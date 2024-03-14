@@ -1,0 +1,210 @@
+/* =================================================================
+MAIN
+================================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    background-color: #f2f2f2;
+}
+
+/* =================================================================
+TEXT
+================================================================= */
+
+/* pages: login.ejs, signup.ejs */
+.font {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+}
+
+/* =================================================================
+TITLE
+================================================================= */
+
+/* pages: login.ejs, signup.ejs */
+.log-title {
+    margin-bottom: 20px;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+/* =================================================================
+LINK
+================================================================= */
+
+/* pages: login.ejs, signup.ejs */
+.forgot-password {
+    text-align: right;
+    font-size: small;
+}
+
+/* pages: login.ejs, signup.ejs */
+.log-link {
+    text-align: center;
+}
+
+/* pages: login.ejs */
+.remove-link-color {
+    color: black;
+    text-decoration: none !important;
+}
+
+.remove-link-color:hover {
+    color: #007bff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* =================================================================
+SECTION
+================================================================= */
+section {
+    margin-bottom: 20px;
+}
+
+/* pages: login.ejs */
+.forgot-password-section {
+    display: flex;
+    justify-content: right;
+    /* Aggiunta per centrare al centro */
+    text-align: right;
+    padding-bottom: 30px;
+}
+
+/* pages: login.ejs, signup.ejs */
+.log-section {
+    display: flex;
+    justify-content: center;
+    /* Aggiunta per centrare al centro */
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 10px;
+}
+
+/* =================================================================
+CONTAINER
+================================================================= */
+
+/* pages: login.ejs, signup.ejs */
+.log-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* pages: login.ejs */
+/* Aggiunta per nascondere il pulsante della password */
+.password-input-container {
+    position: relative;
+}
+
+#show-password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 1;
+    color: #007bff;
+}
+
+/* =================================================================
+FORM
+================================================================= */
+
+/* pages: login.ejs, signup.ejs */
+.log-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* =================================================================
+INPUT
+================================================================= */
+
+/* pages: login.ejs */
+input {
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    /* Rimuovi il bordo */
+    border-bottom: 1px solid #ccc;
+    /* Aggiungi solo la sottolineatura */
+    background-color: transparent;
+    /* Assicurati che lo sfondo sia trasparente */
+    outline: none;
+    /* Rimuovi l'outline quando il campo è in focus */
+}
+
+/* =================================================================
+BUTTON
+================================================================= */
+
+/* pages: login.ejs */
+.log-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.log-button:hover {
+    box-shadow: 0 11px 15px -7px rgba(0, 0, 0, .13), 0 24px 38px 3px rgba(0, 0, 0, .09), 0 9px 46px 8px rgba(0, 0, 0, .05);
+    transition: all 500ms ease-out;
+}
+
+button:active {
+    background-color: #004080;
+}
+
+/* =================================================================
+GENERAL
+================================================================= */
+
+/* pages: login.ejs, signup.ejs */
+.margin-b {
+    margin-bottom: 20px;
+}
+
+/* pages: login.ejs */
+.bold {
+    font-weight: bold;
+}
+
+/* pages: login.ejs */
+::placeholder {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+}
+
+
+
+
+
+.navbar {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+}
+
+.header-block,
+.footer-block {
+    padding: 5px 10px;
+}
