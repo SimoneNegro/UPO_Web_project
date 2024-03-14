@@ -1,6 +1,4 @@
 <link rel="stylesheet" href="/style/style.css">
-<script src="/js/functions.js"></script>
-<script src="/js/login_validation.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +12,8 @@
         <!-- EMAIL FIELD -->
         <section class="margin-b">
             <label class="bold" for="email">E-mail</label>
-            <input id="email" name="email" type="email" autocomplete="email" placeholder="Type your e-mail" required autofocus>
+            <input id="email" name="email" type="text" autocomplete="email" placeholder="Type your e-mail" required autofocus>
+            <span id="email-error"></span>
         </section>
         <!-- PASSWORD FIELD -->
         <section class="margin-b">
@@ -23,6 +22,7 @@
                 <input id="current-password" name="password" type="password" placeholder="Type your password" autocomplete="current-password" required>
                 <button class="font" type="button" id="show-password-toggle" onclick="togglePasswordVisibility(0)">Show</button>
             </div>
+            <span id="current-password-error"></span>   
         </section>
         <!-- FORGOT PASSWORD -->
         <section class="forgot-password-section">
@@ -36,3 +36,8 @@
         <a class="log-link remove-link-color" href="/signup">Or sign up.</a>
     </section>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+<script src="/js/functions.js"></script>
+<script src="/js/login_validation.js"></script>
