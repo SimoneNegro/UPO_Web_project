@@ -2,7 +2,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+    rel="stylesheet">
 <!-- MAIN CONTAINER -->
 <div class="log-container">
     <!-- TITLE -->
@@ -18,8 +19,10 @@
         <section class="margin-b">
             <label class="bold" for="new-password">Password</label>
             <div class="password-input-container">
-                <input id="new-password" name="password" type="password" placeholder="Type your password" autocomplete="new-password" required>
-                <button class="font show-password-toggle" type="button" id="show-new-password-toggle" onclick="togglePasswordVisibility(this)">Show</button>
+                <input id="new-password" name="password" type="password" placeholder="Type your password"
+                    autocomplete="new-password" required>
+                <button class="font show-password-toggle" type="button" id="show-new-password-toggle"
+                    onclick="togglePasswordVisibility(this)">Show</button>
             </div>
             <span id="new-password-error"></span>
         </section>
@@ -27,8 +30,10 @@
         <section class="margin-b">
             <label class="bold" for="confirm-new-password">Confirm password</label>
             <div class="password-input-container">
-                <input id="confirm-new-password" name="confirm_password" type="password" placeholder="Confirm your password" autocomplete="confirm-new-password" required>
-                <button class="font show-password-toggle" type="button" id="show-confirm-password-toggle" onclick="togglePasswordVisibility(this)">Show</button>
+                <input id="confirm-new-password" name="confirm_password" type="password"
+                    placeholder="Confirm your password" autocomplete="confirm-new-password" required>
+                <button class="font show-password-toggle" type="button" id="show-confirm-password-toggle"
+                    onclick="togglePasswordVisibility(this)">Show</button>
             </div>
             <span id="confirm-new-password-error"></span>
         </section>
@@ -38,6 +43,13 @@
         </section>
         <!-- SIGN UP BUTTON -->
         <button class="log-button font" type="submit">Sign up</button>
+        <span class="error-already-registred">
+            <% if (typeof message !=='undefined' && message.length> 0) { %>
+                <p>
+                    <%= message %>
+                </p>
+                <% } %>
+        </span>
     </form>
     <!-- SIGN IN -->
     <section class="log-section">

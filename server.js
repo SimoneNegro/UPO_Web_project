@@ -107,32 +107,46 @@ app.post('/logout', function (req, res, next) {
 
 // signup root
 app.get('/signup', function (req, res, next) {
+    // Check if there's an error parameter in the query string
+    if (req.query.error === 'email_already_exists') {
+        // Render signup page with informational message
+        return res.render('signup', { message: 'Email already exists.' });
+    }
+
+    // If no error, render signup page without message
     res.render('signup');
 });
 
 // execute users signup
-app.post('/signup', function(req, res, next) {
-    var salt = crypto.randomBytes(16);
-    crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', function(err, hashedPassword) {
-      if (err) { return next(err); }
-      db.run('INSERT INTO utente (email, password, tipo, salt) VALUES (?, ?, ?, ?)', [
-        req.body.email,
-        hashedPassword,
-        "utente",
-        salt
-      ], function(err) {
-        if (err) { return next(err); }
-        var user = {
-          id: this.lastID,
-          username: req.body.username
-        };
-        req.login(user, function(err) {
-          if (err) { return next(err); }
-          res.redirect('/');
+app.post('/signup', function (req, res, next) {
+    db.get('SELECT * FROM utente WHERE email = ?', [req.body.email], function (err, results, fields) {
+
+        if (results != undefined) { return res.redirect('/signup?error=email_already_exists'); }
+
+        var salt = crypto.randomBytes(16);
+        crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', function (err, hashedPassword) {
+            if (err) { return next(err); }
+
+            if (err) { return next(err); }
+            db.run('INSERT INTO utente (email, password, tipo, salt) VALUES (?, ?, ?, ?)', [
+                req.body.email,
+                hashedPassword,
+                "utente",
+                salt
+            ], function (err) {
+                if (err) { return next(err); }
+                var user = {
+                    id: this.lastID,
+                    username: req.body.username
+                };
+                req.login(user, function (err) {
+                    if (err) { return next(err); }
+                    res.redirect('/');
+                });
+            });
         });
-      });
     });
-  });
+});
 
 //----------------------------------------------------------------------------------------------------
 // LISTEN (START APP)
