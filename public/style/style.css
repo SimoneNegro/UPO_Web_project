@@ -27,7 +27,15 @@ TEXT
     color: red;
 }
 
-#current-password-error{
+#current-password-error {
+    color: red;
+}
+
+#new-password-error {
+    color: red;
+}
+
+#confirm-new-password-error {
     color: red;
 }
 
@@ -115,7 +123,7 @@ CONTAINER
     position: relative;
 }
 
-#show-password-toggle {
+.show-password-toggle {
     position: absolute;
     top: 50%;
     right: 5px;
@@ -176,7 +184,7 @@ BUTTON
     transition: all 500ms ease-out;
 }
 
-button:active {
+.log-button:active {
     background-color: #004080;
 }
 

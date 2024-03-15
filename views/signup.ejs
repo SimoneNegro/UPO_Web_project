@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="/style/style.css">
-<script src="/js/functions.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -9,19 +8,29 @@
     <!-- TITLE -->
     <h1 class="log-title">Sign up</h1>
     <!-- FORM -->
-    <form class="log-form" action="/signup" method="post">
+    <form class="log-form" id="signup-form" action="/signup" method="post">
         <!-- EMAIL FIELD -->
         <section class="margin-b">
             <label class="bold" for="email">E-mail</label>
-            <input id="email" name="email" type="email" autocomplete="email" placeholder="Type your e-mail" required>
+            <input id="email" name="email" type="text" autocomplete="email" placeholder="Type your e-mail" required>
         </section>
         <!-- PASSWORD FIELD -->
         <section class="margin-b">
             <label class="bold" for="new-password">Password</label>
             <div class="password-input-container">
                 <input id="new-password" name="password" type="password" placeholder="Type your password" autocomplete="new-password" required>
-                <button class="font" type="button" id="show-password-toggle" onclick="togglePasswordVisibility(1)">Show</button>
+                <button class="font show-password-toggle" type="button" id="show-new-password-toggle" onclick="togglePasswordVisibility(this)">Show</button>
             </div>
+            <span id="new-password-error"></span>
+        </section>
+        <!-- CONFIRM PASSWORD FIELD -->
+        <section class="margin-b">
+            <label class="bold" for="confirm-new-password">Confirm password</label>
+            <div class="password-input-container">
+                <input id="confirm-new-password" name="confirm_password" type="password" placeholder="Confirm your password" autocomplete="confirm-new-password" required>
+                <button class="font show-password-toggle" type="button" id="show-confirm-password-toggle" onclick="togglePasswordVisibility(this)">Show</button>
+            </div>
+            <span id="confirm-new-password-error"></span>
         </section>
         <!-- FORGOT PASSWORD -->
         <section class="forgot-password-section">
@@ -35,3 +44,8 @@
         <a class="signup-link remove-link-color" href="/login">Already registered? Log in.</a>
     </section>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+<script src="/js/functions.js"></script>
+<script src="/js/signup_validation.js"></script>

@@ -24,15 +24,15 @@ $(document).ready(function () {
             }
         },
 
-        // we take the span id to determine where the message goes in the code
+        // we take the span id to determine where the error message goes in the code
         errorPlacement: function (error, element) {
             var id = element.attr('id');
             var errorElement = $('#' + id + '-error');
-            if (errorElement.length) {
+
+            if (errorElement.length)
                 error.appendTo(errorElement);
-            } else {
+            else
                 error.insertAfter(element);
-            }
         }
     })
 });
