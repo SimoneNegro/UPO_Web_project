@@ -171,3 +171,8 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
+// if page root does not exist, return error 404
+app.use((req,res)=>{
+    res.status(404)
+    res.send('<h1> Error 404: Resource not found</h1>');
+})
