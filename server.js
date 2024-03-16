@@ -23,7 +23,7 @@ app.set('view engine', 'ejs');
 // USE
 //----------------------------------------------------------------------------------------------------
 
-// Verifica e usa username e password per eseguire il login
+// verify and use username and password to perform the login
 passport.use(new LocalStrategy(function verify(email, password, cb) {
     db.get('SELECT * FROM utente WHERE mail = ?', [email], function (err, row) {
         if (err) { return cb(err); }
@@ -77,7 +77,7 @@ passport.deserializeUser(function (user, cb) {
 // HTTP METHODS
 //----------------------------------------------------------------------------------------------------
 
-// acces to home page
+// access to home page
 app.get('/', (req, res, next) => {
     res.render('home');
 });
@@ -166,7 +166,7 @@ app.post('/forgot-password', function (req, res, next) {
 // LISTEN (START APP)
 //----------------------------------------------------------------------------------------------------
 
-// Si mette in ascolto sulla porta 3000
+// it listens on port 3000
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

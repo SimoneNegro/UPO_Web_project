@@ -1,12 +1,12 @@
 // I use DBeaver with a sqlite database
 const sqlite3 = require('sqlite3').verbose();
 
-// Creazione di una nuova istanza del database SQLite
+// create new instance of SQLite database
 const db = new sqlite3.Database('./databases/helpdesk.db', (err) => {
     if (err) {
-        console.error('Errore durante l\'apertura del database:', err.message);
+        console.error('Error during database opening:', err.message);
     } else {
-        console.log('Connesso al database SQLite.');
+        console.log('Connected to SQLite database.');
     }
 });
 
