@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const config = require('./config.json');
+const router = express.Router();
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
@@ -81,12 +82,7 @@ app.get('/', (req, res, next) => {
     res.render('home');
 });
 
-// acces to reset password
-app.get('/forgot', (req, res, next) => {
-    res.render('forgot_password');
-});
-
-// Richiesta alla pagina di login
+// login root
 app.get('/login', (req, res, next) => {
     res.render('login');
 });
@@ -105,23 +101,32 @@ app.post('/logout', function (req, res, next) {
     });
 });
 
+// forgot password root
+app.get('/forgot-password', (req, res, next) => {
+    if (req.body.error === 'email_not_exists')
+        return res.render('forgot_password', { message: 'Email does not exist.' });
+
+    res.render('forgot_password');
+});
+
 // signup root
 app.get('/signup', function (req, res, next) {
-    // Check if there's an error parameter in the query string
-    if (req.query.error === 'email_already_exists') {
-        // Render signup page with informational message
-        return res.render('signup', { message: 'Email already exists.' });
-    }
+    const errorMessage = req.session.errorMessage;
+    // clean error message session
+    req.session.errorMessage = null; 
 
-    // If no error, render signup page without message
-    res.render('signup');
+    res.render('signup', { message: errorMessage });
 });
 
 // execute users signup
 app.post('/signup', function (req, res, next) {
     db.get('SELECT * FROM utente WHERE email = ?', [req.body.email], function (err, results, fields) {
 
-        if (results != undefined) { return res.redirect('/signup?error=email_already_exists'); }
+        if (results != undefined) {
+            // create a session error for root function
+            req.session.errorMessage = 'Email already exists.';
+            return res.redirect('/signup');
+        }
 
         var salt = crypto.randomBytes(16);
         crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', function (err, hashedPassword) {
@@ -145,6 +150,15 @@ app.post('/signup', function (req, res, next) {
                 });
             });
         });
+    });
+});
+
+app.post('/forgot-password', function (req, res, next) {
+    db.get('SELECT * FROM utente WHERE email = ?', [req.body.email], function (err, results, fields) {
+        if (err) { return next(err); }
+
+        if (results == undefined) { return res.redirect('/forgot-password?error=email_not_exists'); }
+        // redir to code link
     });
 });
 

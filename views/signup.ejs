@@ -39,15 +39,14 @@
         </section>
         <!-- FORGOT PASSWORD -->
         <section class="forgot-password-section">
-            <a class="forgot-password remove-link-color" href="/forgot">Forgot password?</a>
+            <a class="forgot-password remove-link-color" href="/forgot-password">Forgot password?</a>
         </section>
         <!-- SIGN UP BUTTON -->
         <button class="log-button font" type="submit">Sign up</button>
+        <!-- ALREADY EXIST PASSWORD ERROR -->
         <span class="error-already-registred">
-            <% if (typeof message !=='undefined' && message.length> 0) { %>
-                <p>
+            <% if (typeof message !=='undefined' && message != null) { %>
                     <%= message %>
-                </p>
                 <% } %>
         </span>
     </form>
