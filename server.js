@@ -1,4 +1,3 @@
-// Rimuovi questa linea se non stai utilizzando 'morgan' per il logging
 const logger = require('morgan');
 const express = require('express');
 const flash = require('connect-flash');
@@ -6,7 +5,7 @@ const app = express();
 const port = 3000;
 const config = require('./config.json');
 
-// Importa i router delle rotte
+// import router files
 const signupRouter = require('./routes/signup');
 const homeRouter = require('./routes/home');
 const loginRouter = require('./routes/login');
@@ -29,23 +28,23 @@ app.set('view engine', 'ejs');
 // USE
 //----------------------------------------------------------------------------------------------------
 
-// Configura i middleware
+// middleware configuration
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Configura la sessione
+// sessione configuration
 app.use(session({
     secret: config.secret,
     resave: false,
     saveUninitialized: false
 }));
 
-// Configura Passport
+// passport configuration
 app.use(passport.session());
 
-// Configura la strategia di autenticazione locale di Passport
+// configure passport authentication strategies
 passport.use(new LocalStrategy(function(email, password, done) {
     db.get('SELECT * FROM utente WHERE email = ?', [email], function(err, user) {
         if (err) { return done(err); }
@@ -61,12 +60,12 @@ passport.use(new LocalStrategy(function(email, password, done) {
     });
 }));
 
-// Serializzazione dell'utente
+// user serialization
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
 
-// Deserializzazione dell'utente
+// user deserialization
 passport.deserializeUser(function(id, done) {
     db.get('SELECT * FROM utente WHERE id = ?', [id], function(err, user) {
         if (err) { return done(err); }
@@ -74,10 +73,11 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
-// Utilizza i router per le rotte
+// routers
 app.use('/', homeRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
+app.use('/forgot-password', forgotpasswordRouter);
 
 // Gestione del logout
 app.post('/logout', function(req, res) {
@@ -95,12 +95,12 @@ app.post('/forgot-password', function (req, res, next) {
     });
 });
 
-// Gestione degli errori 404
+// error 404 response
 app.use(function(req, res, next) {
     res.status(404).send('<h1>Error 404: Resource not found</h1>');
 });
 
-// Avvia il server
+// sever start
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

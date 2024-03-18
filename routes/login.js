@@ -2,13 +2,16 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
+// login root
 router.get('/', function(req, res, next) {
     const errorMessage = req.session.errorMessage;
     // clean error message session
     req.session.errorMessage = null;
-    res.render('login', { message: errorMessage }); // Passa i messaggi flash alla vista
+
+    res.render('login', { message: errorMessage });
 });
 
+// check if user email and password are correct
 router.post('/', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
         if (err) { return next(err); }
