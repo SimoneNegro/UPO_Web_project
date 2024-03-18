@@ -8,7 +8,7 @@
     <!-- TITLE -->
     <h1 class="log-title">Sign in</h1>
     <!-- FORM -->
-    <form class="log-form" id="login-form" action="/login/password" method="post">
+    <form class="log-form" id="login-form" action="/login" method="post">
         <!-- EMAIL FIELD -->
         <section class="margin-b">
             <label class="bold" for="email">E-mail</label>
@@ -30,6 +30,12 @@
         </section>
         <!-- SIGN IN BUTTON -->
         <button class="log-button font" id="sign-in-submit" type="submit">Sign in</button>
+        <!-- INCORRECT USERNAME OR PASSWORD ERROR -->
+        <span class="error-username-password">
+            <% if (typeof message !=='undefined' && message != null) { %>
+                    <%= message %>
+                <% } %>
+        </span>
     </form>
     <!-- SIGN UP -->
     <section class="log-section">

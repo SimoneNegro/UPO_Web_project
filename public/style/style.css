@@ -10,7 +10,7 @@ MAIN
 body {
     font-family: "Roboto Mono", monospace;
     font-optical-sizing: auto;
-    background-color: #f2f2f2;
+    background-color: #d7f8f4;
 }
 
 /* =================================================================
@@ -78,7 +78,7 @@ LINK
 }
 
 .remove-link-color:hover {
-    color: #007bff;
+    color: #118a80;
     text-decoration: none;
     cursor: pointer;
 }
@@ -115,9 +115,16 @@ CONTAINER
 
 /* pages: login.ejs, signup.ejs */
 .log-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 30px;
+    width: 27rem;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 25px;
+    padding-bottom: 30px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
@@ -138,7 +145,7 @@ CONTAINER
     padding: 0;
     cursor: pointer;
     z-index: 1;
-    color: #007bff;
+    color: #118a80;
 }
 
 /* =================================================================
@@ -176,7 +183,8 @@ BUTTON
 /* pages: login.ejs */
 .log-button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #1aa398;
+    font-size: medium;
     color: #fff;
     border: none;
     border-radius: 50px;
@@ -190,7 +198,7 @@ BUTTON
 }
 
 .log-button:active {
-    background-color: #004080;
+    background-color: #118a80;
 }
 
 /* =================================================================
