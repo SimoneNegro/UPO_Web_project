@@ -2,46 +2,53 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
-<!-- MAIN CONTAINER -->
-<div class="log-container">
-    <!-- TITLE -->
-    <h1 class="log-title">Sign in</h1>
-    <!-- FORM -->
-    <form class="log-form" id="login-form" action="/login" method="post">
-        <!-- EMAIL FIELD -->
-        <section class="margin-b">
-            <label class="bold" for="email">E-mail</label>
-            <input id="email" name="email" type="text" autocomplete="email" placeholder="Type your e-mail" required autofocus>
-            <span id="email-error"></span>
-        </section>
-        <!-- PASSWORD FIELD -->
-        <section class="margin-b">
-            <label class="bold" for="current-password">Password</label>
-            <div class="password-input-container">
-                <input id="current-password" name="password" type="password" placeholder="Type your password" autocomplete="current-password" required>
-                <button class="font show-password-toggle" type="button" id="show-password-toggle" onclick="togglePasswordVisibility(this)">Show</button>
-            </div>
-            <span id="current-password-error"></span>   
-        </section>
-        <!-- FORGOT PASSWORD -->
-        <section class="forgot-password-section">
-            <a class="forgot-password remove-link-color" href="/forgot-password">Forgot password?</a>
-        </section>
-        <!-- SIGN IN BUTTON -->
-        <button class="log-button font" id="sign-in-submit" type="submit">Sign in</button>
-        <!-- INCORRECT USERNAME OR PASSWORD ERROR -->
-        <span class="error-username-password">
-            <% if (typeof message !=='undefined' && message != null) { %>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+    rel="stylesheet">
+
+<body class="log-background">
+    <!-- MAIN CONTAINER -->
+    <div class="log-container">
+        <!-- TITLE -->
+        <h1 class="title margin-bottom">Sign in</h1>
+        <!-- FORM -->
+        <form class="log-form" id="login-form" action="/login" method="post">
+            <!-- EMAIL FIELD -->
+            <section class="margin-b">
+                <label class="bold" for="email">E-mail</label>
+                <input id="email" name="email" type="text" autocomplete="email" placeholder="Type your e-mail" required
+                    autofocus>
+                <span id="email-error"></span>
+            </section>
+            <!-- PASSWORD FIELD -->
+            <section class="margin-b">
+                <label class="bold" for="current-password">Password</label>
+                <div class="password-input-container">
+                    <input id="current-password" name="password" type="password" placeholder="Type your password"
+                        autocomplete="current-password" required>
+                    <button class="font show-password-toggle" type="button" id="show-password-toggle"
+                        onclick="togglePasswordVisibility(this)">Show</button>
+                </div>
+                <span id="current-password-error"></span>
+            </section>
+            <!-- FORGOT PASSWORD -->
+            <section class="forgot-password-section">
+                <a class="forgot-password remove-link-color" href="/forgot-password">Forgot password?</a>
+            </section>
+            <!-- SIGN IN BUTTON -->
+            <button class="log-button font" id="sign-in-submit" type="submit">Sign in</button>
+            <!-- INCORRECT USERNAME OR PASSWORD ERROR -->
+            <span class="error-username-password">
+                <% if (typeof message !=='undefined' && message !=null) { %>
                     <%= message %>
-                <% } %>
-        </span>
-    </form>
-    <!-- SIGN UP -->
-    <section class="log-section">
-        <a class="log-link remove-link-color" href="/signup">Or sign up.</a>
-    </section>
-</div>
+                        <% } %>
+            </span>
+        </form>
+        <!-- SIGN UP -->
+        <section class="log-section">
+            <a class="log-link remove-link-color" href="/signup">Or sign up.</a>
+        </section>
+    </div>
+</body>
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>

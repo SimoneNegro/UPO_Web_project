@@ -20,6 +20,6 @@ Nelle cartelle sono presenti:
 
 ## Dettagli
 
-Per andare a vedere quello che riguarda il front-end, basta andare a vedere le pagine presenti nelle `views`, dove lo stile viene definito nella catella `style` e tutto ciò che riguarda alcune validazioni o migliori grafiche avanzate, basta guardare la cartella `js`.
+Per andare a vedere quello che riguarda il front-end, basta andare a vedere le pagine presenti nelle `views`, dove lo stile viene definito nella cartella `style` e tutto ciò che riguarda alcune validazioni o migliori grafiche avanzate, basta guardare la cartella `js`.
 
 La parte più complessa da capire è il back-end. Il file main e più importante è `server.js`.

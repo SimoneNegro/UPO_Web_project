@@ -7,10 +7,19 @@ MAIN
     box-sizing: border-box;
 }
 
-body {
+.log-background {
     font-family: "Roboto Mono", monospace;
     font-optical-sizing: auto;
     background-color: #d7f8f4;
+}
+
+.home-background {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+}
+
+.page-header {
+    background-color: var(--primary-color);
 }
 
 /* =================================================================
@@ -24,28 +33,28 @@ TEXT
 }
 
 #email-error {
-    color: red;
+    color: var(--error-color);
 }
 
 #current-password-error {
-    color: red;
+    color: var(--error-color);
 }
 
 #new-password-error {
-    color: red;
+    color: var(--error-color);
 }
 
 #confirm-new-password-error {
-    color: red;
+    color: var(--error-color);
 }
 
 .error-already-registred {
-    color: red;
+    color: var(--error-color);
     padding-top: 15px;
 }
 
-.error-username-password{
-    color: red;
+.error-username-password {
+    color: var(--error-color);
     padding-top: 15px;
 }
 
@@ -54,11 +63,14 @@ TITLE
 ================================================================= */
 
 /* pages: login.ejs, signup.ejs */
-.log-title {
-    margin-bottom: 20px;
+.title {
     text-align: center;
     padding-top: 15px;
     padding-bottom: 15px;
+}
+
+.margin-bottom {
+    margin-bottom: 20px;
 }
 
 /* =================================================================
@@ -80,10 +92,13 @@ LINK
 .remove-link-color {
     color: black;
     text-decoration: none !important;
+    transition: all 0.3s ease;
 }
 
 .remove-link-color:hover {
-    color: #118a80;
+    color: var(--on-over-link-color);
+    text-shadow: 0px 0px 10px rgba(0, 123, 255, 0.3);
+    /* Aggiunge un'ombra sottile */
     text-decoration: none;
     cursor: pointer;
 }
@@ -151,6 +166,12 @@ CONTAINER
     cursor: pointer;
     z-index: 1;
     color: #118a80;
+    transition: all 0.3s ease;
+}
+
+.show-password-toggle:hover {
+    text-shadow: 0px 0px 10px rgba(0, 123, 255, 0.3);
+    /* Aggiunge un'ombra sottile */
 }
 
 /* =================================================================
@@ -188,7 +209,7 @@ BUTTON
 /* pages: login.ejs */
 .log-button {
     padding: 10px 20px;
-    background-color: #1aa398;
+    background-color: var(--button-color);
     font-size: medium;
     color: #fff;
     border: none;
@@ -203,7 +224,7 @@ BUTTON
 }
 
 .log-button:active {
-    background-color: #118a80;
+    background-color: var(--on-active-button-color);
 }
 
 /* =================================================================
@@ -226,6 +247,17 @@ GENERAL
     font-optical-sizing: auto;
 }
 
+/* =================================================================
+ROOT
+================================================================= */
+:root {
+    --primary-color: #1aa398;
+    --secondary-color: #118a80;
+    --button-color: #1aa398;
+    --on-active-button-color: #118a80;
+    --on-over-link-color: #118a80;
+    --error-color: red;
+}
 
 
 
