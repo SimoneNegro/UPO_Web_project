@@ -5,32 +5,22 @@ MAIN
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Roboto flex", serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .log-background {
-    font-family: "Roboto Mono", monospace;
-    font-optical-sizing: auto;
     background-color: #d7f8f4;
 }
 
-.home-background {
-    font-family: "Roboto Mono", monospace;
-    font-optical-sizing: auto;
-}
-
 .page-header {
-    background-color: var(--primary-color);
+    background-color: var(--light-bg);
 }
 
 /* =================================================================
 TEXT
 ================================================================= */
-
-/* pages: login.ejs, signup.ejs */
-.font {
-    font-family: "Roboto Mono", monospace;
-    font-optical-sizing: auto;
-}
 
 #email-error {
     color: var(--error-color);
@@ -254,6 +244,7 @@ ROOT
     --primary-color: #1aa398;
     --secondary-color: #118a80;
     --button-color: #1aa398;
+    --light-bg: #d7f8f4;
     --on-active-button-color: #118a80;
     --on-over-link-color: #118a80;
     --error-color: red;
