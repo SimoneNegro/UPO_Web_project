@@ -4,6 +4,23 @@
     font-style: normal;
 }
 
+html, body {
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    width: 100%;
+    position: relative; 
+    background-color: #eceef0; 
+    text-align: center;
+    padding: 10px 0;
+    bottom: 0;
+    margin-top: auto;
+}
+
 .link:hover {
     color: var(--on-over-link-color);
     text-shadow: 0px 0px 10px rgba(0, 123, 255, 0.3);
@@ -32,4 +49,10 @@
     --on-active-button-color: #118a80;
     --on-over-link-color: #118a80;
     --error-color: red;
+}
+
+/* MAP STYLE */
+#map {
+    height: 180px;
+    width: 25rem;
 }

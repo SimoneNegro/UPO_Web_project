@@ -3,8 +3,8 @@ function togglePasswordVisibility(op) {
     const btn = $(op);
     // take previous input element 
     const txt = btn.prev('input')[0];
-   
-    if(btn.text() == "Show") {
+
+    if (btn.text() == "Show") {
         txt.type = "text";
         btn.text("Hide");
     }
