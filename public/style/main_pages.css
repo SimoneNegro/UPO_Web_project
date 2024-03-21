@@ -4,6 +4,29 @@
     font-style: normal;
 }
 
+/* html {
+    font-size: 14px;
+  }
+  
+  @media (min-width: 768px) {
+    html {
+      font-size: 16px;
+    }
+  }
+  
+  .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  }
+  
+  html {
+    position: relative;
+    min-height: 100%;
+  }
+  
+  body {
+    margin-bottom: 60px;
+  } */
+
 .link:hover {
     color: var(--on-over-link-color);
     text-shadow: 0px 0px 10px rgba(0, 123, 255, 0.3);
@@ -24,6 +47,14 @@
     background-color: var(--light-bg) !important;
 }
 
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+}
+
 :root {
     --primary-color: #1aa398;
     --secondary-color: #118a80;
@@ -32,4 +63,10 @@
     --on-active-button-color: #118a80;
     --on-over-link-color: #118a80;
     --error-color: red;
+}
+
+/* MAP STYLE */
+#map {
+    height: 180px;
+    width: 25rem;
 }

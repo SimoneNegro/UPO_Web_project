@@ -1,5 +1,5 @@
 // verify if email and password have valid values
-$(document).ready(function () {
+$(function () {
     $("#login-form").validate({
         // those are rules that field must have to be validated
         rules: {
