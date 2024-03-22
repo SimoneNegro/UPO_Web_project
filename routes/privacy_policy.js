@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-// home root
+// privacy_policy root
 router.get('/', function (req, res, next) {
-    res.render('home', {title: "NGR"});
+    res.render('privacy_policy', {title: 'Privacy Policy'});
 });
 
 module.exports = router;

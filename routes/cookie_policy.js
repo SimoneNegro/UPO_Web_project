@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-// home root
+// cookie_policy root
 router.get('/', function (req, res, next) {
-    res.render('home', {title: "NGR"});
+    res.render('cookie_policy', {title: 'Cookie Policy'});
 });
 
 module.exports = router;

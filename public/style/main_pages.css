@@ -4,7 +4,8 @@
     font-style: normal;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     min-height: 100vh;
     display: flex;
@@ -13,12 +14,19 @@ html, body {
 
 footer {
     width: 100%;
-    position: relative; 
-    background-color: #eceef0; 
+    position: relative;
+    background-color: #eceef0;
     text-align: center;
     padding: 10px 0;
     bottom: 0;
     margin-top: auto;
+}
+
+
+.link {
+    text-decoration: none !important;
+    color: #212529;
+    transition: all 0.3s ease;
 }
 
 .link:hover {
@@ -51,8 +59,22 @@ footer {
     --error-color: red;
 }
 
+/* .img-link {
+    transition: all 0.3s ease;
+}
+
+.img-link:hover {
+    color: var(--on-over-link-color);
+    box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.3);
+} */
+
+.icon-dimension {
+    max-width: 1.5rem;
+    max-height: 1.5rem;
+}
+
 /* MAP STYLE */
 #map {
-    height: 180px;
+    height: 15rem;
     width: 25rem;
 }

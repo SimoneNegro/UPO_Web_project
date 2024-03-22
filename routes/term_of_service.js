@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-// home root
+// term_of_service root
 router.get('/', function (req, res, next) {
-    res.render('home', {title: "NGR"});
+    res.render('term_of_service', {title: 'Term Of Service'});
 });
 
 module.exports = router;

@@ -10,6 +10,9 @@ const signupRouter = require('./routes/signup');
 const homeRouter = require('./routes/home');
 const loginRouter = require('./routes/login');
 const forgotpasswordRouter = require('./routes/forgot_password');
+const termofserviceRouter = require('./routes/term_of_service');
+const cookiepolicyRouter = require('./routes/cookie_policy');
+const privacypolicyRouter = require('./routes/privacy_policy');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -78,6 +81,9 @@ app.use('/', homeRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
 app.use('/forgot-password', forgotpasswordRouter);
+app.use('/term-of-service', termofserviceRouter);
+app.use('/cookie-policy', cookiepolicyRouter);
+app.use('/privacy-policy', privacypolicyRouter);
 
 // Gestione del logout
 app.post('/logout', function(req, res) {

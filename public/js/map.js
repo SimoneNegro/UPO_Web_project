@@ -8,3 +8,8 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // add map position
 L.marker([45.3275748,8.4245634,17]).addTo(map);
+
+// add popup
+L.marker([45.3275748,8.4245634,17]).addTo(map)
+    .bindPopup('We are here!')
+    .openPopup();
