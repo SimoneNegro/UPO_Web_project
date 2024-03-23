@@ -4,9 +4,8 @@
         <div class="container">
             <a class="navbar-brand link" href="/"><!-- inserisci img logo -->NGR</a>
             <!-- BUTTON SHOW SMALL SCREEN -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
-                aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- ALL PAGES LINK -->
@@ -19,8 +18,14 @@
                 </div>
                 <!-- LOG PAGES -->
                 <div class="d-sm-inline-flex gap-4">
-                    <a class="nav-link link" href="/signup">Register</a>
-                    <a class="nav-link link" href="/login">Login</a>
+                    <% if (!user) { %>
+                        <a class="nav-link link" href="/signup">Register</a>
+                        <a class="nav-link link" href="/login">Login</a>
+                        <% } else { %>
+                            <form action="/logout" method="post">
+                                <button class="nav-link link">Log out</button>
+                            </form>
+                            <% } %>
                 </div>
             </div>
         </div>

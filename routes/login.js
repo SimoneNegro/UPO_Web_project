@@ -19,7 +19,10 @@ router.post('/', function(req, res, next) {
             req.session.errorMessage = 'Email or password are incorrect.';
             return res.redirect('/login');
         }
-        return res.redirect('/home');
+        req.login(user, function (err) {
+            if (err) { return next(err); }
+            res.redirect('/');
+        });
     })(req, res, next);
 });
 

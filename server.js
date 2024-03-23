@@ -17,6 +17,7 @@ const privacypolicyRouter = require('./routes/privacy_policy');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const crypto = require('crypto');
+const bcrypt = require('bcrypt');
 const db = require('./db');
 const session = require('express-session');
 const SQLiteStore = require('connect-sqlite3')(session);
@@ -47,30 +48,30 @@ app.use(session({
 // passport configuration
 app.use(passport.session());
 
-// configure passport authentication strategies
-passport.use(new LocalStrategy(function(email, password, done) {
-    db.get('SELECT * FROM utente WHERE email = ?', [email], function(err, user) {
+// user authentication
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+}, function (email, password, done) {
+    db.get('SELECT * FROM utente WHERE email = ?', [email], function (err, user) {
         if (err) { return done(err); }
-        if (!user) { return done(null, false, { message: 'Incorrect username or password.' }); }
-        
-        crypto.pbkdf2(password, user.salt, 310000, 32, 'sha256', function(err, hashedPassword) {
+        if (!user) { return done(null, false); }
+        bcrypt.compare(password, user.password, function (err, result) {
             if (err) { return done(err); }
-            if (!crypto.timingSafeEqual(Buffer.from(user.password, 'binary'), hashedPassword)) {
-                return done(null, false, { message: 'Incorrect username or password.' });
-            }
-            return done(null, user);
+            if (result) { return done(null, user); }
+            else { return done(null, false); }
         });
     });
 }));
 
 // user serialization
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
     done(null, user.id);
 });
 
 // user deserialization
-passport.deserializeUser(function(id, done) {
-    db.get('SELECT * FROM utente WHERE id = ?', [id], function(err, user) {
+passport.deserializeUser(function (id, done) {
+    db.get('SELECT * FROM utente WHERE id = ?', [id], function (err, user) {
         if (err) { return done(err); }
         done(null, user);
     });
@@ -86,9 +87,11 @@ app.use('/cookie-policy', cookiepolicyRouter);
 app.use('/privacy-policy', privacypolicyRouter);
 
 // Gestione del logout
-app.post('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
+app.post('/logout', function (req, res, next) {
+    req.logout(function (err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+    });
 });
 
 // DA METTERE IN FORGOT PASSWORD
@@ -102,7 +105,7 @@ app.post('/forgot-password', function (req, res, next) {
 });
 
 // error 404 response
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.status(404).send('<h1>Error 404: Resource not found</h1>');
 });
 
