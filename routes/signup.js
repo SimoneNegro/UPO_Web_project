@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const crypto = require('crypto');
+const bcrypt = require('bcrypt');
 const db = require('../db');
 
 // signup root
@@ -16,23 +17,17 @@ router.get('/', function (req, res, next) {
 // execute users signup
 router.post('/', function (req, res, next) {
     db.get('SELECT * FROM utente WHERE email = ?', [req.body.email], function (err, results, fields) {
-
         if (results != undefined) {
-            // create a session error for root function
             req.session.errorMessage = 'Email already exists.';
             return res.redirect('/signup');
         }
 
-        var salt = crypto.randomBytes(16);
-        crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', function (err, hashedPassword) {
+        bcrypt.hash(req.body.password, 10, function(err, hash) {
             if (err) { return next(err); }
-
-            if (err) { return next(err); }
-            db.run('INSERT INTO utente (email, password, tipo, salt) VALUES (?, ?, ?, ?)', [
+            db.run('INSERT INTO utente (email, password, tipo) VALUES (?, ?, ?)', [
                 req.body.email,
-                hashedPassword,
-                "utente",
-                salt
+                hash,
+                "utente"
             ], function (err) {
                 if (err) { return next(err); }
                 var user = {
