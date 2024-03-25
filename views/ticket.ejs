@@ -1,0 +1,52 @@
+<%- include('includes/head.ejs') %>
+
+    <body>
+        <!-- HEADER -->
+        <%- include('includes/header.ejs') %>
+            <!-- CONTENT -->
+            <main>
+                <div class="container">
+                    <h2>Open a ticket</h2>
+                    <% if (!user) { %>
+                        <p>To open a ticket, you must first <a class="link blue-text" href="/signup">register</a>.</p>
+                        <% } else { %>
+                            <!-- FORM -->
+                            <!-- ACTION DA FARE! -->
+                            <form id="new-ticket" action="/" method="post">
+                                <!-- EMAIL FIELD -->
+                                <section class="mb-3">
+                                    <label class="bold" for="email">E-mail</label>
+                                    <input id="email" name="email" type="text" autocomplete="email"
+                                        placeholder=<%=user.email %> disabled>
+                                </section>
+                                <!-- PASSWORD FIELD -->
+                                <section class="margin-b">
+                                    <label class="bold" for="topic">Topic:</label>
+                                    <select name="topic" id="topic">
+                                        <% 
+                                    </select>
+                                </section>
+                                <!-- FORGOT PASSWORD -->
+                                <section class="forgot-password-section">
+                                    <a class="forgot-password remove-link-color" href="/forgot-password">Forgot
+                                        password?</a>
+                                </section>
+                                <!-- SIGN IN BUTTON -->
+                                <button class="log-button font" id="sign-in-submit" type="submit">Sign in</button>
+                                <!-- INCORRECT USERNAME OR PASSWORD ERROR -->
+                                <span class="error-username-password">
+                                    <% if (typeof message !=='undefined' && message !=null) { %>
+                                        <%= message %>
+                                            <% } %>
+                                </span>
+                            </form>
+                            <% } %>
+                </div>
+            </main>
+            <!-- FOOTER -->
+            <%- include('includes/footer.ejs') %>
+                <!-- SCRIPTS-->
+                <%- include('includes/scripts.ejs') %>
+    </body>
+
+    </html>

@@ -49,6 +49,10 @@ footer {
     background-color: var(--light-bg) !important;
 }
 
+.blue-text {
+    color: var(--secondary-color);
+}
+
 :root {
     --primary-color: #1aa398;
     --secondary-color: #118a80;
@@ -75,6 +79,6 @@ footer {
 
 /* MAP STYLE */
 #map {
-    height: 15rem;
-    width: 25rem;
+    height: 10rem;
+    width: 20rem;
 }
