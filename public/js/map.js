@@ -1,5 +1,5 @@
 // map initialization
-var map = L.map('map').setView([45.3275748,8.4245634,17], 17); // Imposta la posizione e lo zoom iniziale
+var map = L.map('map').setView([45.3275748,8.4245634,17], 15); // Imposta la posizione e lo zoom iniziale
     
 // add map layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

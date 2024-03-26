@@ -14,6 +14,39 @@ function togglePasswordVisibility(op) {
     }
 }
 
+// show textarea length
+$(() => {
+    const messageEle = $('#description');
+    const counterEle = $('#counter');
+    const maxLength = messageEle.attr('maxlength');
+
+    counterEle.text(`0/${maxLength}`);
+
+    messageEle.on('input', function (e) {
+        const target = e.target;
+    
+        // Count the current number of characters
+        const currentLength = target.value.length;
+
+        counterEle.text(`${currentLength}/${maxLength}`);
+    });
+});
+
+
+// document.addEventListener('DOMContentLoaded', function () {
+//     const messageEle = document.getElementById('message');
+//     const counterEle = document.getElementById('counter');
+//     const maxLength = messageEle.getAttribute('maxlength');
+
+//     counterEle.innerHTML = '0/' + maxLength;
+
+//     messageEle.addEventListener('input', function (e) {
+//         const target = e.target;
+//         const currentLength = target.value.length;
+//         counterEle.innerHTML = currentLength + '/' + maxLength;
+//     });
+// });
+
 /*
 $("#sign-in-submit").on("submit", function (e) {
     e.preventDefault();

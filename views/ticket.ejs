@@ -19,17 +19,22 @@
                                     <input id="email" name="email" type="text" autocomplete="email"
                                         placeholder=<%=user.email %> disabled>
                                 </section>
-                                <!-- PASSWORD FIELD -->
-                                <section class="margin-b">
+                                <!-- TOPIC FIELD -->
+                                <section class="mb-3">
                                     <label class="bold" for="topic">Topic:</label>
                                     <select name="topic" id="topic">
-                                        <% 
+                                        <% topics.forEach(function(topic) { %>
+                                            <option value="<%= topic.nome %>" title="<%= topic.descrizione %>">
+                                                <%= topic.nome %>
+                                            </option>
+                                            <% }); %>
                                     </select>
                                 </section>
-                                <!-- FORGOT PASSWORD -->
-                                <section class="forgot-password-section">
-                                    <a class="forgot-password remove-link-color" href="/forgot-password">Forgot
-                                        password?</a>
+                                <!-- ISSUE DESCRIPTION PASSWORD -->
+                                <section class="mb-3">
+                                    <p><label class="bold" for="description">Describe your issue:</label></p>
+                                    <textarea class="form-control" name="description" id="description" rows="7" cols="50" maxlength="1000" placeholder="Give us more information..." required></textarea>
+                                    <div style="margin-top: 0.25rem; text-align: left" id="counter">0</div>
                                 </section>
                                 <!-- SIGN IN BUTTON -->
                                 <button class="log-button font" id="sign-in-submit" type="submit">Sign in</button>

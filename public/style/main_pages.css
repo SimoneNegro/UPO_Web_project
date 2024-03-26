@@ -77,8 +77,25 @@ footer {
     max-height: 1.5rem;
 }
 
+[title] {
+    position: relative;
+    cursor: help; /* Cambia il cursore quando ci si posiziona sopra */
+}
+
+[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    padding: 5px 10px;
+    border-radius: 5px;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap; /* Evita il testo su più righe */
+    z-index: 999; /* Assicura che il tooltip sia sopra gli altri elementi */
+}
+
 /* MAP STYLE */
 #map {
-    height: 10rem;
-    width: 20rem;
+    height: 8rem;
+    width: 16rem;
 }
