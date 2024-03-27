@@ -14,14 +14,14 @@ router.post('/', function (req, res, next) {
     let data = new Date();
 
     db.run('INSERT INTO ticket (descrizione, data_apertura, stato, id_utente, nome_topic) VALUES (?, ?, ?, ?, ?)', [
-        req.body.description, 
+        req.body.description,
         data,
-        "Open", 
+        "Open",
         req.user.id,
         req.body.topic
     ], function (err) {
         if (err) { return next(err); }
-        return res.redirect('/my-tickets'); 
+        return res.redirect('/my-tickets');
     })
 });
 

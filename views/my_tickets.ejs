@@ -12,8 +12,17 @@
                                 href="/signup?return=my-tickets">register</a> or <a class="link blue-text"
                                 href="/login?return=my-tickets">login.</a></p>
                         <% } else { %>
-
-                            <% } %>
+                            <!-- IF USER HAVE NO TICKET -->
+                            <% if (num_tickets.num_user_ticket == 0) { %>
+                                <p>You don't have any ticket. To open a ticket, go to <a class="link blue-text"
+                                    href="/open-ticket">Open ticket</a>.</p>
+                                <!-- IF USER HAVE AT LEAST A ONE TICKET -->
+                                <% } else { %>
+                                    <p>You have ticket!</p>
+                                    <!-- TESTING -->
+                                    <!-- <%= num_tickets.num_user_ticket %> -->
+                                    <% } %>
+                                        <% } %>
                 </div>
             </main>
             <!-- FOOTER -->
