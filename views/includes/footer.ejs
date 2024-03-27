@@ -10,16 +10,33 @@
             <div class="col text-start">
                 <span class="fw-bold">USEFUL LINKS</span>
                 <div class="row pt-2">
-                    <a class="link" href="/term-of-service">Terms of Service</a>
-                    <a class="link" href="/privacy-policy">Privacy Policy</a>
-                    <a class="link" href="/cookie-policy">Cookie Policy</a>
+                    <% if(title=="Terms Of Service" ) { %>
+                        <a class="static-link">Terms of Service</a>
+                        <% } else { %>
+                            <a class="link" href="/terms-of-service">Terms of Service</a>
+                            <% } %>
+                                <% if(title=="Privacy Policy" ) { %>
+                                    <a class="static-link">Privacy Policy</a>
+                                    <% } else { %>
+                                        <a class="link" href="/privacy-policy">Privacy Policy</a>
+                                        <% } %>
+                                            <% if(title=="Cookie Policy" ) { %>
+                                                <a class="static-link">Cookie Policy</a>
+                                                <% } else { %>
+                                                    <a class="link" href="/cookie-policy">Cookie Policy</a>
+                                                    <% } %>
+
                 </div>
             </div>
             <!-- THIRD COLUMN -->
             <div class="col text-start">
                 <span class="fw-bold">PAGES</span>
                 <div class="row pt-2">
-                    <a class="link" href="/open-ticket">Open ticket</a>
+                    <% if(title=="Open a ticket" ) { %>
+                        <a class="static-link">Open ticket</a>
+                        <% } else { %>
+                            <a class="link" href="/open-ticket">Open ticket</a>
+                            <% } %>
                 </div>
             </div>
             <!-- FOURTH COLUMN -->

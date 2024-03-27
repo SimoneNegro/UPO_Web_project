@@ -83,7 +83,7 @@ app.use('/', homeRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
 app.use('/forgot-password', forgotpasswordRouter);
-app.use('/term-of-service', termofserviceRouter);
+app.use('/terms-of-service', termofserviceRouter);
 app.use('/cookie-policy', cookiepolicyRouter);
 app.use('/privacy-policy', privacypolicyRouter);
 app.use('/open-ticket', ticketRouter);

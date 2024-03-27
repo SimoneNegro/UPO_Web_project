@@ -32,9 +32,22 @@ footer {
 .link:hover {
     color: var(--on-over-link-color);
     text-shadow: 0px 0px 10px rgba(0, 123, 255, 0.3);
-    /* Aggiunge un'ombra sottile */
     text-decoration: none;
     cursor: pointer;
+}
+
+.static-link {
+    color: var(--static-link-color);
+    font-weight: 500;
+    text-decoration: none;
+    cursor: context-menu;
+}
+
+.static-link:hover {
+    color: var(--static-link-color);
+    font-weight: 500;
+    text-decoration: none;
+    cursor: context-menu;
 }
 
 .padding-l {
@@ -57,20 +70,20 @@ footer {
     --primary-color: #1aa398;
     --secondary-color: #118a80;
     --light-bg: #d7f8f4;
-    --button-color: #1aa398;
-    --on-active-button-color: #118a80;
+
+    --button-color: rgb(142, 226, 215);
+
+    --button-color-hover: rgb(123, 219, 206);
+    
+    --on-active-button-color: #449c95;
     --on-over-link-color: #118a80;
+
+    --static-link-color: #066156;
     --error-color: red;
-}
 
-/* .img-link {
-    transition: all 0.3s ease;
+    --border-color: #06615667;
+    --outline: #0f908139;
 }
-
-.img-link:hover {
-    color: var(--on-over-link-color);
-    box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.3);
-} */
 
 .icon-dimension {
     max-width: 1.5rem;
@@ -94,8 +107,95 @@ footer {
     z-index: 999; /* Assicura che il tooltip sia sopra gli altri elementi */
 }
 
+.max-width {
+    max-width: 50rem;
+}
+
+.border {
+    border: var(--border-color) solid 1px !important;
+}
+
+.width {
+    width: auto !important;
+}
+
+.shadow-box {
+    box-shadow: 0px 0px 12px 5px rgba(0, 0, 0, 0.10);
+}
+
+.send-button {
+    padding: 10px 20px;
+    background-color: var(--button-color);
+    font-size: medium;
+    color: #000000;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0px 0px 12px 5px rgba(0, 0, 0, 0.10);
+    transition: background-color 500ms ease;
+}
+
+.send-button:hover {
+    box-shadow: 0px 0px 12px 8px rgba(0, 0, 0, .10);
+    background-color: var(--button-color-hover);
+    transition: all 500ms ease-out;
+}
+
+.send-button:active {
+    background-color: var(--button-color);
+    box-shadow: 0px 0px 12px 5px rgba(0, 0, 0, 0.10);
+}
+
 /* MAP STYLE */
 #map {
     height: 8rem;
     width: 16rem;
+}
+
+.area-style {
+    padding: 0.5rem;
+    border: 1px solid #ced4da; 
+    border-radius: 0.25rem; 
+    background-color: #fff; 
+    font-size: 1rem;
+    box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.10);
+    line-height: 1.5;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.area-style:hover {
+    box-shadow: 0px 0px 12px 7px rgba(0, 0, 0, .10);
+    transition: all 500ms ease-out;
+}
+
+.area-style:focus {
+    border-color: var(--border-color); 
+    outline: none;
+    box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.10);
+}
+
+.select-style {
+    padding: 0.5rem;
+    border: 1px solid #ced4da; 
+    border-radius: 0.25rem;
+    background-color: #fff; 
+    box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.10);
+    font-size: 1rem;
+    line-height: 1.5;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.select-style:hover {
+    box-shadow: 0px 0px 12px 7px rgba(0, 0, 0, .10);
+    transition: all 500ms ease-out;
+}
+
+.select-style:focus {
+    border-color: var(--border-color); 
+    outline: none; 
+    box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.10);
+}
+
+select.decorated option:hover {
+    background-color: red !important;
 }
