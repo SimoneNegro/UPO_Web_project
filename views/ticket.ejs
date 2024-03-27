@@ -9,7 +9,8 @@
                     <h1 class="mb-4">Open a ticket</h1>
                     <% if (!user) { %>
                         <p class="mb-4">To open a ticket, you must first <a class="link blue-text"
-                                href="/signup">register</a>.</p>
+                            href="/signup?return=open-ticket">register</a> or <a class="link blue-text"
+                            href="/login?return=open-ticket">login.</p>
                         <% } else { %>
                             <!-- FORM -->
                             <!-- ACTION DA FARE! -->

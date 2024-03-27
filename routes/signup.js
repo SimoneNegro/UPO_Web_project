@@ -5,11 +5,14 @@ const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 const db = require('../db');
 
+let returnUrl = "";
+
 // signup root
 router.get('/', function (req, res, next) {
     const errorMessage = req.session.errorMessage;
     // clean error message session
-    req.session.errorMessage = null; 
+    req.session.errorMessage = null;
+    returnUrl = req.query.return;
 
     res.render('signup', { message: errorMessage });
 });
@@ -22,7 +25,7 @@ router.post('/', function (req, res, next) {
             return res.redirect('/signup');
         }
 
-        bcrypt.hash(req.body.password, 10, function(err, hash) {
+        bcrypt.hash(req.body.password, 10, function (err, hash) {
             if (err) { return next(err); }
             db.run('INSERT INTO utente (email, password, tipo) VALUES (?, ?, ?)', [
                 req.body.email,
@@ -36,7 +39,8 @@ router.post('/', function (req, res, next) {
                 };
                 req.login(user, function (err) {
                     if (err) { return next(err); }
-                    res.redirect('/open-ticket');
+                    if (!returnUrl) { return res.redirect('/'); }
+                    return res.redirect(returnUrl);
                 });
             });
         });

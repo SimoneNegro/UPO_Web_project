@@ -23,7 +23,11 @@
                                     <% } else { %>
                                         <a class="nav-link link" href="/open-ticket">Open ticket</a>
                                         <% } %>
-                                            <a class="nav-link link">My tickets</a>
+                                        <% if(title=="My Tickets" ) { %>
+                                            <a class="nav-link static-link">My tickets</a>
+                                            <% } else { %>
+                                                <a class="nav-link link" href="/my-tickets">My tickets</a>
+                                                <% } %>
                                             <a class="nav-link link">Terza pagina</a>
                             </div>
                             <!-- LOG PAGES -->

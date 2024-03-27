@@ -1,0 +1,25 @@
+<%- include('includes/head.ejs') %>
+
+    <body>
+        <!-- HEADER -->
+        <%- include('includes/header.ejs') %>
+            <!-- CONTENT -->
+            <main>
+                <div class="container">
+                    <h1 class="mb-4">My tickets</h1>
+                    <% if (!user) { %>
+                        <p class="mb-4">To see all your tickets, you must first <a class="link blue-text"
+                                href="/signup?return=my-tickets">register</a> or <a class="link blue-text"
+                                href="/login?return=my-tickets">login.</p>
+                        <% } else { %>
+
+                            <% } %>
+                </div>
+            </main>
+            <!-- FOOTER -->
+            <%- include('includes/footer.ejs') %>
+                <!-- SCRIPTS-->
+                <%- include('includes/scripts.ejs') %>
+    </body>
+
+    </html>
