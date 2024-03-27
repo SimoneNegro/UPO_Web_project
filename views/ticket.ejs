@@ -14,7 +14,7 @@
                         <% } else { %>
                             <!-- FORM -->
                             <!-- ACTION DA FARE! -->
-                            <form id="new-ticket" action="/" method="post">
+                            <form id="new-ticket" action="/open-ticket" method="post">
                                 <!-- EMAIL FIELD -->
                                 <section class="mb-4">
                                     <label class="bold me-2" for="email">E-mail: </label>
@@ -45,7 +45,7 @@
                                     <div style="margin-top: 0.25rem; text-align: left" id="counter">0</div>
                                 </section>
                                 <!-- SEND TICKET BUTTON -->
-                                <button class="send-button font mb-5" id="sign-in-submit" type="submit">Send
+                                <button class="send-button font mb-5" id="new-ticket" type="submit">Send
                                     ticket</button>
                                 <!-- INCORRECT USERNAME OR PASSWORD ERROR -->
                                 <span class="error-username-password">

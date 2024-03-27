@@ -10,4 +10,19 @@ router.get('/', function (req, res, next) {
     });
 });
 
+router.post('/', function (req, res, next) {
+    let data = new Date();
+
+    db.run('INSERT INTO ticket (descrizione, data_apertura, stato, id_utente, nome_topic) VALUES (?, ?, ?, ?, ?)', [
+        req.body.description, 
+        data,
+        "Open", 
+        req.user.id,
+        req.body.topic
+    ], function (err) {
+        if (err) { return next(err); }
+        return res.redirect('/my-tickets'); 
+    })
+});
+
 module.exports = router;
