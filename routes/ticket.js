@@ -11,7 +11,8 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-    let data = new Date();
+    // get date from epoch
+    let data = Math.floor(new Date().getTime() / 1000.0);
 
     db.run('INSERT INTO ticket (descrizione, data_apertura, stato, id_utente, nome_topic) VALUES (?, ?, ?, ?, ?)', [
         req.body.description,

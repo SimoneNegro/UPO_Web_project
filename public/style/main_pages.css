@@ -72,7 +72,6 @@ footer {
     --light-bg: #d7f8f4;
 
     --button-color: rgb(142, 226, 215);
-
     --button-color-hover: rgb(123, 219, 206);
     
     --on-active-button-color: #449c95;
@@ -83,6 +82,9 @@ footer {
 
     --border-color: #06615667;
     --outline: #0f908139;
+
+    --ticket-color: #f1fffc;
+    --ticket-hover-color: #ecfffb;
 }
 
 .icon-dimension {
@@ -150,6 +152,9 @@ footer {
 #map {
     height: 8rem;
     width: 16rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da; 
+    box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.10);
 }
 
 .area-style {
@@ -198,4 +203,18 @@ footer {
 
 select.decorated option:hover {
     background-color: red !important;
+}
+
+.ticket-container {
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da; 
+    background-color: var(--ticket-color);
+    box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.10);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.ticket-container:hover {
+    box-shadow: 0px 0px 12px 7px rgba(0, 0, 0, .10);
+    background-color: var(--ticket-hover-color);
+    transition: all 500ms ease-out;
 }

@@ -9,8 +9,8 @@
                     <h1 class="mb-4">Open a ticket</h1>
                     <% if (!user) { %>
                         <p class="mb-4">To open a ticket, you must first <a class="link blue-text"
-                            href="/signup?return=open-ticket">register</a> or <a class="link blue-text"
-                            href="/login?return=open-ticket">login.</a></p>
+                                href="/signup?return=open-ticket">register</a> or <a class="link blue-text"
+                                href="/login?return=open-ticket">login.</a></p>
                         <% } else { %>
                             <!-- FORM -->
                             <form id="new-ticket" action="/open-ticket" method="post">
@@ -47,6 +47,7 @@
                                 <button class="send-button font mb-5" id="new-ticket" type="submit">Send
                                     ticket</button>
                                 <!-- INCORRECT USERNAME OR PASSWORD ERROR -->
+                                <!-- DA FARE: CORRETTO INSERIMENTO/ERRORE INSERIMENTO -->
                                 <span class="error-username-password">
                                     <% if (typeof message !=='undefined' && message !=null) { %>
                                         <%= message %>

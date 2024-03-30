@@ -13,14 +13,53 @@
                                 href="/login?return=my-tickets">login.</a></p>
                         <% } else { %>
                             <!-- IF USER HAVE NO TICKET -->
-                            <% if (num_tickets.num_user_ticket == 0) { %>
+                            <% if (num_tickets.num_user_ticket==0) { %>
                                 <p>You don't have any ticket. To open a ticket, go to <a class="link blue-text"
-                                    href="/open-ticket">Open ticket</a>.</p>
+                                        href="/open-ticket">Open ticket</a>.</p>
                                 <!-- IF USER HAVE AT LEAST A ONE TICKET -->
                                 <% } else { %>
-                                    <p>You have ticket!</p>
-                                    <!-- TESTING -->
-                                    <!-- <%= num_tickets.num_user_ticket %> -->
+                                    <!-- TESTING --><!-- <p>You have ticket!</p> <%= num_tickets.num_user_ticket %> -->
+                                    <h4>Open tickets:</h4>
+                                    <section>
+                                        <div class="container text-center pt-2 pb-5 ps-0 pe-3">
+                                            <div class="row justify-content-left ms-0">
+                                                <!-- FOREACH DI OGNI TICKET -->
+                                                <% tickets.forEach(function(ticket) { %>
+                                                    <div class="col-5 text-start me-4 ps-0 mt-4">
+                                                        <div class="container ticket-container ps-4 pe-4">
+                                                            <h5 class="pt-4">TOPIC</h5>
+                                                            <p>
+                                                                <%= ticket.nome_topic %>
+                                                            </p>
+                                                            <h5 class="pt-1">DESCRIPTION</h5>
+                                                            <p>
+                                                                <%= ticket.descrizione %>
+                                                            </p>
+                                                            <h5 class="pt-1">STATUS</h5>
+                                                            <p>
+                                                                <%= ticket.stato %>
+                                                            </p>
+                                                            <h5 class="pt-1">TICKET OPEN DATE</h5>
+                                                            <p>
+                                                                <!-- CONVERT EPOCH DATE INTO HUMAN DATE -->
+                                                                <%= new Date(ticket.data_apertura * 1000).toLocaleString(); %>
+                                                            </p>
+                                                            <h5 class="pt-1">TICKET CLOSE DATE</h5>
+                                                            <p class="pb-3">
+                                                                <% if (ticket.data_chiusura) { %>
+
+                                                                    <%= new Date(ticket.data_apertura * 1000).toLocaleString(); %>
+
+                                                                        <% } else { %>
+                                                                            Not closed yet
+                                                                            <% } %>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <% }); %>
+                                            </div>
+                                        </div>
+                                    </section>
                                     <% } %>
                                         <% } %>
                 </div>
