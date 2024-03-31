@@ -37,6 +37,7 @@ router.post('/', function (req, res, next) {
                     id: this.lastID,
                     username: req.body.username
                 };
+                // generare il token
                 req.login(user, function (err) {
                     if (err) { return next(err); }
                     if (!returnUrl) { return res.redirect('/'); }
