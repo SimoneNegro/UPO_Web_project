@@ -42,13 +42,15 @@
                                                             <h5 class="pt-1">TICKET OPEN DATE</h5>
                                                             <p>
                                                                 <!-- CONVERT EPOCH DATE INTO HUMAN DATE -->
-                                                                <%= new Date(ticket.data_apertura * 1000).toLocaleString(); %>
+                                                                <%= new Date(ticket.data_apertura *
+                                                                    1000).toLocaleString(); %>
                                                             </p>
                                                             <h5 class="pt-1">TICKET CLOSE DATE</h5>
                                                             <p class="pb-3">
                                                                 <% if (ticket.data_chiusura) { %>
 
-                                                                    <%= new Date(ticket.data_apertura * 1000).toLocaleString(); %>
+                                                                    <%= new Date(ticket.data_apertura *
+                                                                        1000).toLocaleString(); %>
 
                                                                         <% } else { %>
                                                                             Not closed yet
