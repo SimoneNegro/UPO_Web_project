@@ -6,6 +6,8 @@ const bcrypt = require('bcrypt');
 const DataBase = require("../db"); // db.js
 const db = new DataBase();
 
+const { generateToken } = require('../public/js/check-auth');
+
 let returnUrl = "";
 
 // signup root
@@ -31,6 +33,9 @@ router.post('/', async function (req, res, next) {
             await db.addNewUser(req.body.email, hash);
 
             const userFound = await db.findUserByEmail(req.body.email);
+
+            await db.addTokenToUser(userFound.id, generateToken(userFound.id));
+
             if (userFound) {
                 var user = {
                     id: userFound.id,

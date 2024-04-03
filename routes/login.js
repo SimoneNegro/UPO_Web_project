@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const DataBase = require("../db"); // db.js
+const db = new DataBase();
+
+const { generateToken } = require('../public/js/check-auth');
 
 let returnUrl = "";
 
@@ -10,7 +14,7 @@ router.get('/', function (req, res, next) {
     // clean error message session
     req.session.errorMessage = null;
     returnUrl = req.query.return;
-    
+
     res.render('login', { message: errorMessage });
 });
 
@@ -22,10 +26,16 @@ router.post('/', function (req, res, next) {
             req.session.errorMessage = 'Email or password are incorrect.';
             return res.redirect('/login');
         }
-        req.login(user, function (err) {
-            if (err) { return next(err); }
-            if (!returnUrl) { return res.redirect('/'); }
-            return res.redirect(returnUrl);
+        req.login(user, async function (err) {
+            try {
+                if (err) { return next(err); }
+                await db.addTokenToUser(user.id, generateToken(user.id));
+                if (!returnUrl) { return res.redirect('/'); }
+                return res.redirect(returnUrl);
+            } catch (err) {
+                console.error("Error:", err);
+                // TODO: handle error
+            }
         });
     })(req, res, next);
 });

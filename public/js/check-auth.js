@@ -1,14 +1,18 @@
-const express = require('express');
-const router = express.Router();
-const db = require('../db');
+const DataBase = require("../../db"); // db.js
+const db = new DataBase();
 
 const jwt = require("jsonwebtoken"); // generate JWT tokens
-const jwt_decode = require("jwt-decode"); // decode JWT token
+// const jwt_decode = require("jwt-decode"); // decode JWT token
 
+function generateToken(user_id) {
+    return jwt.sign(
+        {
+            user_id,
+            iat: Math.floor(new Date().getTime() / 1000)
+        },
+        process.env.TOKEN_KEY,
+        { expiresIn: "1h" }
+    );
+}
 
-// function checkAuthenticated(req, res, next) {
-//     if (req.isAuthenticated()) {
-//         return next();
-//     }
-//     res.redirect("/login");
-// }
+module.exports = { generateToken };

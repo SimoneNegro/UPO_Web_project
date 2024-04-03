@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config(); // load .env file
+}
 const logger = require('morgan');
 const express = require('express');
 const flash = require('connect-flash');

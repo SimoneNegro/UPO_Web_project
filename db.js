@@ -121,6 +121,25 @@ class DataBase {
     }
 
     /**
+     * 
+     * @param {int} user_id User id.
+     * @param {String} token Generated user token.
+     * @returns 
+     */
+    addTokenToUser(user_id, token) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE utente SET token = ? WHERE id = ?`;
+
+            this.open();
+            db.run(sql, [token, user_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    /**
      * Return all topics from database.
      * @returns All topics.
      */
