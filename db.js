@@ -99,6 +99,25 @@ class DataBase {
             this.close();
         });
     }
+
+    /**
+     * Add new user into database.
+     * @param {String} email User email.
+     * @param {String} password User password.
+     */
+    addNewUser(email, password) {
+        return new Promise((resolve, reject) => {
+            const sql = `INSERT INTO utente (email, password, tipo) VALUES (?, ?, ?)`;
+
+            this.open();
+            // insert user type into function to prevent inject attacks
+            db.run(sql, [email, password, "utente"], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
 }
 
 // create new instance of SQLite database
