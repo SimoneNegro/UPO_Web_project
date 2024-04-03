@@ -20,7 +20,7 @@ router.post('/', async function (req, res, next) {
             return res.redirect('/forgot-password?error=email_not_exist');
         }
 
-        // return res.render('/otp');
+        return res.redirect('/otp');
     } catch (err) {
         console.log(err);
     }

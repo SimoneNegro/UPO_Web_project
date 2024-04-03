@@ -15,6 +15,7 @@ const cookiepolicyRouter = require('./routes/cookie_policy');
 const privacypolicyRouter = require('./routes/privacy_policy');
 const ticketRouter = require('./routes/ticket');
 const myTicketsRouter = require('./routes/my_tickets');
+const otpRouter = require('./routes/otp');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -106,6 +107,7 @@ app.use('/cookie-policy', cookiepolicyRouter);
 app.use('/privacy-policy', privacypolicyRouter);
 app.use('/open-ticket', ticketRouter);
 app.use('/my-tickets', myTicketsRouter);
+app.use('/otp', otpRouter);
 
 // Gestione del logout
 app.post('/logout', function (req, res, next) {
