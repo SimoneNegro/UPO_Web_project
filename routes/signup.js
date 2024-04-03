@@ -15,7 +15,7 @@ router.get('/', function (req, res, next) {
     req.session.errorMessage = null;
     returnUrl = req.query.return;
 
-    res.render('signup', { message: errorMessage });
+    return res.render('signup', { message: errorMessage });
 });
 
 // execute users signup

@@ -115,23 +115,6 @@ app.post('/logout', function (req, res, next) {
     });
 });
 
-// DA METTERE IN FORGOT PASSWORD
-// DA FINIRE
-app.post('/forgot-password', async function (mail, done) {
-    try {
-        const user = await db.findUserByEmail(req.body.email);
-    } catch (err) {
-        console.log(err);
-    }
-    
-    db.get('SELECT * FROM utente WHERE email = ?', [req.body.email], function (err, results, fields) {
-        if (err) { return next(err); }
-
-        if (results == undefined) { return res.redirect('/forgot-password?error=email_not_exists'); }
-        // redir to code link
-    });
-});
-
 // error 404 response
 app.use(function (req, res, next) {
     res.status(404).send('<h1>Error 404: Resource not found</h1>');
