@@ -1,4 +1,8 @@
 // function that is used to change password visibility
+/**
+ * Show or hide password field.
+ * @param {*} op 
+ */
 function togglePasswordVisibility(op) {
     const btn = $(op);
     // take previous input element 

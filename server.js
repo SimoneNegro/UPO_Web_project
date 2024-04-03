@@ -20,7 +20,9 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
-const db = require('./db');
+// const db = require('./db');
+const DataBase = require("./db"); // db.js
+const db = new DataBase();
 const session = require('express-session');
 const SQLiteStore = require('connect-sqlite3')(session);
 const path = require('path');
@@ -54,16 +56,25 @@ app.use(passport.session());
 passport.use(new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password'
-}, function (email, password, done) {
-    db.get('SELECT * FROM utente WHERE email = ?', [email], function (err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false); }
+}, async function (email, password, done) {
+    try {
+        const user = await db.findUserByEmail(email);
+        // user not found
+        if (!user) return done(null, false);
+
         bcrypt.compare(password, user.password, function (err, result) {
-            if (err) { return done(err); }
-            if (result) { return done(null, user); }
-            else { return done(null, false); }
+            if (err) return done(err);
+            // password matched
+            if (result) return done(null, user);
+            // password mismatch
+            else return done(null, false);
         });
-    });
+    } catch (err) {
+        // log error
+        console.error("Error finding user by email:", err);
+        // database error
+        return done(err);
+    }
 }));
 
 // user serialization
@@ -72,11 +83,17 @@ passport.serializeUser(function (user, done) {
 });
 
 // user deserialization
-passport.deserializeUser(function (id, done) {
-    db.get('SELECT * FROM utente WHERE id = ?', [id], function (err, user) {
-        if (err) { return done(err); }
+passport.deserializeUser(async function (id, done) {
+    try {
+        const user = await db.findUserById(id);
+        // user found
         done(null, user);
-    });
+    } catch (err) {
+        // log error
+        console.error("Error finding user by id:", err);
+        // pass error to Passport 
+        done(err);
+    }
 });
 
 // routers
@@ -99,7 +116,14 @@ app.post('/logout', function (req, res, next) {
 });
 
 // DA METTERE IN FORGOT PASSWORD
-app.post('/forgot-password', function (req, res, next) {
+// DA FINIRE
+app.post('/forgot-password', async function (mail, done) {
+    try {
+        const user = await db.findUserByEmail(req.body.email);
+    } catch (err) {
+        console.log(err);
+    }
+    
     db.get('SELECT * FROM utente WHERE email = ?', [req.body.email], function (err, results, fields) {
         if (err) { return next(err); }
 
