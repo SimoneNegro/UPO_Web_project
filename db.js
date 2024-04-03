@@ -84,7 +84,7 @@ class DataBase {
 
     /**
      * Return all tickets opened by a specified user.
-     * @param {int} id User id. 
+     * @param {int} id - User id. 
      * @returns All user tickets.
      */
     allUserTicketsByUserId(id) {
@@ -102,8 +102,9 @@ class DataBase {
 
     /**
      * Add new user into database.
-     * @param {String} email User email.
-     * @param {String} password User password.
+     * @param {String} email - User email.
+     * @param {String} password - User password.
+     * @returns Returns true if successful or false if failed.
      */
     addNewUser(email, password) {
         return new Promise((resolve, reject) => {
@@ -112,6 +113,44 @@ class DataBase {
             this.open();
             // insert user type into function to prevent inject attacks
             db.run(sql, [email, password, "utente"], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    /**
+     * Return all topics from database.
+     * @returns All topics.
+     */
+    allTicketTopics() {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT * FROM topic`;
+
+            this.open();
+            db.all(sql, [], (err, rows) => {
+                if (err) throw reject(err);
+                resolve(rows);
+            });
+            this.close();
+        });
+    }
+
+    /**
+     * Add new ticket opened by user.
+     * @param {String} description - Ticket description.
+     * @param {*} data - Ticket open data.
+     * @param {*} user_id - User id.
+     * @param {*} topic - Ticket topic.
+     * @returns Returns true if successful or false if failed.
+     */
+    addNewTicket(description, data, user_id, topic) {
+        return new Promise((resolve, reject) => {
+            const sql = `INSERT INTO ticket (descrizione, data_apertura, stato, id_utente, nome_topic) VALUES (?, ?, ?, ?, ?)`;
+
+            this.open();
+            db.run(sql, [description, data, "Open", user_id, topic], (err, row) => {
                 if (err) throw reject(err);
                 resolve(row);
             });
