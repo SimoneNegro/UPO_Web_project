@@ -4,7 +4,7 @@ const passport = require('passport');
 const DataBase = require("../db"); // db.js
 const db = new DataBase();
 
-const { generateToken } = require('../public/js/check-auth');
+const { generateToken } = require('../public/js/jwt-token');
 
 let returnUrl = "";
 

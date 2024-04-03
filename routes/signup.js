@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 const DataBase = require("../db"); // db.js
 const db = new DataBase();
 
-const { generateToken } = require('../public/js/check-auth');
+const { generateToken } = require('../public/js/jwt-token');
 
 let returnUrl = "";
 
