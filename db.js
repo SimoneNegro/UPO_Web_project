@@ -121,10 +121,10 @@ class DataBase {
     }
 
     /**
-     * 
+     * Add token to the user.
      * @param {int} user_id User id.
      * @param {String} token Generated user token.
-     * @returns 
+     * @returns Returns true if successful or false if failed.
      */
     addTokenToUser(user_id, token) {
         return new Promise((resolve, reject) => {
@@ -132,6 +132,20 @@ class DataBase {
 
             this.open();
             db.run(sql, [token, user_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+
+    getRole(user_id) {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT tipo FROM utente WHERE id = ?`;
+
+            this.open();
+            db.get(sql, [user_id], (err, row) => {
                 if (err) throw reject(err);
                 resolve(row);
             });
