@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config(); // load .env file
+}
 const logger = require('morgan');
 const express = require('express');
 const flash = require('connect-flash');
@@ -15,12 +18,17 @@ const cookiepolicyRouter = require('./routes/cookie_policy');
 const privacypolicyRouter = require('./routes/privacy_policy');
 const ticketRouter = require('./routes/ticket');
 const myTicketsRouter = require('./routes/my_tickets');
+const otpRouter = require('./routes/otp');
+// admin routes
+const adminRouter = require('./routes/admin');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
-const db = require('./db');
+// const db = require('./db');
+const DataBase = require("./db"); // db.js
+const db = new DataBase();
 const session = require('express-session');
 const SQLiteStore = require('connect-sqlite3')(session);
 const path = require('path');
@@ -54,16 +62,25 @@ app.use(passport.session());
 passport.use(new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password'
-}, function (email, password, done) {
-    db.get('SELECT * FROM utente WHERE email = ?', [email], function (err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false); }
+}, async function (email, password, done) {
+    try {
+        const user = await db.findUserByEmail(email);
+        // user not found
+        if (!user) return done(null, false);
+
         bcrypt.compare(password, user.password, function (err, result) {
-            if (err) { return done(err); }
-            if (result) { return done(null, user); }
-            else { return done(null, false); }
+            if (err) return done(err);
+            // password matched
+            if (result) return done(null, user);
+            // password mismatch
+            else return done(null, false);
         });
-    });
+    } catch (err) {
+        // log error
+        console.error("Error finding user by email:", err);
+        // database error
+        return done(err);
+    }
 }));
 
 // user serialization
@@ -72,11 +89,17 @@ passport.serializeUser(function (user, done) {
 });
 
 // user deserialization
-passport.deserializeUser(function (id, done) {
-    db.get('SELECT * FROM utente WHERE id = ?', [id], function (err, user) {
-        if (err) { return done(err); }
+passport.deserializeUser(async function (id, done) {
+    try {
+        const user = await db.findUserById(id);
+        // user found
         done(null, user);
-    });
+    } catch (err) {
+        // log error
+        console.error("Error finding user by id:", err);
+        // pass error to Passport 
+        done(err);
+    }
 });
 
 // routers
@@ -89,22 +112,16 @@ app.use('/cookie-policy', cookiepolicyRouter);
 app.use('/privacy-policy', privacypolicyRouter);
 app.use('/open-ticket', ticketRouter);
 app.use('/my-tickets', myTicketsRouter);
+app.use('/otp', otpRouter);
+
+// admin routes
+app.use('/admin', adminRouter);
 
 // Gestione del logout
 app.post('/logout', function (req, res, next) {
     req.logout(function (err) {
         if (err) { return next(err); }
         res.redirect('/');
-    });
-});
-
-// DA METTERE IN FORGOT PASSWORD
-app.post('/forgot-password', function (req, res, next) {
-    db.get('SELECT * FROM utente WHERE email = ?', [req.body.email], function (err, results, fields) {
-        if (err) { return next(err); }
-
-        if (results == undefined) { return res.redirect('/forgot-password?error=email_not_exists'); }
-        // redir to code link
     });
 });
 

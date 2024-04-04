@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const crypto = require('crypto');
 const bcrypt = require('bcrypt');
-const db = require('../db');
+const DataBase = require("../db"); // db.js
+const db = new DataBase();
+
+const { generateToken } = require('../public/js/jwt-token');
 
 let returnUrl = "";
 
@@ -14,28 +16,29 @@ router.get('/', function (req, res, next) {
     req.session.errorMessage = null;
     returnUrl = req.query.return;
 
-    res.render('signup', { message: errorMessage });
+    return res.render('signup', { message: errorMessage });
 });
 
 // execute users signup
-router.post('/', function (req, res, next) {
-    db.get('SELECT * FROM utente WHERE email = ?', [req.body.email], function (err, results, fields) {
-        if (results != undefined) {
+router.post('/', async function (req, res, next) {
+    try {
+        if (await db.findUserByEmail(req.body.email)) {
             req.session.errorMessage = 'Email already exists.';
             return res.redirect('/signup');
         }
 
-        bcrypt.hash(req.body.password, 10, function (err, hash) {
+        bcrypt.hash(req.body.password, 10, async function (err, hash) {
             if (err) { return next(err); }
-            db.run('INSERT INTO utente (email, password, tipo) VALUES (?, ?, ?)', [
-                req.body.email,
-                hash,
-                "utente"
-            ], function (err) {
-                if (err) { return next(err); }
+            await db.addNewUser(req.body.email, hash);
+
+            const userFound = await db.findUserByEmail(req.body.email);
+
+            await db.addTokenToUser(userFound.id, generateToken(userFound.id));
+
+            if (userFound) {
                 var user = {
-                    id: this.lastID,
-                    username: req.body.username
+                    id: userFound.id,
+                    username: req.body.email
                 };
                 // generare il token
                 req.login(user, function (err) {
@@ -43,9 +46,12 @@ router.post('/', function (req, res, next) {
                     if (!returnUrl) { return res.redirect('/'); }
                     return res.redirect(returnUrl);
                 });
-            });
+            }
         });
-    });
+    } catch (err) {
+        console.error("Error creating new user:", err);
+        // Render an error page or message to the user
+    }
 });
 
 module.exports = router;

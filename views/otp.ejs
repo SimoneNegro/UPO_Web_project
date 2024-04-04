@@ -10,7 +10,7 @@
     <!-- MAIN CONTAINER -->
     <div class="log-container">
         <!-- TITLE -->
-        <h1 class="title margin-bottom">Forgot password</h1>
+        <h1 class="title margin-bottom">Reset password</h1>
         <!-- FORM -->
         <form class="log-form" id="forgot-password" action="/forgot-password" method="post">
             <!-- EMAIL FIELD -->
@@ -18,7 +18,6 @@
                 <label class="bold" for="email">E-mail</label>
                 <input id="email" name="email" type="text" autocomplete="email" placeholder="Type your e-mail" required>
             </section>
-            <input type="hidden" id="otp" name="otp" value="">
             <!-- INCORRECT USERNAME OR PASSWORD ERROR -->
             <span class="error-username-password margin-b">
                 <% if (typeof message !=='undefined' && message !=null) { %>

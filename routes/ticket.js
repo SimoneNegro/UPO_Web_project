@@ -1,29 +1,32 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db');
+const DataBase = require("../db"); // db.js
+const db = new DataBase();
 
 // ticket root
-router.get('/', function (req, res, next) {
-    db.all('SELECT * FROM topic', function (err, row) {
-        if (err) { return done(err); }
-        res.render('ticket', { title: "Open a ticket", user: req.user, topics: row });
-    });
+router.get('/', async function (req, res, next) {
+    try {
+        const topics = await db.allTicketTopics();
+
+        return res.render('ticket', { title: "Open a ticket", user: req.user, topics: topics });
+    } catch (err) {
+        console.error("Error:", err);
+        // TODO: handle error
+    }
 });
 
-router.post('/', function (req, res, next) {
-    // get date from epoch
-    let data = Math.floor(new Date().getTime() / 1000.0);
+router.post('/', async function (req, res, next) {
+    try {
+        // get date from epoch
+        let data = Math.floor(new Date().getTime() / 1000.0);
 
-    db.run('INSERT INTO ticket (descrizione, data_apertura, stato, id_utente, nome_topic) VALUES (?, ?, ?, ?, ?)', [
-        req.body.description,
-        data,
-        "Open",
-        req.user.id,
-        req.body.topic
-    ], function (err) {
-        if (err) { return next(err); }
+        await db.addNewTicket(req.body.description, data, req.user.id, req.body.topic);
         return res.redirect('/my-tickets');
-    })
+        
+    } catch (err) {
+        console.error("Error:", err);
+        // TODO: handle error
+    }
 });
 
 module.exports = router;
