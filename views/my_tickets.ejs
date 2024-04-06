@@ -45,16 +45,9 @@
                                                                 <%= new Date(ticket.data_apertura *
                                                                     1000).toLocaleString(); %>
                                                             </p>
-                                                            <h5 class="pt-1">TICKET CLOSE DATE</h5>
+                                                            <h5 class="pt-1">TICKET ID</h5>
                                                             <p class="pb-3">
-                                                                <% if (ticket.data_chiusura) { %>
-
-                                                                    <%= new Date(ticket.data_apertura *
-                                                                        1000).toLocaleString(); %>
-
-                                                                        <% } else { %>
-                                                                            Not closed yet
-                                                                            <% } %>
+                                                                <%= ticket.id %>
                                                             </p>
                                                         </div>
                                                     </div>

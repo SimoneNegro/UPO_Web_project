@@ -15,7 +15,7 @@ router.get('/', function (req, res, next) {
     req.session.errorMessage = null;
     returnUrl = req.query.return;
 
-    res.render('login', { message: errorMessage });
+    return res.render('login', { message: errorMessage });
 });
 
 // check if user email and password are correct

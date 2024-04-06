@@ -7,10 +7,40 @@
             <main>
                 <div class="container">
                     <h1>View tickets</h1>
-                    <p>Welcome to our helpdesk. Whether you have a technical issue or need assistance, we're here to
-                        help
-                        you.
-                        Please feel free to explore our services and submit a ticket if you need assistance.</p>
+                    <section>
+                        <div class="container text-center pt-2 pb-5 ps-0 pe-3">
+                            <div class="row justify-content-left ms-0">
+                                <!-- FOREACH DI OGNI TICKET -->
+                                <% tickets.forEach(function(ticket) { %>
+                                    <div class="col-5 text-start me-4 ps-0 mt-4">
+                                        <div class="container ticket-container ps-4 pe-4">
+                                            <h5 class="pt-4">TOPIC</h5>
+                                            <p>
+                                                <%= ticket.nome_topic %>
+                                            </p>
+                                            <h5 class="pt-1">DESCRIPTION</h5>
+                                            <p>
+                                                <%= ticket.descrizione %>
+                                            </p>
+                                            <h5 class="pt-1">OPEN DATE TICKET</h5>
+                                            <p>
+                                                <%= new Date(ticket.data_apertura * 1000).toLocaleString(); %>
+                                            </p>
+                                            <form action="/view_tickets" method="post">
+                                                <input class="shadow-box width border" id="ticket_id" name="ticket_id"
+                                                    type="hidden" value=<%=ticket.id %>>
+                                                <section>
+                                                    <!-- SEND TICKET BUTTON -->
+                                                    <button class="send-button font mb-3" type="submit">Manage
+                                                        ticket</button>
+                                                </section>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <% }); %>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </main>
             <!-- FOOTER -->

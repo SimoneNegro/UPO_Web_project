@@ -101,6 +101,45 @@ class DataBase {
     }
 
     /**
+     * Return all tickets with Open status ordered by open date (first opened, more priorities)
+     * @returns All open tickets.
+     */
+    allOpenTickets() {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT * FROM ticket WHERE stato LIKE 'Pending' ORDER BY data_apertura ASC`;
+
+            this.open();
+            db.all(sql, [], (err, rows) => {
+                if (err) throw reject(err);
+                resolve(rows);
+            });
+            this.close();
+        });
+    }
+
+    updateTicketStatus(ticket_id) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE`;
+
+            this.open();
+
+
+            this.close();
+        });
+    }
+
+    manageTicket(ticket_id, staff_id, date) {
+        return new Promise((resolve, reject) => {
+            const sql = `INSERT INTO `;
+
+            this.open();
+
+
+            this.close();
+        });
+    }
+
+    /**
      * Add new user into database.
      * @param {String} email - User email.
      * @param {String} password - User password.
@@ -139,19 +178,18 @@ class DataBase {
         });
     }
 
+    // getRole(user_id) {
+    //     return new Promise((resolve, reject) => {
+    //         const sql = `SELECT tipo FROM utente WHERE id = ?`;
 
-    getRole(user_id) {
-        return new Promise((resolve, reject) => {
-            const sql = `SELECT tipo FROM utente WHERE id = ?`;
-
-            this.open();
-            db.get(sql, [user_id], (err, row) => {
-                if (err) throw reject(err);
-                resolve(row);
-            });
-            this.close();
-        });
-    }
+    //         this.open();
+    //         db.get(sql, [user_id], (err, row) => {
+    //             if (err) throw reject(err);
+    //             resolve(row);
+    //         });
+    //         this.close();
+    //     });
+    // }
 
     /**
      * Return all topics from database.
@@ -183,7 +221,7 @@ class DataBase {
             const sql = `INSERT INTO ticket (descrizione, data_apertura, stato, id_utente, nome_topic) VALUES (?, ?, ?, ?, ?)`;
 
             this.open();
-            db.run(sql, [description, data, "Open", user_id, topic], (err, row) => {
+            db.run(sql, [description, data, "Pending", user_id, topic], (err, row) => {
                 if (err) throw reject(err);
                 resolve(row);
             });
