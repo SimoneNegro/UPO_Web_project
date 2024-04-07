@@ -23,12 +23,17 @@
                                     <% } else { %>
                                         <a class="nav-link link" href="/view_tickets">View tickets</a>
                                         <% } %>
-                                            <% if(title=="Closed Tickets" ) { %>
-                                                <a class="nav-link static-link">Closed tickets</a>
+                                            <% if(title=="Ticket Dashboard" ) { %>
+                                                <a class="nav-link static-link">Ticket dashboard</a>
                                                 <% } else { %>
-                                                    <a class="nav-link link" href="/closed_tickets">Closed tickets</a>
+                                                    <a class="nav-link link" href="/dashboard">Ticket dashboard</a>
                                                     <% } %>
-                                                        <a class="nav-link link">Terza pagina</a>
+                                                        <% if(title=="Closed Tickets" ) { %>
+                                                            <a class="nav-link static-link">Closed tickets</a>
+                                                            <% } else { %>
+                                                                <a class="nav-link link" href="/closed_tickets">Closed
+                                                                    tickets</a>
+                                                                <% } %>
                             </div>
                             <!-- LOG PAGES -->
                             <div class="d-sm-inline-flex gap-4">

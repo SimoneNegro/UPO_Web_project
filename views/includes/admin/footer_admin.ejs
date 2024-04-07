@@ -10,6 +10,11 @@
                         <% } else { %>
                             <a class="link" href="/view_tickets">View tickets</a>
                             <% } %>
+                            <% if(title=="Ticket Dashboard" ) { %>
+                                <a class="static-link">Ticket dashboard</a>
+                                <% } else { %>
+                                    <a class="link" href="/dashboard">Ticket dashboard</a>
+                                    <% } %>
                                 <% if(title=="Closed Tickets" ) { %>
                                     <a class="static-link">Closed tickets</a>
                                     <% } else { %>

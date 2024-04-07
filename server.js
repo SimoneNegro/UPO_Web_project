@@ -23,6 +23,7 @@ const otpRouter = require('./routes/otp');
 const adminRouter = require('./routes/admin');
 const closedTicketsRouter = require('./routes/closed_tickets');
 const viewTicketsRouter = require('./routes/view_tickets');
+const ticketDashboardRouter = require('./routes/dashboard');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -120,6 +121,7 @@ app.use('/otp', otpRouter);
 app.use('/admin', adminRouter);
 app.use('/closed_tickets', closedTicketsRouter);
 app.use('/view_tickets', viewTicketsRouter);
+app.use('/dashboard', ticketDashboardRouter);
 
 // Gestione del logout
 app.post('/logout', function (req, res, next) {
