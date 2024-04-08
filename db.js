@@ -117,24 +117,40 @@ class DataBase {
         });
     }
 
-    updateTicketStatus(ticket_id) {
+    /*
+        TICKET STATUS 
+        New:
+        Pending: new ticket waiting to be managed;
+        WaitingTransfert: waiting to be transferred to another staff member;
+        InProgress: staff member opened the ticket; 
+        Resolved: staff member solved problem;
+        Closed: staff member can't solve this problem;
+        Cancelled: staff member cancelled the ticket because not a real issue.
+    */
+
+
+    updateTicketStatusInProgress(ticket_id) {
         return new Promise((resolve, reject) => {
-            const sql = `UPDATE`;
+            const sql = `UPDATE ticket SET stato='In Progress' WHERE id = ?`;
 
             this.open();
-
-
+            db.run(sql, [ticket_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
             this.close();
         });
     }
 
-    manageTicket(ticket_id, staff_id, date) {
+    manageTicket(staff_id, ticket_id, date) {
         return new Promise((resolve, reject) => {
-            const sql = `INSERT INTO `;
+            const sql = `INSERT INTO gestisce (id_admin, id_ticket, data_gestione_ticket) VALUES (?, ?, ?)`;
 
             this.open();
-
-
+            db.run(sql, [staff_id, ticket_id, date], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
             this.close();
         });
     }

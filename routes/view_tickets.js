@@ -4,6 +4,7 @@ const router = express.Router();
 const DataBase = require("../db"); // db.js
 const db = new DataBase();
 
+// const { userId } = require('../public/js/jwt-token');
 const { isStaff } = require('../public/js/auth');
 
 router.get('/', async function (req, res, next) {
@@ -18,14 +19,17 @@ router.get('/', async function (req, res, next) {
     }
 });
 
-router.post('/', function (req, res, next) {
+router.post('/', async function (req, res, next) {
     if (!isStaff(req)) { return res.redirect('/'); }
-    console.log(req.body.ticket_id);
-    // try {
-
-    // } catch (err) {
-
-    // }
+    try {
+        let data = Math.floor(new Date().getTime() / 1000.0);
+        await db.manageTicket(req.user.id, req.body.ticket_id, data);
+        await db.updateTicketStatusInProgress(req.body.ticket_id);
+        return res.redirect('/dashboard')
+    } catch (err) {
+        console.error("Error:", err);
+        // TODO: handle error
+    }
 });
 
 module.exports = router;
