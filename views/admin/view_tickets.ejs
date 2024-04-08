@@ -8,38 +8,43 @@
                 <div class="container">
                     <h1>View tickets</h1>
                     <section>
-                        <div class="container text-center pt-2 pb-5 ps-0 pe-3">
-                            <div class="row justify-content-left ms-0">
-                                <!-- FOREACH DI OGNI TICKET -->
-                                <% tickets.forEach(function(ticket) { %>
-                                    <div class="col-5 text-start me-4 ps-0 mt-4">
-                                        <div class="container ticket-container ps-4 pe-4">
-                                            <h5 class="pt-4">TOPIC</h5>
-                                            <p>
-                                                <%= ticket.nome_topic %>
-                                            </p>
-                                            <h5 class="pt-1">DESCRIPTION</h5>
-                                            <p>
-                                                <%= ticket.descrizione %>
-                                            </p>
-                                            <h5 class="pt-1">OPEN DATE TICKET</h5>
-                                            <p>
-                                                <%= new Date(ticket.data_apertura * 1000).toLocaleString(); %>
-                                            </p>
-                                            <form action="/view_tickets" method="post">
-                                                <input class="shadow-box width border" id="ticket_id" name="ticket_id"
-                                                    type="hidden" value=<%=ticket.id %>>
-                                                <section>
-                                                    <!-- SEND TICKET BUTTON -->
-                                                    <button class="send-button font mb-3" type="submit">Manage
-                                                        ticket</button>
-                                                </section>
-                                            </form>
-                                        </div>
+                        <% if (num_tickets.num_managed_ticket> 0) { %>
+                            <p>Before to work to another ticket, you must manage your ticket.</p>
+                            <p>Click <a href="/dashboard" class="link blue-text">here</a> to see.</p>
+                            <% } else { %>
+                                <div class="container pt-2 pb-5 ps-0 pe-3">
+                                    <div class="row justify-content-left ms-0">
+                                        <!-- FOREACH DI OGNI TICKET -->
+                                        <% tickets.forEach(function(ticket) { %>
+                                            <div class="col-5 text-start me-4 ps-0 mt-4">
+                                                <div class="container ticket-container ps-4 pe-4">
+                                                    <h5 class="pt-4">ID</h5>
+                                                    <p>
+                                                        <%=ticket.id %>
+                                                    </p>
+                                                    <h5 class="pt-1">STATUS</h5>
+                                                    <p>
+                                                        <%= ticket.stato %>
+                                                    </p>
+                                                    <h5 class="pt-1">OPEN DATE TICKET</h5>
+                                                    <p>
+                                                        <%= new Date(ticket.data_apertura * 1000).toLocaleString(); %>
+                                                    </p>
+                                                    <form action="/view_tickets" method="post">
+                                                        <input class="shadow-box width border" id="ticket_id"
+                                                            name="ticket_id" type="hidden" value=<%=ticket.id %>>
+                                                        <section>
+                                                            <!-- SEND TICKET BUTTON -->
+                                                            <button class="send-button font mb-3" type="submit">Manage
+                                                                ticket</button>
+                                                        </section>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <% }); %>
+                                                <% } %>
                                     </div>
-                                    <% }); %>
-                            </div>
-                        </div>
+                                </div>
                     </section>
                 </div>
             </main>

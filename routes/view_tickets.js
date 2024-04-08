@@ -12,7 +12,8 @@ router.get('/', async function (req, res, next) {
 
     try {
         const tickets = await db.allOpenTickets();
-        return res.render('admin/view_tickets', { title: "View Tickets", user: req.user, tickets: tickets});
+        const num_tickets = await db.numberOfManagedTicket(req.user.id);
+        return res.render('admin/view_tickets', { title: "View Tickets", user: req.user, tickets: tickets, num_tickets: num_tickets });
     } catch (err) {
         console.error("Error:", err);
         // TODO: handle error
@@ -25,7 +26,7 @@ router.post('/', async function (req, res, next) {
         let data = Math.floor(new Date().getTime() / 1000.0);
         await db.manageTicket(req.user.id, req.body.ticket_id, data);
         await db.updateTicketStatusInProgress(req.body.ticket_id);
-        return res.redirect('/dashboard')
+        return res.redirect('/dashboard');
     } catch (err) {
         console.error("Error:", err);
         // TODO: handle error

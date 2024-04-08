@@ -106,7 +106,7 @@ class DataBase {
      */
     allOpenTickets() {
         return new Promise((resolve, reject) => {
-            const sql = `SELECT * FROM ticket WHERE stato LIKE 'Pending' ORDER BY data_apertura ASC`;
+            const sql = `SELECT * FROM ticket WHERE stato LIKE 'Pending' OR stato LIKE 'Waiting Transfert' ORDER BY data_apertura ASC`;
 
             this.open();
             db.all(sql, [], (err, rows) => {
@@ -117,18 +117,21 @@ class DataBase {
         });
     }
 
-    /*
-        TICKET STATUS 
+    /* TICKET STATUS 
         New:
         Pending: new ticket waiting to be managed;
-        WaitingTransfert: waiting to be transferred to another staff member;
-        InProgress: staff member opened the ticket; 
+        Waiting Transfert: waiting to be transferred to another staff member;
+        In Progress: staff member opened the ticket; 
         Resolved: staff member solved problem;
         Closed: staff member can't solve this problem;
         Cancelled: staff member cancelled the ticket because not a real issue.
     */
 
-
+    /**
+     * Update ticket status to "In Progress".
+     * @param {id} ticket_id Ticket id.
+     * @returns Returns true if successful or false if failed.
+     */
     updateTicketStatusInProgress(ticket_id) {
         return new Promise((resolve, reject) => {
             const sql = `UPDATE ticket SET stato='In Progress' WHERE id = ?`;
@@ -142,12 +145,32 @@ class DataBase {
         });
     }
 
+    /**
+     * Create a row where is used to see who is currently working on the ticket.
+     * @param {int} staff_id Staff id.
+     * @param {int} ticket_id Ticket id.
+     * @param {int} date Manage ticket date:
+     * @returns Returns true if successful or false if failed.
+     */
     manageTicket(staff_id, ticket_id, date) {
         return new Promise((resolve, reject) => {
             const sql = `INSERT INTO gestisce (id_admin, id_ticket, data_gestione_ticket) VALUES (?, ?, ?)`;
 
             this.open();
             db.run(sql, [staff_id, ticket_id, date], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    numberOfManagedTicket(staff_id) {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT COUNT(*) num_managed_ticket FROM gestisce g INNER JOIN ticket t ON g.id_ticket=t.id WHERE g.id_admin = ? AND t.stato='In Progress'`;
+
+            this.open();
+            db.get(sql, [staff_id], (err, row) => {
                 if (err) throw reject(err);
                 resolve(row);
             });
