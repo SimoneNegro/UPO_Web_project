@@ -127,4 +127,4 @@ dist
 .pnp.*
 
 # database
-# databases/helpdesk.db
+databases/helpdesk.db
