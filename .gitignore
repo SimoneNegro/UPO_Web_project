@@ -127,4 +127,5 @@ dist
 .pnp.*
 
 # database
-databases/.db
+/databases/*.db
+databases/*.db
