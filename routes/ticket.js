@@ -22,7 +22,6 @@ router.post('/', async function (req, res, next) {
 
         await db.addNewTicket(req.body.description, data, req.user.id, req.body.topic);
         return res.redirect('/my-tickets');
-        
     } catch (err) {
         console.error("Error:", err);
         // TODO: handle error
