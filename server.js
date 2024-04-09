@@ -49,7 +49,7 @@ app.set('view engine', 'ejs');
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 
 // sessione configuration
 app.use(session({
@@ -126,7 +126,9 @@ app.use('/dashboard', ticketDashboardRouter);
 // Gestione del logout
 app.post('/logout', function (req, res, next) {
     req.logout(function (err) {
-        if (err) { return next(err); }
+        if (err) {
+            return next(err);
+        }
         res.redirect('/');
     });
 });
