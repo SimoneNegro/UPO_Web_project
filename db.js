@@ -118,7 +118,7 @@ class DataBase {
             const sql = `SELECT *
                          FROM ticket
                          WHERE stato LIKE 'Pending'
-                            OR stato LIKE 'Waiting Transfert'
+                            OR stato LIKE 'Waiting Transfer'
                          ORDER BY data_apertura ASC`;
 
             this.open();
@@ -133,7 +133,7 @@ class DataBase {
     /* TICKET STATUS 
         New:
         Pending: new ticket waiting to be managed;
-        Waiting Transfert: waiting to be transferred to another staff member;
+        Waiting Transfer: waiting to be transferred to another staff member;
         In Progress: staff member opened the ticket; 
         Resolved: staff member solved problem;
         Closed: staff member can't solve this problem;
@@ -153,6 +153,107 @@ class DataBase {
 
             this.open();
             db.run(sql, [ticket_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    /**
+     * Update ticket status to "Waiting Transfer".
+     * @param {int} ticket_id Ticket id.
+     * @returns Returns true if successful or false if failed.
+     */
+    updateTicketStatusWaitingTransfer(ticket_id) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE ticket
+                         SET stato='Waiting Transfer'
+                         WHERE id = ?`;
+
+            this.open();
+            db.run(sql, [ticket_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    /**
+     * Update ticket status to "Resolved".
+     * @param {int} ticket_id Ticket id.
+     * @returns Returns true if successful or false if failed.
+     */
+    updateTicketStatusSolved(ticket_id) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE ticket
+                         SET stato='Resolved'
+                         WHERE id = ?`;
+
+            this.open();
+            db.run(sql, [ticket_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    /**
+     * Update ticket status to "Closed".
+     * @param {int} ticket_id Ticket id.
+     * @returns Returns true if successful or false if failed.
+     */
+    updateTicketStatusClosed(ticket_id) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE ticket
+                         SET stato='Closed'
+                         WHERE id = ?`;
+
+            this.open();
+            db.run(sql, [ticket_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    /**
+     * Update ticket status to "Cancelled".
+     * @param {int} ticket_id Ticket id.
+     * @returns Returns true if successful or false if failed.
+     */
+    updateTicketStatusCancelled(ticket_id) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE ticket
+                         SET stato='Cancelled'
+                         WHERE id = ?`;
+
+            this.open();
+            db.run(sql, [ticket_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    /**
+     * Update closing date ticket.
+     * @param {int} ticket_id Ticket id.
+     * @param {int} data Close ticket date.
+     * @returns {Promise<unknown>} Returns true if successful or false if failed.
+     */
+    updateCloseDateTicket(ticket_id, data) {
+        return new Promise((resolve, reject) => {
+           const sql = `UPDATE ticket
+                        SET chiusura_ticket = ?
+                        WHERE id = ?`;
+
+            this.open();
+            db.run(sql, [data, ticket_id], (err, row) => {
                 if (err) throw reject(err);
                 resolve(row);
             });
