@@ -128,3 +128,5 @@ dist
 
 # database
 databases/helpdesk.db
+
+databases/
