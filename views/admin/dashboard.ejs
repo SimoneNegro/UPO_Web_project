@@ -1,27 +1,41 @@
 <%- include('../includes/head.ejs') %>
 
-    <body>
-        <!-- HEADER -->
-        <%- include('../includes/admin/header_admin.ejs') %>
-            <!-- CONTENT -->
-            <main>
-                <div class="container">
-                    <h1>Ticket dashboard</h1>
-                    <section>
-                        <% if (num_tickets.num_managed_ticket==0) { %>
-                            <!-- LINK TO PAGE -->
-                            <p>Link page</p>
-                            <% } else { %>
-                                <!-- SEE TICKET AND OPERATION -->
-                                <p>Show possible ticket action</p>
-                                <% } %>
-                    </section>
-                </div>
-            </main>
-            <!-- FOOTER -->
-            <%- include('../includes/admin/footer_admin.ejs') %>
-                <!-- SCRIPTS-->
-                <%- include('../includes/scripts.ejs') %>
-    </body>
+<body>
+<!-- HEADER -->
+<%- include('../includes/admin/header_admin.ejs') %>
+<!-- CONTENT -->
+<main>
+    <div class="container">
+        <h1>Ticket dashboard</h1>
+        <section>
+            <% if (num_tickets.num_managed_ticket === 0) { %>
+                <!-- LINK TO PAGE -->
+                <p>To see the ticket, you must first manage one.</p>
+                <p>Click <a class="link blue-text" href="/view_tickets">here</a> to see.</p>
+            <% } else { %>
+                <!-- SEE TICKET AND OPERATION -->
+                <section>
+                    <div class="col-sm-6">
+                        <div class="container ticket-container">
+                            <h5 class="pt-3">TICKET ID</h5>
+                            <p><%= managed_ticket.id %></p>
+                            <h5>TOPIC</h5>
+                            <p><%= managed_ticket.nome_topic %></p>
+                            <h5>DESCRIPTION</h5>
+                            <p><%= managed_ticket.descrizione %></p>
+                            <h5>USER E-MAIL</h5>
+                            <p><%= managed_ticket.email %></p>
+                        </div>
+                    </div>
+                </section>
+            <% } %>
+        </section>
+    </div>
+</main>
+<!-- FOOTER -->
+<%- include('../includes/admin/footer_admin.ejs') %>
+<!-- SCRIPTS-->
+<%- include('../includes/scripts.ejs') %>
+</body>
 
-    </html>
+</html>

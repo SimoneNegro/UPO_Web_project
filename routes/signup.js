@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const DataBase = require("../db"); // db.js
 const db = new DataBase();
 
-const { generateToken } = require('../public/js/jwt-token');
+const {generateToken} = require('../public/js/jwt-token');
 
 let returnUrl = "";
 
@@ -16,7 +16,7 @@ router.get('/', function (req, res, next) {
     req.session.errorMessage = null;
     returnUrl = req.query.return;
 
-    return res.render('signup', { message: errorMessage });
+    return res.render('signup', {message: errorMessage});
 });
 
 // execute users signup
@@ -28,7 +28,9 @@ router.post('/', async function (req, res, next) {
         }
 
         bcrypt.hash(req.body.password, 10, async function (err, hash) {
-            if (err) { return next(err); }
+            if (err) {
+                return next(err);
+            }
             await db.addNewUser(req.body.email, hash);
 
             const userFound = await db.findUserByEmail(req.body.email);
@@ -42,8 +44,12 @@ router.post('/', async function (req, res, next) {
                 };
                 // generare il token
                 req.login(user, function (err) {
-                    if (err) { return next(err); }
-                    if (!returnUrl) { return res.redirect('/'); }
+                    if (err) {
+                        return next(err);
+                    }
+                    if (!returnUrl) {
+                        return res.redirect('/');
+                    }
                     return res.redirect(returnUrl);
                 });
             }

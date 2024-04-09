@@ -24,7 +24,7 @@ router.post('/', async function (req, res, next) {
     if (!isStaff(req)) { return res.redirect('/'); }
     try {
         let data = Math.floor(new Date().getTime() / 1000.0);
-        await db.manageTicket(req.user.id, req.body.ticket_id, data);
+        await db.addManageTicket(req.user.id, req.body.ticket_id, data);
         await db.updateTicketStatusInProgress(req.body.ticket_id);
         return res.redirect('/dashboard');
     } catch (err) {
