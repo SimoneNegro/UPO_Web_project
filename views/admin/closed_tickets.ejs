@@ -1,22 +1,108 @@
 <%- include('../includes/head.ejs') %>
 
-    <body>
-        <!-- HEADER -->
-        <%- include('../includes/admin/header_admin.ejs') %>
-            <!-- CONTENT -->
-            <main>
-                <div class="container">
-                    <h1>Closed tickets</h1>
-                    <p>Welcome to our helpdesk. Whether you have a technical issue or need assistance, we're here to
-                        help
-                        you.
-                        Please feel free to explore our services and submit a ticket if you need assistance.</p>
+<body>
+<!-- HEADER -->
+<%- include('../includes/admin/header_admin.ejs') %>
+<!-- CONTENT -->
+<main>
+    <div class="container">
+        <h1>Closed tickets</h1>
+        <% if (num_closed_tickets.closed_tickets === 0) { %>
+            <!-- LINK TO PAGE -->
+            <p>To see the ticket, you must first manage one.</p>
+            <p>Click <a class="link blue-text" href="/view_tickets">here</a> to see.</p>
+        <% } else { %>
+            <h4>SOLVED TICKETS</h4>
+            <% if (resolved_tickets.length === 0) { %>
+                <p>There's no solved tickets.</p>
+            <% } else { %>
+            <div class="container pb-4 ps-0 pe-3">
+                <div class="row justify-content-left ms-0">
+                    <!-- FOREACH DI OGNI TICKET -->
+                    <% resolved_tickets.forEach(function(ticket) { %>
+                        <div class="col-sm text-start me-4 ps-0 mt-2">
+                            <div class="container ticket-container ps-4 pe-4">
+                                <h5 class="pt-3">TICKET ID</h5>
+                                <p>
+                                    <%= ticket.id_ticket %>
+                                </p>
+                                <h5>USER ID</h5>
+                                <p>
+                                    <%= ticket.id_utente %>
+                                </p>
+                                <h5>CLOSED TICKET DATE</h5>
+                                <p>
+                                    <%= new Date(ticket.chiusura_ticket * 1000).toLocaleString(); %>
+                                </p>
+                            </div>
+                        </div>
+                    <% }); %>
+                    <% } %>
                 </div>
-            </main>
-            <!-- FOOTER -->
-            <%- include('../includes/admin/footer_admin.ejs') %>
-                <!-- SCRIPTS-->
-                <%- include('../includes/scripts.ejs') %>
-    </body>
+            </div>
+            <h4>CLOSED TICKETS</h4>
+            <% if (closed_tickets.length === 0) { %>
+                <p>There's no closed tickets.</p>
+            <% } else { %>
+            <div class="container pb-4 ps-0 pe-3">
+                <div class="row justify-content-left ms-0">
+                    <!-- FOREACH DI OGNI TICKET -->
+                    <% closed_tickets.forEach(function(ticket) { %>
+                        <div class="col-sm text-start me-4 ps-0 mt-2">
+                            <div class="container ticket-container ps-4 pe-4">
+                                <h5 class="pt-3">TICKET ID</h5>
+                                <p>
+                                    <%= ticket.id_ticket %>
+                                </p>
+                                <h5>USER ID</h5>
+                                <p>
+                                    <%= ticket.id_utente %>
+                                </p>
+                                <h5>CLOSED TICKET DATE</h5>
+                                <p>
+                                    <%= new Date(ticket.chiusura_ticket * 1000).toLocaleString(); %>
+                                </p>
+                            </div>
+                        </div>
+                    <% }); %>
+                    <% } %>
+                </div>
+            </div>
+            <h4>CANCELLED TICKETS</h4>
+            <% if (cancelled_tickets.length === 0) { %>
+                <p>There's no cancelled tickets.</p>
+            <% } else { %>
+            <div class="container pb-4 ps-0 pe-3">
+                <div class="row justify-content-left ms-0">
+                    <!-- FOREACH DI OGNI TICKET -->
+                    <% cancelled_tickets.forEach(function(ticket) { %>
+                        <div class="col-sm text-start me-4 ps-0 mt-2">
+                            <div class="container ticket-container ps-4 pe-4">
+                                <h5 class="pt-3">TICKET ID</h5>
+                                <p>
+                                    <%= ticket.id_ticket %>
+                                </p>
+                                <h5>USER ID</h5>
+                                <p>
+                                    <%= ticket.id_utente %>
+                                </p>
+                                <h5>CLOSED TICKET DATE</h5>
+                                <p>
+                                    <%= new Date(ticket.chiusura_ticket * 1000).toLocaleString(); %>
+                                </p>
+                            </div>
+                        </div>
+                    <% }); %>
+                    <% } %>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</main>
+<!-- FOOTER -->
+<%- include('../includes/admin/footer_admin.ejs') %>
+<!-- SCRIPTS-->
+<%- include('../includes/scripts.ejs') %>
+</body>
 
-    </html>
+</html>

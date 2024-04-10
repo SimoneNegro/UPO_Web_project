@@ -305,6 +305,90 @@ class DataBase {
     }
 
     /**
+     * Return all 'Resolved' tickets made by staff user.
+     * @param {int} staff_id Staff id.
+     * @returns {Promise<unknown>}
+     */
+    resolvedTickets(staff_id) {
+        return new Promise((resolve, reject) => {
+           const sql =  `SELECT g.id_ticket, t.id_utente, t.chiusura_ticket
+                         FROM gestisce g
+                                  INNER JOIN ticket t ON g.id_ticket = t.id
+                         WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ? AND t.stato = 'Resolved'`;
+
+           this.open();
+           db.all(sql, [staff_id], (err, row) => {
+               if (err) throw reject(err);
+               resolve(row);
+           });
+           this.close();
+        });
+    }
+
+    /**
+     * Return all 'Closed' tickets made by staff user.
+     * @param {int} staff_id Staff id.
+     * @returns {Promise<unknown>}
+     */
+    closedTickets(staff_id) {
+        return new Promise((resolve, reject) => {
+            const sql =  `SELECT g.id_ticket, t.id_utente, t.chiusura_ticket
+                         FROM gestisce g
+                                  INNER JOIN ticket t ON g.id_ticket = t.id
+                         WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ? AND t.stato = 'Closed'`;
+
+            this.open();
+            db.all(sql, [staff_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    /**
+     * Return all 'Cancelled' tickets made by staff user.
+     * @param {int} staff_id Staff id.
+     * @returns {Promise<unknown>}
+     */
+    cancelledTickets(staff_id) {
+        return new Promise((resolve, reject) => {
+            const sql =  `SELECT g.id_ticket, t.id_utente, t.chiusura_ticket
+                          FROM gestisce g
+                                   INNER JOIN ticket t ON g.id_ticket = t.id
+                          WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ? AND t.stato = 'Cancelled'`;
+
+            this.open();
+            db.all(sql, [staff_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    /**
+     * Count the number of tickets closed by a staff user.
+     * @param {int} staff_id Staff id.
+     * @returns {Promise<unknown>} Number of closed tickets.
+     */
+    numberOfClosedTickets(staff_id) {
+        return new Promise((resolve, reject) => {
+           const sql = `SELECT COUNT(*) AS closed_tickets
+                        FROM gestisce g
+                                 INNER JOIN ticket t ON g.id_ticket = t.id
+                        WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ?`;
+
+           this.open();
+           db.get(sql, [staff_id], (err, row) => {
+               if (err) throw reject(err);
+               resolve(row);
+           });
+           this.close();
+        });
+    }
+
+    /**
      * Count the number of ticket managed by a staff user.
      * @param {int} staff_id Staff id.
      * @returns {Promise<unknown>} Number of managed ticket.
