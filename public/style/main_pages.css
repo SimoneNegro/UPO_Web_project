@@ -218,3 +218,7 @@ select.decorated option:hover {
     background-color: var(--ticket-hover-color);
     transition: all 500ms ease-out;
 }
+
+.pie-dimension {
+    height: 10rem;
+}

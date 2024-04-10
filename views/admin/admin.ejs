@@ -1,20 +1,25 @@
 <%- include('../includes/head.ejs') %>
 
-    <body>
-        <!-- HEADER -->
-        <%- include('../includes/admin/header_admin.ejs') %>
-            <!-- CONTENT -->
-            <main>
-                <div class="container">
-                    <h1>Bentornato <%= user.email %>!</h1>
-                    <p>Click <a class="link blue-text" href="/view_tickets">here</a> to start.</p>
-                    <h4>Dashboard</h4>
-                </div>
-            </main>
-            <!-- FOOTER -->
-            <%- include('../includes/admin/footer_admin.ejs') %>
-                <!-- SCRIPTS-->
-                <%- include('../includes/scripts.ejs') %>
-    </body>
+<body>
+<!-- HEADER -->
+<%- include('../includes/admin/header_admin.ejs') %>
+<!-- CONTENT -->
+<main>
+    <div class="container">
+        <h1>Bentornato <%= user.email %>!</h1>
+        <p>Click <a class="link blue-text" href="/view_tickets">here</a> to start.</p>
+        <h3>Dashboard</h3>
+        <div class="container pb-3">
+            <div class="col-sm-5">
+                <canvas id="myChart" class="pie-dimension"></canvas>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- FOOTER -->
+<%- include('../includes/admin/footer_admin.ejs') %>
+<!-- SCRIPTS-->
+<%- include('../includes/scripts.ejs') %>
+</body>
 
-    </html>
+</html>
