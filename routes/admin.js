@@ -6,16 +6,23 @@ const db = new DataBase();
 
 const {isStaff} = require('../public/js/auth');
 
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
     if (!isStaff(req)) {
         return res.redirect('/');
     }
 
-    return res.render('admin/admin', {title: "Staff panel", user: req.user});
+    try {
+        return res.render('admin/admin', {title: "Staff panel", user: req.user});
+    } catch (err) {
+        console.error("Error:", err);
+        // TODO: handle error
+    }
 });
 
 router.get('/chartdata', async function (req, res, next) {
-    if(!req.user) {return res.status(401).json();}
+    if (!req.user) {
+        return res.status(401).json();
+    }
     try {
         const results = await db.numClosedTicketsByStatusByStaffUser(req.user.id);
         // console.log(results);
@@ -61,6 +68,65 @@ router.get('/chartdata', async function (req, res, next) {
         };
         // console.log(chartData);
         res.status(200).json(chartData);
+    } catch (err) {
+        console.error("Error:", err);
+        // TODO: handle error
+    }
+});
+
+router.get('/linechartpermonth', async function (req, res, next) {
+    if (!req.user) {
+        return res.status(401).json();
+    }
+    try {
+        const tickets = await db.closedTicketsLastMonthByStaffUser(req.user.id);
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const monthCounts = new Map();
+        let maxValue = 0;
+        tickets.forEach((ticket) => {
+            const monthIndex = ticket.month - 1;
+            monthCounts.set(monthIndex, ticket.num_closed_tickets);
+            if(ticket.num_closed_tickets > maxValue) {
+                maxValue = ticket.num_closed_tickets;
+            }
+        });
+
+        const data = {
+            labels: months,
+            datasets: [
+                {
+                    label: 'Closed tickets',
+                    data: months.map((monthLabel, index) => monthCounts.get(index) || 0),
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    pointStyle: 'rectRounded',
+                    pointRadius: 5,
+                    pointHoverRadius: 10
+                }
+            ]
+        };
+
+        const lineChartPerMonth = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Number of closed tickets',
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 0,
+                        max: maxValue + 2,
+                    }
+                }
+            },
+        };
+
+        res.status(200).json(lineChartPerMonth);
     } catch (err) {
         console.error("Error:", err);
         // TODO: handle error
