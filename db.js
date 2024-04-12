@@ -388,6 +388,40 @@ class DataBase {
         });
     }
 
+    numClosedTicketsByStatusByStaffUser(staff_id) {
+        return new Promise((resolve, reject) => {
+           const sql =  `SELECT t.stato, COUNT(*) AS closed_tickets
+                         FROM gestisce g
+                                  INNER JOIN ticket t ON g.id_ticket = t.id
+                         WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ?
+                         GROUP BY t.stato`;
+           this.open();
+           db.all(sql, [staff_id], (err, row) => {
+               if (err) throw reject(err);
+               resolve(row);
+           });
+           this.close();
+        });
+    }
+
+    closedTicketsLastMonthByStaffUser(staff_id) {
+        return new Promise((resolve, reject) => {
+           const sql =  `SELECT strftime('%m', datetime(t.chiusura_ticket, 'unixepoch')) AS month, COUNT(*) AS num_closed_tickets
+                         FROM gestisce g
+                             INNER JOIN ticket t
+                         ON g.id_ticket = t.id
+                         WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ?
+                         GROUP BY month`;
+
+           this.open();
+            db.all(sql, [staff_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
     /**
      * Count the number of ticket managed by a staff user.
      * @param {int} staff_id Staff id.
