@@ -1,22 +1,81 @@
 <%- include('includes/head.ejs') %>
 
-    <body>
-        <!-- HEADER -->
-        <%- include('includes/header.ejs') %>
-            <!-- CONTENT -->
-            <main>
-                <div class="container">
-                    <h1>Get Help Here</h1>
-                    <p>Welcome to our helpdesk. Whether you have a technical issue or need assistance, we're here to
-                        help
-                        you.
-                        Please feel free to explore our services and submit a ticket if you need assistance.</p>
+<body>
+<!-- HEADER -->
+<%- include('includes/header.ejs') %>
+<!-- CONTENT -->
+<main>
+    <div class="container">
+        <section class="text-center">
+            <h1 class="color-blue">NGR - New Generation Resolution</h1>
+            <p>
+                Welcome to our helpdesk. Whether you have a technical issue or need assistance, we're here to
+                help
+                you.
+                Please feel free to explore our services and submit a ticket if you need assistance.
+            </p>
+        </section>
+        <section class="py-3">
+            <h2 class="mb-4 text-center">Helpdesk Features</h2>
+            <div class="row justify-content-center">
+                <div class="col-sm-5 d-flex align-items-stretch">
+                    <div class="card mb-4 shadow">
+                        <div class="card-header blue-bg pt-3">
+                            <h5 class="card-title">24/7 Support</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Our team is available around the clock to assist you with any technical
+                                issues or questions you may have.</p>
+                        </div>
+                    </div>
                 </div>
-            </main>
-            <!-- FOOTER -->
-            <%- include('includes/footer.ejs') %>
-                <!-- SCRIPTS-->
-                <%- include('includes/scripts.ejs') %>
-    </body>
 
-    </html>
+                <div class="col-sm-5 d-flex align-items-stretch">
+                    <div class="card mb-4 shadow">
+                        <div class="card-header blue-bg pt-3">
+                            <h5 class="card-title">Multi-Channel Support</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">We offer a variety of support channels to suit your needs, including
+                                phone, email,
+                                live chat, and self-service knowledge base.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-5 d-flex align-items-stretch">
+                    <div class="card mb-4 shadow">
+                        <div class="card-header blue-bg pt-3">
+                            <h5 class="card-title">Remote Troubleshooting</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Our experienced technicians can remotely access your device to diagnose
+                                and
+                                resolve issues quickly and efficiently.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-5 d-flex align-items-stretch">
+                    <div class="card mb-4 shadow">
+                        <div class="card-header blue-bg pt-3">
+                            <h5 class="card-title">Proactive Support</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">We monitor your systems for potential issues and proactively reach out
+                                to you to
+                                prevent downtime and ensure optimal performance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+<!-- FOOTER -->
+<%- include('includes/footer.ejs') %>
+<!-- SCRIPTS-->
+<%- include('includes/scripts.ejs') %>
+</body>
+
+</html>
