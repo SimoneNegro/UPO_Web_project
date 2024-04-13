@@ -5,6 +5,8 @@ const db = new DataBase();
 
 // ticket root
 router.get('/', async function (req, res, next) {
+    // ADD IS NOT IN STAFF ROUTING
+
     try {
         const topics = await db.allTicketTopics();
 
