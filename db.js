@@ -311,9 +311,10 @@ class DataBase {
      */
     resolvedTickets(staff_id) {
         return new Promise((resolve, reject) => {
-           const sql =  `SELECT g.id_ticket, t.id_utente, t.chiusura_ticket
+           const sql =  `SELECT g.id_ticket, u.email, t.chiusura_ticket
                          FROM gestisce g
                                   INNER JOIN ticket t ON g.id_ticket = t.id
+                                  INNER JOIN utente u ON u.id = t.id_utente
                          WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ? AND t.stato = 'Resolved'`;
 
            this.open();
@@ -332,9 +333,10 @@ class DataBase {
      */
     closedTickets(staff_id) {
         return new Promise((resolve, reject) => {
-            const sql =  `SELECT g.id_ticket, t.id_utente, t.chiusura_ticket
+            const sql =  `SELECT g.id_ticket, u.email, t.chiusura_ticket
                          FROM gestisce g
                                   INNER JOIN ticket t ON g.id_ticket = t.id
+                                  INNER JOIN utente u ON u.id = t.id_utente
                          WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ? AND t.stato = 'Closed'`;
 
             this.open();
@@ -353,9 +355,10 @@ class DataBase {
      */
     cancelledTickets(staff_id) {
         return new Promise((resolve, reject) => {
-            const sql =  `SELECT g.id_ticket, t.id_utente, t.chiusura_ticket
+            const sql =  `SELECT g.id_ticket, u.email, t.chiusura_ticket
                           FROM gestisce g
                                    INNER JOIN ticket t ON g.id_ticket = t.id
+                                   INNER JOIN utente u ON u.id = t.id_utente
                           WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ? AND t.stato = 'Cancelled'`;
 
             this.open();
