@@ -97,6 +97,7 @@ footer {
 
     --static-link-color: #08baa3;
     --error-color: red;
+    --check-color: #19bd19;
 
     --border-color: #06615667;
     --outline: #0f908139;
@@ -247,4 +248,12 @@ select.decorated option:hover {
 
 .in-w {
     width: 20rem;
+}
+
+.error {
+    color: var(--error-color);
+}
+
+.check {
+    color: var(--check-color);
 }

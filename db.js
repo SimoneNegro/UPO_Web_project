@@ -370,6 +370,23 @@ class DataBase {
         });
     }
 
+    closedTicketByMailUser(staff_id, user_mail) {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT g.id_ticket, u.email, t.chiusura_ticket, t.stato
+                          FROM gestisce g
+                                   INNER JOIN ticket t ON g.id_ticket = t.id
+                                   INNER JOIN utente u ON u.id = t.id_utente
+                          WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ? AND (t.stato = 'Cancelled' OR t.stato = 'Closed' OR t.stato = 'Resolved') AND u.email = ?`;
+
+            this.open();
+            db.all(sql, [staff_id, user_mail], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
     /**
      * Count the number of tickets closed by a staff user.
      * @param {int} staff_id Staff id.
