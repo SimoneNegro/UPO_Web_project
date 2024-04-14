@@ -85,7 +85,7 @@ footer {
     --tertiary: #3963b3;
     --fourth: #90e5dd;
     --primary-color: #1aa398;
-    --secondary-color: #118a80;
+    --secondary-color: rgb(17, 138, 128);
     /*--light-bg: #d7f8f4;*/
     --light-bg: var(--primary);
 
@@ -243,4 +243,8 @@ select.decorated option:hover {
 
 .width-container {
     width: 15rem;
+}
+
+.in-w {
+    width: 20rem;
 }

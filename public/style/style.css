@@ -11,8 +11,13 @@ MAIN
 }
 
 .log-background {
-    background-color: #d7f8f4;
+    background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
 }
+
+h1, h2, h3, h4, h5, span {
+    color: var(--tertiary-color) !important;
+}
+
 
 .page-header {
     background-color: var(--light-bg);
@@ -241,27 +246,12 @@ GENERAL
 ROOT
 ================================================================= */
 :root {
-    --primary-color: #1aa398;
-    --secondary-color: #118a80;
+    --primary-color: #eef6fd;
+    --secondary-color: #90e5dd;
+    --tertiary-color: #170763;
     --button-color: #1aa398;
     --light-bg: #d7f8f4;
     --on-active-button-color: #118a80;
     --on-over-link-color: #118a80;
     --error-color: red;
-}
-
-
-
-
-.navbar {
-    background-color: #333;
-    color: #fff;
-    display: flex;
-    justify-content: space-around;
-    padding: 20px 0;
-}
-
-.header-block,
-.footer-block {
-    padding: 5px 10px;
 }
