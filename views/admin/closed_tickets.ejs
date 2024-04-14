@@ -12,6 +12,53 @@
             <p>To see the ticket, you must first manage one.</p>
             <p>Click <a class="link blue-text" href="/view_tickets">here</a> to see.</p>
         <% } else { %>
+            <!-- SEARCH TICKETS -->
+            <section>
+                <div class="container ms-0 ps-0 mb-3">
+                    <form action="/closed_tickets" method="get">
+                        <label class="bold me-2" for="email">Search ticket by user email: </label>
+                        <input class="shadow-box border in-w me-2" id="email" name="email" type="text" autocomplete="email"
+                               required>
+                        <input class="send-button ms-2" name="operation_type" type="submit" value="Search tickets"
+                               title="Search ticket by user email.">
+                    </form>
+                    <% if (searched_tickets !== undefined) { %>
+                        <% if (searched_tickets.length === 0) { %>
+                            <p class="error">No tickets found.<%= searched_tickets %> </p>
+                        <% } else { %>
+                            <p class="check">Tickets found: <%= searched_tickets.length %></p>
+                            <div class="container pb-4 ps-0 pe-3">
+                                <div class="row justify-content-left ms-0">
+                                    <!-- FOREACH DI OGNI TICKET -->
+                                    <% searched_tickets.forEach(function(ticket) { %>
+                                        <div class="col-sm text-start me-4 ps-0 mt-2">
+                                            <div class="container ticket-container ps-4 pe-4">
+                                                <h5 class="pt-3">TICKET ID</h5>
+                                                <p>
+                                                    <%= ticket.id_ticket %>
+                                                </p>
+                                                <h5>USER EMAIL</h5>
+                                                <p>
+                                                    <%= ticket.email %>
+                                                </p>
+                                                <h5>TICKET STATUS</h5>
+                                                <p>
+                                                    <%= ticket.stato %>
+                                                </p>
+                                                <h5>CLOSED TICKET DATE</h5>
+                                                <p>
+                                                    <%= new Date(ticket.chiusura_ticket * 1000).toLocaleString(); %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    <% }); %>
+                                </div>
+                            </div>
+                        <% } %>
+                    <% } %>
+                </div>
+            </section>
+            <!-- ALL CLOSED TICKETS -->
             <h4>SOLVED TICKETS</h4>
             <% if (resolved_tickets.length === 0) { %>
                 <p>There's no solved tickets.</p>
@@ -26,9 +73,9 @@
                                 <p>
                                     <%= ticket.id_ticket %>
                                 </p>
-                                <h5>USER ID</h5>
+                                <h5>USER EMAIL</h5>
                                 <p>
-                                    <%= ticket.id_utente %>
+                                    <%= ticket.email %>
                                 </p>
                                 <h5>CLOSED TICKET DATE</h5>
                                 <p>
@@ -54,9 +101,9 @@
                                 <p>
                                     <%= ticket.id_ticket %>
                                 </p>
-                                <h5>USER ID</h5>
+                                <h5>USER EMAIL</h5>
                                 <p>
-                                    <%= ticket.id_utente %>
+                                    <%= ticket.email %>
                                 </p>
                                 <h5>CLOSED TICKET DATE</h5>
                                 <p>
@@ -82,9 +129,9 @@
                                 <p>
                                     <%= ticket.id_ticket %>
                                 </p>
-                                <h5>USER ID</h5>
+                                <h5>USER EMAIL</h5>
                                 <p>
-                                    <%= ticket.id_utente %>
+                                    <%= ticket.email %>
                                 </p>
                                 <h5>CLOSED TICKET DATE</h5>
                                 <p>
