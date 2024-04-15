@@ -387,6 +387,21 @@ class DataBase {
         });
     }
 
+    invalidTicketText(text) {
+        return new Promise((resolve, reject) => {
+           const sql =  `SELECT COUNT(*) AS invalid_text
+                         FROM ticket t
+                         WHERE t.descrizione = ? AND t.stato = 'Cancelled' AND t.chiusura_ticket NOTNULL`;
+
+           this.open();
+           db.get(sql, [text], (err, row) => {
+               if (err) throw reject(err);
+               resolve(row);
+           });
+           this.close();
+        });
+    }
+
     /**
      * Count the number of tickets closed by a staff user.
      * @param {int} staff_id Staff id.
