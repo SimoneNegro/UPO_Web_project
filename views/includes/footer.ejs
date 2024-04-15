@@ -4,27 +4,27 @@
             <!-- FIRST COLUMN -->
             <div class="col text-start me-4">
                 <span class="fw-bold">COMPANY NAME</span>
-                <p class="pt-2">Our company is specialized to help people...</p>
+                <p class="pt-2">Our company specializes in solving problems as quickly as possible.</p>
             </div>
             <!-- SECOND COLUMN -->
             <div class="col text-start me-4">
                 <span class="fw-bold">USEFUL LINKS</span>
                 <div class="row pt-2">
-                    <% if(title=="Terms Of Service" ) { %>
+                    <% if(title == "Terms Of Service" ) { %>
                         <a class="static-link">Terms of Service</a>
-                        <% } else { %>
-                            <a class="link" href="/terms-of-service">Terms of Service</a>
-                            <% } %>
-                                <% if(title=="Privacy Policy" ) { %>
-                                    <a class="static-link">Privacy Policy</a>
-                                    <% } else { %>
-                                        <a class="link" href="/privacy-policy">Privacy Policy</a>
-                                        <% } %>
-                                            <% if(title=="Cookie Policy" ) { %>
-                                                <a class="static-link">Cookie Policy</a>
-                                                <% } else { %>
-                                                    <a class="link" href="/cookie-policy">Cookie Policy</a>
-                                                    <% } %>
+                    <% } else { %>
+                        <a class="link" href="/terms-of-service">Terms of Service</a>
+                    <% } %>
+                    <% if(title == "Privacy Policy" ) { %>
+                        <a class="static-link">Privacy Policy</a>
+                    <% } else { %>
+                        <a class="link" href="/privacy-policy">Privacy Policy</a>
+                    <% } %>
+                    <% if(title == "Cookie Policy" ) { %>
+                        <a class="static-link">Cookie Policy</a>
+                    <% } else { %>
+                        <a class="link" href="/cookie-policy">Cookie Policy</a>
+                    <% } %>
 
                 </div>
             </div>
@@ -32,16 +32,16 @@
             <div class="col text-start me-4">
                 <span class="fw-bold">PAGES</span>
                 <div class="row pt-2">
-                    <% if(title=="Open a ticket" ) { %>
+                    <% if(title == "Open a ticket" ) { %>
                         <a class="static-link">Open ticket</a>
-                        <% } else { %>
-                            <a class="link" href="/open-ticket">Open ticket</a>
-                            <% } %>
-                                <% if(title=="My Tickets" ) { %>
-                                    <a class="static-link">My tickets</a>
-                                    <% } else { %>
-                                        <a class="link" href="/my-tickets">My tickets</a>
-                                        <% } %>
+                    <% } else { %>
+                        <a class="link" href="/open-ticket">Open ticket</a>
+                    <% } %>
+                    <% if(title == "My Tickets" ) { %>
+                        <a class="static-link">My tickets</a>
+                    <% } else { %>
+                        <a class="link" href="/my-tickets">My tickets</a>
+                    <% } %>
                 </div>
             </div>
             <!-- FOURTH COLUMN -->
