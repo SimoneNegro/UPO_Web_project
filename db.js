@@ -392,7 +392,7 @@ class DataBase {
                           FROM gestisce g
                                    INNER JOIN ticket t ON g.id_ticket = t.id
                                    INNER JOIN utente u ON u.id = t.id_utente
-                          WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ? AND (t.stato = 'Cancelled' OR t.stato = 'Closed' OR t.stato = 'Resolved') AND u.email = ?`;
+                          WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ? AND (t.stato = 'Cancelled' OR t.stato = 'Closed' OR t.stato = 'Resolved') AND u.email LIKE '%' || ? || '%'`;
 
             this.open();
             db.all(sql, [staff_id, user_mail], (err, row) => {
