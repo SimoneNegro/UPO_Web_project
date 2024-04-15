@@ -1,65 +1,66 @@
 <%- include('includes/head.ejs') %>
 
-    <body>
-        <!-- HEADER -->
-        <%- include('includes/header.ejs') %>
-            <!-- CONTENT -->
-            <main>
-                <div class="container">
-                    <h1 class="mb-4">Open a ticket</h1>
-                    <% if (!user) { %>
-                        <p class="mb-4">To open a ticket, you must first <a class="link blue-text"
-                                href="/signup?return=open-ticket">register</a> or <a class="link blue-text"
-                                href="/login?return=open-ticket">login.</a></p>
-                        <% } else { %>
-                            <!-- FORM -->
-                            <form id="new-ticket" action="/open-ticket" method="post">
-                                <!-- EMAIL FIELD -->
-                                <section class="mb-4">
-                                    <label class="bold me-2" for="email">E-mail: </label>
-                                    <input class="shadow-box border in-w" id="email" name="email" type="text"
-                                        autocomplete="email" placeholder=<%=user.email %> disabled>
-                                </section>
-                                <!-- TOPIC FIELD -->
-                                <section class="mb-4">
-                                    <label class="bold me-3" for="topic">Topic: </label>
-                                    <select class="shadow-box border select-style" name="topic" id="topic" required>
-                                        <option class="option-style" value=""
-                                            title="Choose a topic to describe the type of issue you are experiencing.">
-                                            -- choose topic --</option>
-                                        <% topics.forEach(function(topic) { %>
-                                            <option class="option-style" value="<%= topic.nome %>"
-                                                title="<%= topic.descrizione %>">
-                                                <%= topic.nome %>
-                                            </option>
-                                            <% }); %>
-                                    </select>
-                                </section>
-                                <!-- ISSUE DESCRIPTION -->
-                                <section class="mb-4">
-                                    <p><label class="bold" for="description">Describe your issue:</label></p>
-                                    <textarea class="form-control max-width area-style border" name="description"
-                                        id="description" rows="12" maxlength="1000"
-                                        placeholder="Give us more information..." required></textarea>
-                                    <div style="margin-top: 0.25rem; text-align: left;" id="counter">0</div>
-                                </section>
-                                <!-- SEND TICKET BUTTON -->
-                                <button class="send-button font mb-5" id="new-ticket" type="submit">Send
-                                    ticket</button>
-                                <!-- DA FARE: CORRETTO INSERIMENTO/ERRORE INSERIMENTO, OPPURE INDIRIZZAMENTO ALLA PAGINA DEI TICKET -->
-                                <!-- <span class="error-username-password">
-                                    <% if (typeof message !=='undefined' && message !=null) { %>
-                                        <%= message %>
-                                            <% } %>
-                                </span> -->
-                            </form>
-                            <% } %>
-                </div>
-            </main>
-            <!-- FOOTER -->
-            <%- include('includes/footer.ejs') %>
-                <!-- SCRIPTS-->
-                <%- include('includes/scripts.ejs') %>
-    </body>
+<body>
+<!-- HEADER -->
+<%- include('includes/header.ejs') %>
+<!-- CONTENT -->
+<main>
+    <div class="container">
+        <h1 class="mb-4">Open a ticket</h1>
+        <% if (!user) { %>
+            <p class="mb-4">To open a ticket, you must first <a class="link blue-text"
+                                                                href="/signup?return=open-ticket">register</a> or <a
+                        class="link blue-text" href="/login?return=open-ticket">login.</a></p>
+        <% } else { %>
+            <!-- FORM -->
+            <form id="new-ticket" action="/open-ticket" method="post">
+                <!-- EMAIL FIELD -->
+                <section class="mb-4">
+                    <label class="bold me-2" for="email">E-mail: </label>
+                    <input class="shadow-box border in-w" id="email" name="email" type="text"
+                           autocomplete="email" placeholder=<%= user.email %> disabled>
+                </section>
+                <!-- TOPIC FIELD -->
+                <section class="mb-4">
+                    <label class="bold me-3" for="topic">Topic: </label>
+                    <select class="shadow-box border select-style" name="topic" id="topic" required>
+                        <option class="option-style" value=""
+                                title="Choose a topic to describe the type of issue you are experiencing.">
+                            -- choose topic --
+                        </option>
+                        <% topics.forEach(function(topic) { %>
+                            <option class="option-style" value="<%= topic.nome %>"
+                                    title="<%= topic.descrizione %>">
+                                <%= topic.nome %>
+                            </option>
+                        <% }); %>
+                    </select>
+                </section>
+                <!-- ISSUE DESCRIPTION -->
+                <section class="mb-4">
+                    <p><label class="bold" for="description">Describe your issue:</label></p>
+                    <textarea class="form-control max-width area-style border" name="description"
+                              id="description" rows="12" maxlength="1000"
+                              placeholder="Give us more information..." required></textarea>
+                    <div style="margin-top: 0.25rem; text-align: left;" id="counter">0</div>
+                </section>
+                <section>
+                    <% if (err_ticket_text !== undefined && err_ticket_text.invalid_text > 0) { %>
+                        <p class="error">Invalid ticket description.</p>
+                    <% } %>
+                </section>
+                <!-- SEND TICKET BUTTON -->
+                <button class="send-button font mb-5" id="new-ticket" type="submit">Send
+                    ticket
+                </button>
+            </form>
+        <% } %>
+    </div>
+</main>
+<!-- FOOTER -->
+<%- include('includes/footer.ejs') %>
+<!-- SCRIPTS-->
+<%- include('includes/scripts.ejs') %>
+</body>
 
-    </html>
+</html>
