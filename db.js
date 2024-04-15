@@ -304,6 +304,22 @@ class DataBase {
         });
     }
 
+    closedTicketsUser(user_id) {
+        return new Promise((resolve, reject) => {
+           const sql = `SELECT t.id, t.stato, t.descrizione, t.chiusura_ticket
+                        FROM ticket t
+                        WHERE t.chiusura_ticket NOTNULL AND t.id_utente = ? AND (t.stato = 'Cancelled' OR t.stato = 'Closed' OR t.stato = 'Resolved')
+                        ORDER BY t.chiusura_ticket ASC`;
+
+           this.open();
+           db.all(sql, [user_id], (err, row) => {
+               if (err) throw reject(err);
+               resolve(row);
+           });
+           this.close();
+        });
+    }
+
     /**
      * Return all 'Resolved' tickets made by staff user.
      * @param {int} staff_id Staff id.
