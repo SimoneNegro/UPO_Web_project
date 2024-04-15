@@ -42,6 +42,11 @@
                     <% } else { %>
                         <a class="link" href="/my-tickets">My tickets</a>
                     <% } %>
+                    <% if(title == "Closed Tickets" ) { %>
+                        <a class="static-link">Closed tickets</a>
+                    <% } else { %>
+                        <a class="link" href="/closed-tickets">Closed tickets</a>
+                    <% } %>
                 </div>
             </div>
             <!-- FOURTH COLUMN -->

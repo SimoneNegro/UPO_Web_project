@@ -6,50 +6,47 @@
 <!-- CONTENT -->
 <main>
     <div class="container">
-        <h1 class="mb-4">My tickets</h1>
+        <h1 class="mb-4">Closed tickets</h1>
         <% if (!user) { %>
-            <p class="mb-4">To see all your closed tickets, you must first <a class="link blue-text"
-                                                                              href="/signup?return=my-tickets">register</a>
+            <p class="mb-4">To see all your tickets, you must first <a class="link blue-text"
+                                                                       href="/signup?return=closed-tickets">register</a>
                 or
                 <a class="link blue-text"
-                   href="/login?return=my-tickets">login.</a></p>
+                   href="/login?return=closed-tickets">login.</a></p>
         <% } else { %>
             <!-- IF USER HAVE NO TICKET -->
-            <% if (num_tickets.num_user_ticket == 0) { %>
-                <p>You don't have any ticket. To open a ticket, go to <a class="link blue-text"
-                                                                         href="/open-ticket">Open ticket</a>.</p>
+            <% if (closed_tickets == 0) { %>
+                <p>You don't have any closed ticket. To open a ticket, go to <a class="link blue-text"
+                                                                                href="/open-ticket">Open ticket</a>.
+                <p>If you opened a ticket, go to <a class="link blue-text"
+                                                    href="/my-tickets">My tickets</a>.</p>
                 <!-- IF USER HAVE AT LEAST A ONE TICKET -->
             <% } else { %>
-                <!-- TESTING --><!-- <p>You have ticket!</p> <%= num_tickets.num_user_ticket %> -->
-                <h4>Open tickets:</h4>
+                <h4>Closed tickets:</h4>
                 <section>
                     <div class="container text-center pb-5 ps-0 pe-3">
                         <div class="row justify-content-left ms-0">
                             <!-- FOREACH DI OGNI TICKET -->
-                            <% tickets.forEach(function(ticket) { %>
+                            <% closed_tickets.forEach(function(ticket) { %>
                                 <div class="col-sm-5 text-start me-4 ps-0 mt-4">
                                     <div class="container ticket-container ps-4 pe-4">
-                                        <h5 class="pt-3">TOPIC</h5>
+                                        <h5 class="pt-3">TICKET ID</h5>
                                         <p>
-                                            <%= ticket.nome_topic %>
+                                            <%= ticket.id %>
                                         </p>
-                                        <h5>DESCRIPTION</h5>
+                                        <h5 class="pt-1">DESCRIPTION</h5>
                                         <p>
                                             <%= ticket.descrizione %>
                                         </p>
-                                        <h5>STATUS</h5>
+                                        <h5 class="pt-1">STATUS</h5>
                                         <p>
                                             <%= ticket.stato %>
                                         </p>
-                                        <h5>TICKET OPEN DATE</h5>
+                                        <h5 class="pt-1">TICKET CLOSE DATE</h5>
                                         <p>
                                             <!-- CONVERT EPOCH DATE INTO HUMAN DATE -->
-                                            <%= new Date(ticket.data_apertura *
+                                            <%= new Date(ticket.chiusura_ticket *
                                                     1000).toLocaleString(); %>
-                                        </p>
-                                        <h5>TICKET ID</h5>
-                                        <p>
-                                            <%= ticket.id %>
                                         </p>
                                     </div>
                                 </div>
