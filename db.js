@@ -389,10 +389,11 @@ class DataBase {
     closedTicketByMailUser(staff_id, user_mail) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT g.id_ticket, u.email, t.chiusura_ticket, t.stato
-                          FROM gestisce g
-                                   INNER JOIN ticket t ON g.id_ticket = t.id
-                                   INNER JOIN utente u ON u.id = t.id_utente
-                          WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ? AND (t.stato = 'Cancelled' OR t.stato = 'Closed' OR t.stato = 'Resolved') AND u.email LIKE '%' || ? || '%'`;
+                         FROM gestisce g
+                                  INNER JOIN ticket t ON g.id_ticket = t.id
+                                  INNER JOIN utente u ON u.id = t.id_utente
+                         WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ? AND (t.stato = 'Cancelled' OR t.stato = 'Closed' OR t.stato = 'Resolved') AND u.email LIKE '%' || ? || '%'
+                         ORDER BY u.email ASC`;
 
             this.open();
             db.all(sql, [staff_id, user_mail], (err, row) => {
@@ -498,7 +499,8 @@ class DataBase {
     allUser() {
         return new Promise((resolve, reject) => {
            const sql = `SELECT email, tipo
-                        FROM utente`;
+                        FROM utente
+                        ORDER BY email ASC`;
 
            this.open();
            db.all(sql, [], (err, row) => {
@@ -513,7 +515,8 @@ class DataBase {
         return new Promise((resolve, reject) => {
            const sql =  `SELECT email, tipo
                          FROM utente
-                         WHERE email LIKE '%' || ? || '%'`;
+                         WHERE email LIKE '%' || ? || '%'
+                         ORDER BY email ASC`;
 
            this.open();
            db.all(sql, [email], (err, row) => {
