@@ -3,9 +3,13 @@
             class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom border-dark-subtle shadow mb-5 sticky-top light-bg">
         <div class="container">
             <% if(title == "NGR" ) { %>
-                <a class="navbar-brand static-link"><img class="logo-size" src="/style/images/logo.jpg" alt="Website logo"></a>
+                <!-- <img class="logo-size" src="/style/images/logo.jpg"
+                     alt="Website logo"> -->
+                <a class="navbar-brand static-link">NGR</a>
             <% } else { %>
-                <a class="navbar-brand link" href="/"><img class="logo-size" src="/style/images/logo.jpg" alt="Website logo"></a>
+                    <!-- <img class="logo-size" src="/style/images/logo.jpg"
+                        alt="Website logo"> -->
+                <a class="navbar-brand link" href="/">NGR</a>
             <% } %>
             <!-- BUTTON SHOW SMALL SCREEN -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -32,6 +36,9 @@
                         <a class="nav-link static-link">Closed tickets</a>
                     <% } else { %>
                         <a class="nav-link link" href="/closed-tickets">Closed tickets</a>
+                    <% } %>
+                    <% if(user) { %>
+                        <p>Sono admin</p>
                     <% } %>
                 </div>
                 <!-- LOG PAGES -->
