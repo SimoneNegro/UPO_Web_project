@@ -6,6 +6,7 @@ const db = new DataBase();
 
 const {generateToken} = require('../public/js/jwt-token');
 const {isStaff} = require('../public/js/auth');
+const {isAdmin} = require('../public/js/auth');
 
 let returnUrl = "";
 
@@ -37,6 +38,9 @@ router.post('/', function (req, res, next) {
                 await db.addTokenToUser(user.id, generateToken(user.id));
                 if (isStaff(req)) {
                     return res.redirect('/admin');
+                }
+                if(isAdmin(req)) {
+                    return res.redirect('/super-admin');
                 }
                 if (returnUrl) {
                     return res.redirect(returnUrl);

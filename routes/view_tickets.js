@@ -5,10 +5,10 @@ const DataBase = require("../db"); // db.js
 const db = new DataBase();
 
 // const { userId } = require('../public/js/jwt-token');
-const {isStaff} = require('../public/js/auth');
+const {isStaff, isAdmin} = require('../public/js/auth');
 
 router.get('/', async function (req, res, next) {
-    if (!isStaff(req)) {
+    if (!isStaff(req) && !isAdmin(req)) {
         return res.redirect('/');
     }
 
@@ -28,7 +28,7 @@ router.get('/', async function (req, res, next) {
 });
 
 router.post('/', async function (req, res, next) {
-    if (!isStaff(req)) {
+    if (!isStaff(req) && !isAdmin(req)) {
         return res.redirect('/');
     }
     try {

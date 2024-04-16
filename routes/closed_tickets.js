@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const {isStaff} = require('../public/js/auth');
+const {isStaff, isAdmin} = require('../public/js/auth');
 
 const DataBase = require("../db"); // db.js
 const db = new DataBase();
 
 
 router.get('/', async function (req, res, next) {
-    if (!isStaff(req)) {
+    if (!isStaff(req) && !isAdmin(req)) {
         return res.redirect('/');
     }
 
@@ -15,7 +15,7 @@ router.get('/', async function (req, res, next) {
         const mail = req.query['email'];
         let searched_tickets;
 
-        if(mail) {
+        if (mail) {
             searched_tickets = await db.closedTicketByMailUser(req.user.id, mail);
         }
 

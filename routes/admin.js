@@ -4,10 +4,10 @@ const router = express.Router();
 const DataBase = require("../db"); // db.js
 const db = new DataBase();
 
-const {isStaff} = require('../public/js/auth');
+const {isStaff, isAdmin} = require('../public/js/auth');
 
 router.get('/', async function (req, res, next) {
-    if (!isStaff(req)) {
+    if (!isStaff(req) && !isAdmin(req)) {
         return res.redirect('/');
     }
 
@@ -22,6 +22,9 @@ router.get('/', async function (req, res, next) {
 router.get('/chartdata', async function (req, res, next) {
     if (!req.user) {
         return res.status(401).json();
+    }
+    if (!isStaff(req) && !isAdmin(req)) {
+        return res.redirect('/');
     }
     try {
         const results = await db.numClosedTicketsByStatusByStaffUser(req.user.id);
@@ -78,6 +81,9 @@ router.get('/linechartpermonth', async function (req, res, next) {
     if (!req.user) {
         return res.status(401).json();
     }
+    if (!isStaff(req) && !isAdmin(req)) {
+        return res.redirect('/');
+    }
     try {
         const tickets = await db.closedTicketsLastMonthByStaffUser(req.user.id);
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -86,7 +92,7 @@ router.get('/linechartpermonth', async function (req, res, next) {
         tickets.forEach((ticket) => {
             const monthIndex = ticket.month - 1;
             monthCounts.set(monthIndex, ticket.num_closed_tickets);
-            if(ticket.num_closed_tickets > maxValue) {
+            if (ticket.num_closed_tickets > maxValue) {
                 maxValue = ticket.num_closed_tickets;
             }
         });

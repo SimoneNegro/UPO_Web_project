@@ -5,21 +5,21 @@
             <div class="col text-start me-4">
                 <span class="fw-bold">PAGES</span>
                 <div class="row pt-2">
-                    <% if(title=="View Tickets" ) { %>
+                    <% if(title == "View Tickets" ) { %>
                         <a class="static-link">View tickets</a>
-                        <% } else { %>
-                            <a class="link" href="/view_tickets">View tickets</a>
-                            <% } %>
-                            <% if(title=="Ticket Dashboard" ) { %>
-                                <a class="static-link">Ticket dashboard</a>
-                                <% } else { %>
-                                    <a class="link" href="/dashboard">Ticket dashboard</a>
-                                    <% } %>
-                                <% if(title=="Closed Tickets" ) { %>
-                                    <a class="static-link">Closed tickets</a>
-                                    <% } else { %>
-                                        <a class="link" href="/closed_tickets">Closed tickets</a>
-                                        <% } %>
+                    <% } else { %>
+                        <a class="link" href="/view_tickets">View tickets</a>
+                    <% } %>
+                    <% if(title == "Ticket Dashboard" ) { %>
+                        <a class="static-link">Ticket dashboard</a>
+                    <% } else { %>
+                        <a class="link" href="/dashboard">Ticket dashboard</a>
+                    <% } %>
+                    <% if(title == "Closed Tickets" ) { %>
+                        <a class="static-link">Closed tickets</a>
+                    <% } else { %>
+                        <a class="link" href="/closed_tickets">Closed tickets</a>
+                    <% } %>
                 </div>
             </div>
         </div>
