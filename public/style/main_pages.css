@@ -257,3 +257,7 @@ select.decorated option:hover {
 .check {
     color: var(--check-color);
 }
+
+.logo-size {
+    width: 8rem;
+}
