@@ -5,7 +5,7 @@
             <% if(title == "Admin panel" ) { %>
                 <a class="navbar-brand static-link"><!-- inserisci img logo -->Admin panel</a>
             <% } else { %>
-                <a class="navbar-brand link" href="/super-adminadmin"><!-- inserisci img logo -->Admin panel</a>
+                <a class="navbar-brand link" href="/super-admin"><!-- inserisci img logo -->Admin panel</a>
             <% } %>
             <!-- BUTTON SHOW SMALL SCREEN -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -18,6 +18,11 @@
                  id="navbarNavAltMarkup">
                 <!-- MAIN PAGES -->
                 <div class="d-sm-inline-flex gap-4">
+                    <% if(title == "Update User" ) { %>
+                        <a class="static-link">Update user</a>
+                    <% } else { %>
+                        <a class="link" href="/update-user">Update user</a>
+                    <% } %>
                     <a class="nav-link link" href="/">Home user</a>
                     <a class="nav-link link" href="/admin">Home staff</a>
                 </div>

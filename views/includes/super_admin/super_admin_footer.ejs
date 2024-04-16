@@ -5,8 +5,18 @@
             <div class="col text-start me-4">
                 <span class="fw-bold">PAGES</span>
                 <div class="row pt-2">
-                    <a class="nav-link link" href="/">Home user</a>
-                    <a class="nav-link link" href="/admin">Home staff</a>
+                    <a class="link" href="/">Home user</a>
+                    <a class="link" href="/admin">Home staff</a>
+                </div>
+            </div>
+            <div class="col text-start me-4">
+                <span class="fw-bold">ADMIN PAGES</span>
+                <div class="row pt-2">
+                    <% if(title == "Update User" ) { %>
+                        <a class="static-link">Update user</a>
+                    <% } else { %>
+                        <a class="link" href="/update-user">Update user</a>
+                    <% } %>
                 </div>
             </div>
         </div>

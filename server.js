@@ -27,6 +27,7 @@ const viewTicketsRouter = require('./routes/view_tickets');
 const ticketDashboardRouter = require('./routes/dashboard');
 // admin routes
 const superAdminRouter = require('./routes/super_admin');
+const adminUpdateUserRouter = require('./routes/update_user');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -129,6 +130,7 @@ app.use('/view_tickets', viewTicketsRouter);
 app.use('/dashboard', ticketDashboardRouter);
 // admin routes
 app.use('/super-admin', superAdminRouter);
+app.use('/update-user', adminUpdateUserRouter);
 
 // Gestione del logout
 app.post('/logout', function (req, res, next) {

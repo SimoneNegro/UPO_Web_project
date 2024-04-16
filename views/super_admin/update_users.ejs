@@ -1,0 +1,78 @@
+<%- include('../includes/head.ejs') %>
+
+<body>
+<!-- HEADER -->
+<%- include('../includes/super_admin/super_admin_header.ejs') %>
+<!-- CONTENT -->
+<main>
+    <div class="container">
+        <h1>Update user</h1>
+        <% if (all_users.length === 0) { %>
+            <p>There are no user.</p>
+        <% } else { %>
+            <section>
+                <h4>Search user</h4>
+                <form action="/update-user" method="get">
+                    <label class="bold me-2" for="email">Search user by email: </label>
+                    <input class="shadow-box border in-w me-2" id="email" name="email" type="text"
+                           autocomplete="email"
+                           required>
+                    <input class="send-button ms-2" name="operation_type" type="submit" value="Search user"
+                           title="Search user by email.">
+                </form>
+                <% if (searched_user !== undefined) { %>
+                    <% if (searched_user.length === 0) { %>
+                        <p class="error">No users found.<%= searched_user %> </p>
+                    <% } else { %>
+                        <p class="check">Users found: <%= searched_user.length %></p>
+                        <div class="container pb-4 ps-0 pe-3">
+                            <div class="row justify-content-left ms-0">
+                                <!-- FOREACH DI OGNI TICKET -->
+                                <% searched_user.forEach(function(all_uesers_searched) { %>
+                                    <div class="col-sm text-start me-4 ps-0 mt-2">
+                                        <div class="container ticket-container ps-4 pe-4">
+                                            <p class="pt-3">
+                                                Email: <%= all_uesers_searched.email %>
+                                            </p>
+                                            <p>
+                                                Type: <%= all_uesers_searched.tipo %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } %>
+            </section>
+            <section>
+                <h4>All users</h4>
+                <div class="container text-left pb-5 ps-0 pe-3">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col"><h5>Email</h5></th>
+                            <th scope="col"><h5>User type</h5></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% all_users.forEach(function(single_user) { %>
+                            <tr>
+                                <th scope="row"><%= single_user.email %></th>
+                                <th scope="row"><%= single_user.tipo %></th>
+                            </tr>
+                        <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        <% } %>
+    </div>
+</main>
+<!-- FOOTER -->
+<%- include('../includes/super_admin/super_admin_footer.ejs') %>
+<!-- SCRIPTS-->
+<%- include('../includes/scripts.ejs') %>
+</body>
+
+</html>

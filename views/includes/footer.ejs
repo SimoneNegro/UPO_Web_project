@@ -47,6 +47,11 @@
                     <% } else { %>
                         <a class="link" href="/closed-tickets">Closed tickets</a>
                     <% } %>
+                    <% if(user) { %>
+                        <% if(user.tipo == 'admin') { %>
+                            <a class="link" href="/super-admin">Admin page</a>
+                        <% } %>
+                    <% } %>
                 </div>
             </div>
             <!-- FOURTH COLUMN -->

@@ -34,6 +34,11 @@
                         <a class="nav-link link" href="/closed_tickets">Closed
                             tickets</a>
                     <% } %>
+                    <% if(user) { %>
+                        <% if(user.tipo == 'admin') { %>
+                            <a class="link" href="/super-admin">Admin page</a>
+                        <% } %>
+                    <% } %>
                 </div>
                 <!-- LOG PAGES -->
                 <div class="d-sm-inline-flex gap-4">

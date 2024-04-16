@@ -495,6 +495,35 @@ class DataBase {
         });
     }
 
+    allUser() {
+        return new Promise((resolve, reject) => {
+           const sql = `SELECT email, tipo
+                        FROM utente`;
+
+           this.open();
+           db.all(sql, [], (err, row) => {
+               if (err) throw reject(err);
+               resolve(row);
+           });
+           this.close();
+        });
+    }
+
+    searchUserByUserEmail(email) {
+        return new Promise((resolve, reject) => {
+           const sql =  `SELECT email, tipo
+                         FROM utente
+                         WHERE email LIKE '%' || ? || '%'`;
+
+           this.open();
+           db.all(sql, [email], (err, row) => {
+               if (err) throw reject(err);
+               resolve(row);
+           });
+           this.close();
+        });
+    }
+
     /**
      * Add new user into database.
      * @param {String} email - User email.
