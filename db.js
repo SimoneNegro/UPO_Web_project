@@ -498,14 +498,41 @@ class DataBase {
 
     allUser() {
         return new Promise((resolve, reject) => {
-           const sql = `SELECT email, tipo
-                        FROM utente
-                        ORDER BY email ASC`;
+           const sql = `SELECT u.email,
+                               u.tipo,
+                               (SELECT COUNT(*)
+                                FROM ticket t
+                                         INNER JOIN gestisce g ON t.id = g.id_ticket
+                                WHERE g.id_admin = u.id
+                                  AND (t.chiusura_ticket IS NOT NULL AND
+                                       (t.stato = 'Closed' OR t.stato = 'Cancelled' OR t.stato = 'Resolved')))  AS closed_tickets,
+                               (SELECT COUNT(*)
+                                FROM ticket t2
+                                WHERE t2.id_utente = u.id
+                                  AND u.tipo = 'utente')                                                        AS opened_tickets
+                        FROM utente u
+                        GROUP BY u.email, u.tipo
+                        ORDER BY u.tipo ASC, u.email ASC`;
 
            this.open();
            db.all(sql, [], (err, row) => {
                if (err) throw reject(err);
                resolve(row);
+           });
+           this.close();
+        });
+    }
+
+    updateUserRole(email, type) {
+        return new Promise((resolve, reject) => {
+           const sql =  `UPDATE utente
+                         SET tipo = ?
+                         WHERE email = ?`;
+
+           this.open();
+           db.run(sql, [type, email], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
            });
            this.close();
         });
@@ -520,6 +547,19 @@ class DataBase {
 
            this.open();
            db.all(sql, [email], (err, row) => {
+               if (err) throw reject(err);
+               resolve(row);
+           });
+           this.close();
+        });
+    }
+
+    getRoles() {
+        return new Promise((resolve, reject) => {
+           const sql = `SELECT tipo FROM permessi`;
+
+           this.open();
+           db.all(sql, [], (err, row) => {
                if (err) throw reject(err);
                resolve(row);
            });

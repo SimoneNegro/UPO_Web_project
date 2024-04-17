@@ -25,22 +25,47 @@
                         <p class="error">No users found.<%= searched_user %> </p>
                     <% } else { %>
                         <p class="check">Users found: <%= searched_user.length %></p>
-                        <div class="container pb-4 ps-0 pe-3">
-                            <div class="row justify-content-left ms-0">
-                                <!-- FOREACH DI OGNI TICKET -->
-                                <% searched_user.forEach(function(all_uesers_searched) { %>
-                                    <div class="col-sm text-start me-4 ps-0 mt-2">
-                                        <div class="container ticket-container ps-4 pe-4">
-                                            <p class="pt-3">
-                                                Email: <%= all_uesers_searched.email %>
-                                            </p>
-                                            <p>
-                                                Type: <%= all_uesers_searched.tipo %>
-                                            </p>
-                                        </div>
-                                    </div>
+                        <div class="container text-left pb-2 ps-0 pe-3">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col"><h5>Email</h5></th>
+                                    <th scope="col"><h5>User type</h5></th>
+                                    <th scope="col"><h5>Update user</h5></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% searched_user.forEach(function(all_searched_user) { %>
+                                    <form action="/update-user?_method=PUT" method="post">
+                                        <tr>
+                                            <th scope="row">
+                                                <%= all_searched_user.email %>
+                                                <input type="hidden" value="<%= all_searched_user.email %>" id="email" name="email">
+                                            </th>
+                                            <th scope="row">
+                                                <label class="bold me-3" for="user_type">User type: </label>
+                                                <select class="shadow-box border select-style" name="user_type"
+                                                        id="user_type"
+                                                        required>
+                                                    <% roles.forEach(function(role) { %>
+                                                        <option class="option-style"
+                                                                value="<%= role.tipo %>" <%= role.tipo === all_searched_user.tipo ? "selected" : null %>>
+                                                            <%= role.tipo %>
+                                                        </option>
+                                                    <% }); %>
+                                                </select>
+                                            </th>
+                                            <th scope="row">
+                                                <input class="send-button mb-3" name="operation_type"
+                                                       type="submit"
+                                                       value="Update user"
+                                                       title="Save changes.">
+                                            </th>
+                                        </tr>
+                                    </form>
                                 <% }); %>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     <% } %>
                 <% } %>
@@ -52,6 +77,8 @@
                         <thead>
                         <tr>
                             <th scope="col"><h5>Email</h5></th>
+                            <th scope="col"><h5>Opened tickets</h5></th>
+                            <th scope="col"><h5>Closed tickets</h5></th>
                             <th scope="col"><h5>User type</h5></th>
                         </tr>
                         </thead>
@@ -59,6 +86,8 @@
                         <% all_users.forEach(function(single_user) { %>
                             <tr>
                                 <th scope="row"><%= single_user.email %></th>
+                                <th scope="row"><%= single_user.opened_tickets %></th>
+                                <th scope="row"><%= single_user.closed_tickets %></th>
                                 <th scope="row"><%= single_user.tipo %></th>
                             </tr>
                         <% }); %>
