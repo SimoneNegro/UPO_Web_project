@@ -144,7 +144,7 @@ app.post('/logout', function (req, res, next) {
 
 // error 404 response
 app.use(function (req, res, next) {
-    res.status(404).send('<h1>Error 404: Resource not found</h1>');
+    res.status(404).render('page_not_found', {title: 'Resource Not Found', user: req.user});
 });
 
 // sever start
