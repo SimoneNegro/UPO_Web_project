@@ -15,7 +15,6 @@ class DataBase {
     open() {
         db = new sqlite3.Database('./databases/helpdesk.db', sqlite3.OPEN_READWRITE, (err) => {
             if (err) console.error('Error during database opening:', err.message);
-            else console.log('Connected to SQLite database.');
         });
     }
 
