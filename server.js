@@ -20,6 +20,7 @@ const ticketRouter = require('./routes/ticket');
 const myTicketsRouter = require('./routes/my_tickets');
 const otpRouter = require('./routes/otp');
 const closedUserTicketsRouter = require('./routes/closed_tickets_user');
+const userDashboardRouter = require('./routes/user_dashboard');
 // staff routes
 const adminRouter = require('./routes/admin');
 const closedTicketsRouter = require('./routes/closed_tickets');
@@ -122,6 +123,7 @@ app.use('/open-ticket', ticketRouter);
 app.use('/my-tickets', myTicketsRouter);
 app.use('/otp', otpRouter);
 app.use('/closed-tickets', closedUserTicketsRouter);
+app.use('/user-dashboard', userDashboardRouter);
 
 // staff routes
 app.use('/admin', adminRouter);

@@ -1,0 +1,42 @@
+<%- include('includes/head.ejs') %>
+
+<body>
+<!-- HEADER -->
+<% if(user.tipo === 'utente') { %>
+    <%- include('includes/header.ejs') %>
+<% } else if(user.tipo === 'staff') { %>
+    <%- include('includes/admin/header_admin.ejs') %>
+<% } else if(user.tipo === 'admin') { %>
+    <%- include('includes/super_admin/super_admin_header.ejs') %>
+<% } %>
+
+<!-- CONTENT -->
+<main>
+    <div class="container">
+        <h1 class="mb-4">Your profile</h1>
+        <h4 class="border-bottom pb-2 mb-2">Account security</h4>
+        <h5>Email</h5>
+        <p><%= user.email %></p>
+        <h5>Password</h5>
+        <a class="nav-link link" href="/forgot-password">Change password</a>
+        <h4 class="border-bottom pb-2 mb-2 mt-4">Support</h4>
+        <h5>Log out</h5>
+        <form action="/logout" method="post">
+            <button class="nav-link link">Log out</button>
+        </form>
+    </div>
+</main>
+<!-- FOOTER -->
+<% if(user.tipo === 'utente') { %>
+    <%- include('includes/footer.ejs') %>
+<% } else if(user.tipo === 'staff') { %>
+    <%- include('includes/admin/footer_admin.ejs') %>
+<% } else if(user.tipo === 'admin') { %>
+    <%- include('includes/super_admin/super_admin_footer.ejs') %>
+<% } %>
+
+<!-- SCRIPTS-->
+<%- include('includes/scripts.ejs') %>
+</body>
+
+</html>
