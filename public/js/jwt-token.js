@@ -16,11 +16,11 @@ function generateToken(user_id) {
             iat: Math.floor(new Date().getTime() / 1000)
         },
         process.env.TOKEN_KEY,
-        { expiresIn: "1h" }
+        {expiresIn: "1h"}
     );
 }
 
 // getRole(24)
 //   .then(role => console.log("User role:", role.tipo)) 
 //   .catch(err => console.error("Error getting user role:", err));
-module.exports = { generateToken };
+module.exports = {generateToken};

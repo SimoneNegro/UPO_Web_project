@@ -50,9 +50,9 @@ router.post('/', async function (req, res, next) {
                 await db.updateTicketStatusCancelled(req.body.ticket_id);
                 await db.updateCloseDateTicket(req.body.ticket_id, data);
                 break;
-                default :
-                    console.log("Error: invalid operation type");
-                    return res.redirect('/dashboard');
+            default :
+                console.log("Error: invalid operation type");
+                return res.redirect('/dashboard');
         }
         return res.redirect('/closed_tickets');
     } catch (err) {

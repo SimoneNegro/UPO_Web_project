@@ -39,7 +39,7 @@ router.post('/', function (req, res, next) {
                 if (isStaff(req)) {
                     return res.redirect('/admin');
                 }
-                if(isAdmin(req)) {
+                if (isAdmin(req)) {
                     return res.redirect('/super-admin');
                 }
                 if (returnUrl) {

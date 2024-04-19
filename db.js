@@ -2,11 +2,12 @@
 const sqlite3 = require('sqlite3').verbose();
 let db;
 
-// @see {@link github_link }
-
 /**
- * Create a database class using specified functions
+ * Create a database class using specified functions.
+ * This is a middleware with all database possible actions.
+ * GitHub repository name: UPO_Web_project.
  * @author BeastOfShadow
+ * @see https://github.com/SimoneNegro
  */
 class DataBase {
     /**
@@ -129,16 +130,6 @@ class DataBase {
             this.close();
         });
     }
-
-    /* TICKET STATUS 
-        New:
-        Pending: new ticket waiting to be managed;
-        Waiting Transfer: waiting to be transferred to another staff member;
-        In Progress: staff member opened the ticket; 
-        Resolved: staff member solved problem;
-        Closed: staff member can't solve this problem;
-        Cancelled: staff member cancelled the ticket because not a real issue.
-    */
 
     /**
      * Update ticket status to "In Progress".
@@ -304,6 +295,11 @@ class DataBase {
         });
     }
 
+    /**
+     * Return all closed tickets (with follow states: Cancelled, Closed and Resolved) by a specific user id.
+     * @param {int} user_id User id.
+     * @returns {Promise<unknown>} All closed tickets.
+     */
     closedTicketsUser(user_id) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT t.id, t.stato, t.descrizione, t.chiusura_ticket
@@ -323,7 +319,7 @@ class DataBase {
     /**
      * Return all 'Resolved' tickets made by staff user.
      * @param {int} staff_id Staff id.
-     * @returns {Promise<unknown>}
+     * @returns {Promise<unknown>} All solved tickets.
      */
     resolvedTickets(staff_id) {
         return new Promise((resolve, reject) => {
@@ -345,7 +341,7 @@ class DataBase {
     /**
      * Return all 'Closed' tickets made by staff user.
      * @param {int} staff_id Staff id.
-     * @returns {Promise<unknown>}
+     * @returns {Promise<unknown>} All closed tickets.
      */
     closedTickets(staff_id) {
         return new Promise((resolve, reject) => {
@@ -367,7 +363,7 @@ class DataBase {
     /**
      * Return all 'Cancelled' tickets made by staff user.
      * @param {int} staff_id Staff id.
-     * @returns {Promise<unknown>}
+     * @returns {Promise<unknown>} All cancelled tickets.
      */
     cancelledTickets(staff_id) {
         return new Promise((resolve, reject) => {
@@ -386,6 +382,12 @@ class DataBase {
         });
     }
 
+    /**
+     * Return all closed tickets by specif staff user and a specific user email. You can put an uncompleted user mail.
+     * @param {int} staff_id Staff id.
+     * @param {text} user_mail User email.
+     * @returns {Promise<unknown>} All closed tickets.
+     */
     closedTicketByMailUser(staff_id, user_mail) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT g.id_ticket, u.email, t.chiusura_ticket, t.stato
@@ -404,6 +406,11 @@ class DataBase {
         });
     }
 
+    /**
+     * Return the number of invalid tickets text by a specific ticket description.
+     * @param {text} text User ticket description.
+     * @returns {Promise<unknown>} Number of invalid tickets text.
+     */
     invalidTicketText(text) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT COUNT(*) AS invalid_text
@@ -442,6 +449,11 @@ class DataBase {
         });
     }
 
+    /**
+     * Count all closed tickets by status ticket by a specific staff user.
+     * @param {int} staff_id Staff id.
+     * @returns {Promise<unknown>} Number of closed tickets of all tickets status.
+     */
     numClosedTicketsByStatusByStaffUser(staff_id) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT t.stato, COUNT(*) AS closed_tickets
@@ -458,6 +470,11 @@ class DataBase {
         });
     }
 
+    /**
+     * Count all tickets for every month year.
+     * @param {int} staff_id Staff id.
+     * @returns {Promise<unknown>} Return closed tickets by month.
+     */
     closedTicketsLastMonthByStaffUser(staff_id) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT strftime('%m', datetime(t.chiusura_ticket, 'unixepoch')) AS month, COUNT(*) AS num_closed_tickets
@@ -498,6 +515,10 @@ class DataBase {
         });
     }
 
+    /**
+     * Return all user. If a user is a normal user, return the number of opened tickets, if it ia a staff user return the number of closed tickets.
+     * @returns {Promise<unknown>} All user with number of opened/closed tickets.
+     */
     allUser() {
         return new Promise((resolve, reject) => {
             const sql = `SELECT u.email,
@@ -525,6 +546,12 @@ class DataBase {
         });
     }
 
+    /**
+     * Update user type (utente, staff, admin).
+     * @param {text} email User email.
+     * @param {text} type New user type.
+     * @returns {Promise<unknown>} Returns true if successful or false if failed.
+     */
     updateUserRole(email, type) {
         return new Promise((resolve, reject) => {
             const sql = `UPDATE utente
@@ -540,6 +567,11 @@ class DataBase {
         });
     }
 
+    /**
+     * Search a user by a specific email. Email could be not complete.
+     * @param {text} email User email.
+     * @returns {Promise<unknown>} User.
+     */
     searchUserByUserEmail(email) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT email, tipo
@@ -556,6 +588,10 @@ class DataBase {
         });
     }
 
+    /**
+     * Return all users role.
+     * @returns {Promise<unknown>} All users roles.
+     */
     getRoles() {
         return new Promise((resolve, reject) => {
             const sql = `SELECT tipo
@@ -570,6 +606,11 @@ class DataBase {
         });
     }
 
+    /**
+     * Return user role searched by email.
+     * @param {text} email User email.
+     * @returns {Promise<unknown>} User role.
+     */
     getUserRole(email) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT u.tipo
@@ -627,6 +668,14 @@ class DataBase {
         });
     }
 
+    /**
+     * Assign otp code to a specific user id.
+     * @param {int} id User id.
+     * @param {int} otp User otp code.
+     * @param {int} current_date Otp creation date.
+     * @param {int} uuid Link identification code.
+     * @returns {Promise<unknown>} Returns true if successful or false if failed.
+     */
     otpCodeAssigment(id, otp, current_date, uuid) {
         return new Promise((resolve, reject) => {
             const sql = `INSERT INTO otp(user_id, otp, date, uuid)
@@ -641,6 +690,11 @@ class DataBase {
         });
     }
 
+    /**
+     * Get user id from a specific url id.
+     * @param {int} uuid Link identification code.
+     * @returns {Promise<unknown>} User data.
+     */
     getUserIdByUuid(uuid) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT o.user_id, o.otp, o.date
@@ -658,6 +712,12 @@ class DataBase {
         });
     }
 
+    /**
+     * Update user password with specific user id.
+     * @param user_id User id.
+     * @param password New user password.
+     * @returns {Promise<unknown>} Returns true if successful or false if failed.
+     */
     updateUserPasswordById(user_id, password) {
         return new Promise((resolve, reject) => {
             const sql = `UPDATE utente
@@ -673,6 +733,11 @@ class DataBase {
         });
     }
 
+    /**
+     * Get user id by user email.
+     * @param {text} email User email.
+     * @returns {Promise<unknown>} User id.
+     */
     getUserId(email) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT id
