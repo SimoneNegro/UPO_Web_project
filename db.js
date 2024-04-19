@@ -93,11 +93,12 @@ class DataBase {
      * @param {int} id - User id.
      * @returns All user tickets.
      */
-    allUserTicketsByUserId(id) {
+    allOpenTicketsUserByUserId(id) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT *
                          FROM ticket
-                         WHERE id_utente = ?`;
+                         WHERE id_utente = ?
+                           AND (stato = 'Pending' OR stato = 'Waiting Transfer')`;
 
             this.open();
             db.all(sql, [id], (err, rows) => {
@@ -247,9 +248,9 @@ class DataBase {
      */
     updateCloseDateTicket(ticket_id, data) {
         return new Promise((resolve, reject) => {
-           const sql = `UPDATE ticket
-                        SET chiusura_ticket = ?
-                        WHERE id = ?`;
+            const sql = `UPDATE ticket
+                         SET chiusura_ticket = ?
+                         WHERE id = ?`;
 
             this.open();
             db.run(sql, [data, ticket_id], (err, row) => {
@@ -305,17 +306,17 @@ class DataBase {
 
     closedTicketsUser(user_id) {
         return new Promise((resolve, reject) => {
-           const sql = `SELECT t.id, t.stato, t.descrizione, t.chiusura_ticket
-                        FROM ticket t
-                        WHERE t.chiusura_ticket NOTNULL AND t.id_utente = ? AND (t.stato = 'Cancelled' OR t.stato = 'Closed' OR t.stato = 'Resolved')
-                        ORDER BY t.chiusura_ticket ASC`;
+            const sql = `SELECT t.id, t.stato, t.descrizione, t.chiusura_ticket
+                         FROM ticket t
+                         WHERE t.chiusura_ticket NOTNULL AND t.id_utente = ? AND (t.stato = 'Cancelled' OR t.stato = 'Closed' OR t.stato = 'Resolved')
+                         ORDER BY t.chiusura_ticket ASC`;
 
-           this.open();
-           db.all(sql, [user_id], (err, row) => {
-               if (err) throw reject(err);
-               resolve(row);
-           });
-           this.close();
+            this.open();
+            db.all(sql, [user_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
         });
     }
 
@@ -326,18 +327,18 @@ class DataBase {
      */
     resolvedTickets(staff_id) {
         return new Promise((resolve, reject) => {
-           const sql =  `SELECT g.id_ticket, u.email, t.chiusura_ticket
+            const sql = `SELECT g.id_ticket, u.email, t.chiusura_ticket
                          FROM gestisce g
                                   INNER JOIN ticket t ON g.id_ticket = t.id
                                   INNER JOIN utente u ON u.id = t.id_utente
                          WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ? AND t.stato = 'Resolved'`;
 
-           this.open();
-           db.all(sql, [staff_id], (err, row) => {
-               if (err) throw reject(err);
-               resolve(row);
-           });
-           this.close();
+            this.open();
+            db.all(sql, [staff_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
         });
     }
 
@@ -348,7 +349,7 @@ class DataBase {
      */
     closedTickets(staff_id) {
         return new Promise((resolve, reject) => {
-            const sql =  `SELECT g.id_ticket, u.email, t.chiusura_ticket
+            const sql = `SELECT g.id_ticket, u.email, t.chiusura_ticket
                          FROM gestisce g
                                   INNER JOIN ticket t ON g.id_ticket = t.id
                                   INNER JOIN utente u ON u.id = t.id_utente
@@ -370,11 +371,11 @@ class DataBase {
      */
     cancelledTickets(staff_id) {
         return new Promise((resolve, reject) => {
-            const sql =  `SELECT g.id_ticket, u.email, t.chiusura_ticket
-                          FROM gestisce g
-                                   INNER JOIN ticket t ON g.id_ticket = t.id
-                                   INNER JOIN utente u ON u.id = t.id_utente
-                          WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ? AND t.stato = 'Cancelled'`;
+            const sql = `SELECT g.id_ticket, u.email, t.chiusura_ticket
+                         FROM gestisce g
+                                  INNER JOIN ticket t ON g.id_ticket = t.id
+                                  INNER JOIN utente u ON u.id = t.id_utente
+                         WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ? AND t.stato = 'Cancelled'`;
 
             this.open();
             db.all(sql, [staff_id], (err, row) => {
@@ -405,16 +406,18 @@ class DataBase {
 
     invalidTicketText(text) {
         return new Promise((resolve, reject) => {
-           const sql =  `SELECT COUNT(*) AS invalid_text
+            const sql = `SELECT COUNT(*) AS invalid_text
                          FROM ticket t
-                         WHERE t.descrizione = ? AND t.stato = 'Cancelled' AND t.chiusura_ticket NOTNULL`;
+                         WHERE t.descrizione = ?
+                           AND t.stato = 'Cancelled'
+                           AND t.chiusura_ticket NOTNULL`;
 
-           this.open();
-           db.get(sql, [text], (err, row) => {
-               if (err) throw reject(err);
-               resolve(row);
-           });
-           this.close();
+            this.open();
+            db.get(sql, [text], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
         });
     }
 
@@ -425,46 +428,46 @@ class DataBase {
      */
     numberOfClosedTickets(staff_id) {
         return new Promise((resolve, reject) => {
-           const sql = `SELECT COUNT(*) AS closed_tickets
-                        FROM gestisce g
-                                 INNER JOIN ticket t ON g.id_ticket = t.id
-                        WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ?`;
+            const sql = `SELECT COUNT(*) AS closed_tickets
+                         FROM gestisce g
+                                  INNER JOIN ticket t ON g.id_ticket = t.id
+                         WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ?`;
 
-           this.open();
-           db.get(sql, [staff_id], (err, row) => {
-               if (err) throw reject(err);
-               resolve(row);
-           });
-           this.close();
+            this.open();
+            db.get(sql, [staff_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
         });
     }
 
     numClosedTicketsByStatusByStaffUser(staff_id) {
         return new Promise((resolve, reject) => {
-           const sql =  `SELECT t.stato, COUNT(*) AS closed_tickets
+            const sql = `SELECT t.stato, COUNT(*) AS closed_tickets
                          FROM gestisce g
                                   INNER JOIN ticket t ON g.id_ticket = t.id
                          WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ?
                          GROUP BY t.stato`;
-           this.open();
-           db.all(sql, [staff_id], (err, row) => {
-               if (err) throw reject(err);
-               resolve(row);
-           });
-           this.close();
+            this.open();
+            db.all(sql, [staff_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
         });
     }
 
     closedTicketsLastMonthByStaffUser(staff_id) {
         return new Promise((resolve, reject) => {
-           const sql =  `SELECT strftime('%m', datetime(t.chiusura_ticket, 'unixepoch')) AS month, COUNT(*) AS num_closed_tickets
+            const sql = `SELECT strftime('%m', datetime(t.chiusura_ticket, 'unixepoch')) AS month, COUNT(*) AS num_closed_tickets
                          FROM gestisce g
                              INNER JOIN ticket t
                          ON g.id_ticket = t.id
                          WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ?
                          GROUP BY month`;
 
-           this.open();
+            this.open();
             db.all(sql, [staff_id], (err, row) => {
                 if (err) throw reject(err);
                 resolve(row);
@@ -497,87 +500,88 @@ class DataBase {
 
     allUser() {
         return new Promise((resolve, reject) => {
-           const sql = `SELECT u.email,
-                               u.tipo,
-                               (SELECT COUNT(*)
-                                FROM ticket t
-                                         INNER JOIN gestisce g ON t.id = g.id_ticket
-                                WHERE g.id_admin = u.id
-                                  AND (t.chiusura_ticket IS NOT NULL AND
-                                       (t.stato = 'Closed' OR t.stato = 'Cancelled' OR t.stato = 'Resolved')))  AS closed_tickets,
-                               (SELECT COUNT(*)
-                                FROM ticket t2
-                                WHERE t2.id_utente = u.id
-                                  AND u.tipo = 'utente')                                                        AS opened_tickets
-                        FROM utente u
-                        GROUP BY u.email, u.tipo
-                        ORDER BY u.tipo ASC, u.email ASC`;
+            const sql = `SELECT u.email,
+                                u.tipo,
+                                (SELECT COUNT(*)
+                                 FROM ticket t
+                                          INNER JOIN gestisce g ON t.id = g.id_ticket
+                                 WHERE g.id_admin = u.id
+                                   AND (t.chiusura_ticket IS NOT NULL AND
+                                        (t.stato = 'Closed' OR t.stato = 'Cancelled' OR t.stato = 'Resolved'))) AS closed_tickets,
+                                (SELECT COUNT(*)
+                                 FROM ticket t2
+                                 WHERE t2.id_utente = u.id
+                                   AND u.tipo = 'utente')                                                       AS opened_tickets
+                         FROM utente u
+                         GROUP BY u.email, u.tipo
+                         ORDER BY u.tipo ASC, u.email ASC`;
 
-           this.open();
-           db.all(sql, [], (err, row) => {
-               if (err) throw reject(err);
-               resolve(row);
-           });
-           this.close();
+            this.open();
+            db.all(sql, [], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
         });
     }
 
     updateUserRole(email, type) {
         return new Promise((resolve, reject) => {
-           const sql =  `UPDATE utente
+            const sql = `UPDATE utente
                          SET tipo = ?
                          WHERE email = ?`;
 
-           this.open();
-           db.run(sql, [type, email], (err, row) => {
+            this.open();
+            db.run(sql, [type, email], (err, row) => {
                 if (err) throw reject(err);
                 resolve(row);
-           });
-           this.close();
+            });
+            this.close();
         });
     }
 
     searchUserByUserEmail(email) {
         return new Promise((resolve, reject) => {
-           const sql =  `SELECT email, tipo
+            const sql = `SELECT email, tipo
                          FROM utente
                          WHERE email LIKE '%' || ? || '%'
                          ORDER BY email ASC`;
 
-           this.open();
-           db.all(sql, [email], (err, row) => {
-               if (err) throw reject(err);
-               resolve(row);
-           });
-           this.close();
+            this.open();
+            db.all(sql, [email], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
         });
     }
 
     getRoles() {
         return new Promise((resolve, reject) => {
-           const sql = `SELECT tipo FROM permessi`;
+            const sql = `SELECT tipo
+                         FROM permessi`;
 
-           this.open();
-           db.all(sql, [], (err, row) => {
-               if (err) throw reject(err);
-               resolve(row);
-           });
-           this.close();
+            this.open();
+            db.all(sql, [], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
         });
     }
 
     getUserRole(email) {
         return new Promise((resolve, reject) => {
-           const sql = `SELECT u.tipo
-                        FROM utente u
-                        WHERE u.email = ?`;
+            const sql = `SELECT u.tipo
+                         FROM utente u
+                         WHERE u.email = ?`;
 
-           this.open();
-           db.get(sql, [email], (err, row) => {
-               if (err) throw reject(err);
-               resolve(row);
-           });
-           this.close();
+            this.open();
+            db.get(sql, [email], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
         });
     }
 
@@ -623,17 +627,66 @@ class DataBase {
         });
     }
 
-    // getRole(user_id) {
-    //     return new Promise((resolve, reject) => {
-    //         const sql = `SELECT tipo FROM utente WHERE id = ?`;
-    //         this.open();
-    //         db.get(sql, [user_id], (err, row) => {
-    //             if (err) throw reject(err);
-    //             resolve(row);
-    //         });
-    //         this.close();
-    //     });
-    // }
+    otpCodeAssigment(id, otp, current_date, uuid) {
+        return new Promise((resolve, reject) => {
+            const sql = `INSERT INTO otp(user_id, otp, date, uuid)
+                         VALUES (?, ?, ?, ?)`;
+
+            this.open();
+            db.run(sql, [id, otp, current_date, uuid], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    getUserIdByUuid(uuid) {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT o.user_id, o.otp, o.date
+                         FROM otp o
+                         WHERE uuid = ?
+                         ORDER BY date DESC
+                             LIMIT 1`
+
+            this.open();
+            db.get(sql, [uuid], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    updateUserPasswordById(user_id, password) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE utente
+                         SET password = ?
+                         WHERE id = ?`;
+
+            this.open();
+            db.run(sql, [password, user_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    getUserId(email) {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT id
+                         FROM utente
+                         WHERE email = ?`;
+
+            this.open();
+            db.get(sql, [email], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
 
     /**
      * Return all topics from database.
