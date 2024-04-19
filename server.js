@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config(); // load .env file
 }
-const logger = require('morgan');
+
 const express = require('express');
 const flash = require('connect-flash');
 const app = express();
@@ -33,13 +33,11 @@ const adminUpdateUserRouter = require('./routes/update_user');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 // const db = require('./db');
 const DataBase = require("./db"); // db.js
 const db = new DataBase();
 const session = require('express-session');
-const SQLiteStore = require('connect-sqlite3')(session);
 const path = require('path');
 
 //----------------------------------------------------------------------------------------------------
@@ -77,7 +75,7 @@ passport.use(new LocalStrategy({
         const user = await db.findUserByEmail(email);
         // user not found
         if (!user) return done(null, false);
-
+        // hashing password
         bcrypt.compare(password, user.password, function (err, result) {
             if (err) return done(err);
             // password matched
@@ -136,7 +134,7 @@ app.use('/dashboard', ticketDashboardRouter);
 app.use('/super-admin', superAdminRouter);
 app.use('/update-user', adminUpdateUserRouter);
 
-// Gestione del logout
+// logout handler
 app.post('/logout', function (req, res, next) {
     req.logout(function (err) {
         if (err) {

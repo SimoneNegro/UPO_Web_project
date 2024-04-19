@@ -11,7 +11,7 @@ router.get('/', async function (req, res, next) {
             return res.redirect('/');
         }
         const type = await db.getUserRole(req.user.email);
-        return res.render('user_dashboard', { title: 'Dashboard', user: req.user, type: type });
+        return res.render('user_dashboard', {title: 'Dashboard', user: req.user, type: type});
     } catch (err) {
         console.error(err);
         // TODO

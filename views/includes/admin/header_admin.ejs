@@ -49,7 +49,7 @@
                         <% if(title == "Dashboard" ) { %>
                             <a class="nav-link static-link">Welcome <%= user.email %></a>
                         <% } else { %>
-                            <a class="nav-link link" href="/user-dashboard">Welcome <%= user.email %></a>
+                                <a class="nav-link link" href="/user-dashboard">Welcome <%= user.email %></a>
                         <% } %>
                         <form action="/logout" method="post">
                             <button class="nav-link link">Log out</button>

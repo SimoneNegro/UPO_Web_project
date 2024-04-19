@@ -1,7 +1,7 @@
 // function that is used to change password visibility
 /**
  * Show or hide password field.
- * @param {*} op 
+ * @param {*} op
  */
 function togglePasswordVisibility(op) {
     const btn = $(op);
@@ -11,8 +11,7 @@ function togglePasswordVisibility(op) {
     if (btn.text() == "Show") {
         txt.type = "text";
         btn.text("Hide");
-    }
-    else {
+    } else {
         txt.type = "password";
         btn.text("Show");
     }
@@ -28,7 +27,7 @@ $(() => {
 
     messageEle.on('input', function (e) {
         const target = e.target;
-    
+
         // Count the current number of characters
         const currentLength = target.value.length;
 

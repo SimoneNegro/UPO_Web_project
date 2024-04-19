@@ -3,7 +3,7 @@ const router = express.Router();
 
 // privacy_policy root
 router.get('/', function (req, res, next) {
-    res.render('privacy_policy', { title: 'Privacy Policy', user: req.user });
+    return res.render('privacy_policy', {title: 'Privacy Policy', user: req.user});
 });
 
 module.exports = router;
