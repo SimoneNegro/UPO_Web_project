@@ -21,6 +21,7 @@ const myTicketsRouter = require('./routes/my_tickets');
 const otpRouter = require('./routes/otp');
 const closedUserTicketsRouter = require('./routes/closed_tickets_user');
 const userDashboardRouter = require('./routes/user_dashboard');
+const changePasswordRouter = require('./routes/change_password');
 // staff routes
 const adminRouter = require('./routes/admin');
 const closedTicketsRouter = require('./routes/closed_tickets');
@@ -57,10 +58,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-// sessione configuration
+// session configuration
 app.use(session({
     secret: config.secret,
-    resave: false,
+    resave: true,
     saveUninitialized: false
 }));
 
@@ -124,6 +125,7 @@ app.use('/my-tickets', myTicketsRouter);
 app.use('/otp', otpRouter);
 app.use('/closed-tickets', closedUserTicketsRouter);
 app.use('/user-dashboard', userDashboardRouter);
+app.use('/change-password', changePasswordRouter);
 
 // staff routes
 app.use('/admin', adminRouter);

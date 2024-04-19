@@ -13,7 +13,7 @@ router.get('/', async function (req, res, next) {
         if (num_tickets == 0) { return res.render('my_tickets', { title: "My Tickets", user: req.user, num_tickets: num_tickets }); }
 
         // get all user tickets
-        const tickets = await db.allUserTicketsByUserId(req.user.id);
+        const tickets = await db.allOpenTicketsUserByUserId(req.user.id);
 
         return res.render('my_tickets', { title: "My Tickets", user: req.user, num_tickets: num_tickets, tickets: tickets });
     } catch (err) {
