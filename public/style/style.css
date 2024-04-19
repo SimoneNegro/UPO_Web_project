@@ -57,6 +57,12 @@ TEXT
     color: var(--error-color) !important;
 }
 
+.error-already-registred {
+    color: var(--error-color) !important;
+}
+.error-username-password {
+    color: var(--error-color) !important;
+}
 /* =================================================================
 TITLE
 ================================================================= */
