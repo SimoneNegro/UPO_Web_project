@@ -17,6 +17,10 @@ h1, h2, h3, h4, h5, span {
     color: var(--secondary) !important;
 }
 
+.bigger-font {
+    font-size: 1.3rem !important;
+}
+
 .blue {
     color: var(--secondary) !important;
 }
