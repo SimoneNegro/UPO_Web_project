@@ -1,0 +1,97 @@
+<%- include('../includes/head.ejs') %>
+
+<body>
+<!-- HEADER -->
+<%- include('../includes/super_admin/super_admin_header.ejs') %>
+<!-- CONTENT -->
+<main>
+    <div class="container">
+        <h1>Update frequent question</h1>
+        <section>
+            <h3>Insert new question</h3>
+            <form action="/update-frequent-question" method="post">
+                <div class="container text-left pb-5 ps-0 pe-3">
+                    <!-- TOPIC FIELD -->
+                    <section class="mb-4">
+                        <label class="bold me-3" for="topic">Topics: </label>
+                        <select class="shadow-box border select-style" name="topic" id="topic" required>
+                            <option class="option-style" value=""
+                                    title="Choose a topic to describe the type of issue you are experiencing.">
+                                -- choose topic --
+                            </option>
+                            <% all_topics.forEach(function(topic) { %>
+                                <option class="option-style" value="<%= topic.nome %>"
+                                        title="<%= topic.descrizione %>">
+                                    <%= topic.nome %>
+                                </option>
+                            <% }); %>
+                        </select>
+                    </section>
+                    <!-- QUESTION TITLE -->
+                    <section class="mb-4">
+                        <p><label class="bold" for="title">Title:</label></p>
+                        <textarea class="form-control max-width area-style border" name="title"
+                                  id="title" rows="1" placeholder="Insert title..." required></textarea>
+                    </section>
+                    <!-- QUESTION DESCRIPTION -->
+                    <section class="mb-4">
+                        <p><label class="bold" for="description">Description:</label></p>
+                        <textarea class="form-control max-width area-style border" name="description"
+                                  id="description" rows="12" placeholder="Insert description..." required></textarea>
+                    </section>
+                    <!-- SEND TICKET BUTTON -->
+                    <button class="send-button font" id="new-ticket" type="submit">Insert question
+                    </button>
+                </div>
+            </form>
+        </section>
+        <section>
+            <h3>All questions</h3>
+            <% if(all_questions !== undefined) { %>
+                <% if(all_questions.length === 0) { %>
+                    <p>No questions inserted.</p>
+                <% } else { %>
+                    <div class="container text-left pb-5 ps-0 pe-3">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col"><h5>Topic</h5></th>
+                                <th scope="col"><h5>Description</h5></th>
+                                <th scope="col"><h5>Title</h5></th>
+                                <th scope="col"><h5>Admin id</h5></th>
+                                <th scope="col"><h5>Delete question</h5></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <% all_questions.forEach(function(question) { %>
+                                <tr>
+                                    <th scope="row"><%= question.topic %></th>
+                                    <th scope="row"><%= question.descrizione %></th>
+                                    <th scope="row"><%= question.titolo %></th>
+                                    <th scope="row"><%= question.admin_id %></th>
+                                    <form action="/update-frequent-question/<%= question.id %>?_method=delete" method="post">
+                                        <th scope="row">
+                                            <button class="send-button font" id="new-ticket" type="submit">Delete
+                                                question
+                                            </button>
+                                        </th>
+                                    </form>
+                                </tr>
+                            <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } %>
+            <% } else { %>
+                <p>No questions inserted.</p>
+            <% } %>
+        </section>
+    </div>
+</main>
+<!-- FOOTER -->
+<%- include('../includes/super_admin/super_admin_footer.ejs') %>
+<!-- SCRIPTS-->
+<%- include('../includes/scripts.ejs') %>
+</body>
+
+</html>

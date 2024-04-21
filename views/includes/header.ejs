@@ -33,6 +33,11 @@
                     <% } else { %>
                         <a class="nav-link link" href="/closed-tickets">Closed tickets</a>
                     <% } %>
+                    <% if(title == "Frequent Questions" ) { %>
+                        <a class="static-link">Frequent questions</a>
+                    <% } else { %>
+                        <a class="link" href="/frequent-questions">Frequent questions</a>
+                    <% } %>
                     <% if(user) { %>
                         <% if(user.tipo == 'admin') { %>
                             <a class="nav-link link" href="/super-admin">Admin page</a>
@@ -50,9 +55,9 @@
                         <% } else { %>
                             <a class="nav-link link" href="/user-dashboard">Welcome <%= user.email %></a>
                         <% } %>
-                            <form action="/logout" method="post">
-                                <button class="nav-link link">Log out</button>
-                            </form>
+                        <form action="/logout" method="post">
+                            <button class="nav-link link">Log out</button>
+                        </form>
                     <% } %>
                 </div>
             </div>
