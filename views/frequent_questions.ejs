@@ -6,161 +6,77 @@
 <!-- CONTENT -->
 <main>
     <div class="container">
-        <section>
+        <section class="mb-4">
             <h2 class="mb-4 text-center">Frequently Asked Question</h2>
             <h4 class="mb-4 text-center">Software Issue</h4>
-            <div class="row justify-content-center">
-                <div class="col-sm-6">
-                    <div class="card mb-4 shadow">
-                        <div class="card-header blue-bg pt-3 text-center">
-                            <h5 class="card-title">My computer won't turn on</h5>
+            <% if(sw_question !== undefined) { %>
+                <% if(sw_question.length === 0) { %>
+                    <p class="text-center">There are no software question.</p>
+                <% } else { %>
+                    <div class="row justify-content-center">
+                        <% sw_question.forEach(function(sw) { %>
+                        <div class="col-sm-6">
+                            <div class="card mb-4 shadow">
+                                <div class="card-header blue-bg pt-3 text-center">
+                                    <h5 class="card-title">
+                                        <%= sw.titolo %>
+                                    </h5>
+                                </div>
+                                <div class="card-body d-flex justify-content-center">
+                                    <p class="nl"><%= sw.descrizione %></p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body d-flex justify-content-center">
-                            <ul>
-                                <li>Ensure the computer is plugged in and turned on at the power source.</li>
-                                <li>Press the power button and wait 30 seconds.</li>
-                                <li>If the computer still doesn't turn on, there might be a hardware issue. Contact
-                                    technical support.
-                                </li>
-                            </ul>
-                        </div>
+                        <% }); %>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="card mb-4 shadow">
-                        <div class="card-header blue-bg pt-3">
-                            <h5 class="card-title">My computer won't turn on</h5>
-                        </div>
-                        <div class="card-body">
-                            <ul>
-                                <li>Ensure the computer is plugged in and turned on at the power source.</li>
-                                <li>Press the power button and wait 30 seconds.</li>
-                                <li>If the computer still doesn't turn on, there might be a hardware issue. Contact
-                                    technical support.
-                                </li>
-                            </ul>
-                        </div>
+                <% } %>
+            <% } %>
+            <h4 class="mb-4 text-center">Hardware Issue</h4>
+            <% if(hw_question !== undefined) { %>
+                <% if(hw_question.length === 0) { %>
+                    <p class="text-center">There are no hardware question.</p>
+                <% } else { %>
+                    <div class="row justify-content-center">
+                        <% hw_question.forEach(function(hw) { %>
+                            <div class="col-sm-6">
+                                <div class="card mb-4 shadow">
+                                    <div class="card-header blue-bg pt-3 text-center">
+                                        <h5 class="card-title">
+                                            <%= hw.titolo %>
+                                        </h5>
+                                    </div>
+                                    <div class="card-body d-flex justify-content-center">
+                                        <p class="nl"><%= hw.descrizione %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
                     </div>
-                </div>
-                <div class="col-sm-8">
-                    <div class="card mb-4 shadow">
-                        <div class="card-header blue-bg pt-3">
-                            <h5 class="card-title">My computer won't turn on</h5>
-                        </div>
-                        <div class="card-body">
-                            <ul>
-                                <li>Ensure the computer is plugged in and turned on at the power source.</li>
-                                <li>Press the power button and wait 30 seconds.</li>
-                                <li>If the computer still doesn't turn on, there might be a hardware issue. Contact
-                                    technical support.
-                                </li>
-                            </ul>
-                        </div>
+                <% } %>
+            <% } %>
+            <h4 class="mb-4 text-center">Other Issue</h4>
+            <% if(o_question !== undefined) { %>
+                <% if(o_question.length === 0) { %>
+                    <p class="text-center">There are no hardware question.</p>
+                <% } else { %>
+                    <div class="row justify-content-center">
+                        <% o_question.forEach(function(o) { %>
+                            <div class="col-sm-6">
+                                <div class="card mb-4 shadow">
+                                    <div class="card-header blue-bg pt-3 text-center">
+                                        <h5 class="card-title">
+                                            <%= o.titolo %>
+                                        </h5>
+                                    </div>
+                                    <div class="card-body d-flex justify-content-center">
+                                        <p class="nl"><%= o.descrizione %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
                     </div>
-                </div>
-            </div>
-            <h4 class="mb-4 text-center">Software Issue</h4>
-            <div class="row justify-content-center">
-                <div class="col-sm-10">
-                    <div class="card mb-4 shadow">
-                        <div class="card-header blue-bg pt-3">
-                            <h5 class="card-title">My computer won't turn on</h5>
-                        </div>
-                        <div class="card-body">
-                            <ul>
-                                <li>Ensure the computer is plugged in and turned on at the power source.</li>
-                                <li>Press the power button and wait 30 seconds.</li>
-                                <li>If the computer still doesn't turn on, there might be a hardware issue. Contact
-                                    technical support.
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-10">
-                    <div class="card mb-4 shadow">
-                        <div class="card-header blue-bg pt-3">
-                            <h5 class="card-title">My computer won't turn on</h5>
-                        </div>
-                        <div class="card-body">
-                            <ul>
-                                <li>Ensure the computer is plugged in and turned on at the power source.</li>
-                                <li>Press the power button and wait 30 seconds.</li>
-                                <li>If the computer still doesn't turn on, there might be a hardware issue. Contact
-                                    technical support.
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-10">
-                    <div class="card mb-4 shadow">
-                        <div class="card-header blue-bg pt-3">
-                            <h5 class="card-title">My computer won't turn on</h5>
-                        </div>
-                        <div class="card-body">
-                            <ul>
-                                <li>Ensure the computer is plugged in and turned on at the power source.</li>
-                                <li>Press the power button and wait 30 seconds.</li>
-                                <li>If the computer still doesn't turn on, there might be a hardware issue. Contact
-                                    technical support.
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <h4 class="mb-4 text-center">Software Issue</h4>
-            <div class="row justify-content-center">
-                <div class="col-sm-10">
-                    <div class="card mb-4 shadow">
-                        <div class="card-header blue-bg pt-3">
-                            <h5 class="card-title">My computer won't turn on</h5>
-                        </div>
-                        <div class="card-body">
-                            <ul>
-                                <li>Ensure the computer is plugged in and turned on at the power source.</li>
-                                <li>Press the power button and wait 30 seconds.</li>
-                                <li>If the computer still doesn't turn on, there might be a hardware issue. Contact
-                                    technical support.
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-10">
-                    <div class="card mb-4 shadow">
-                        <div class="card-header blue-bg pt-3">
-                            <h5 class="card-title">My computer won't turn on</h5>
-                        </div>
-                        <div class="card-body">
-                            <ul>
-                                <li>Ensure the computer is plugged in and turned on at the power source.</li>
-                                <li>Press the power button and wait 30 seconds.</li>
-                                <li>If the computer still doesn't turn on, there might be a hardware issue. Contact
-                                    technical support.
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-10">
-                    <div class="card mb-4 shadow">
-                        <div class="card-header blue-bg pt-3">
-                            <h5 class="card-title">My computer won't turn on</h5>
-                        </div>
-                        <div class="card-body">
-                            <ul>
-                                <li>Ensure the computer is plugged in and turned on at the power source.</li>
-                                <li>Press the power button and wait 30 seconds.</li>
-                                <li>If the computer still doesn't turn on, there might be a hardware issue. Contact
-                                    technical support.
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <% } %>
+            <% } %>
         </section>
     </div>
 </main>

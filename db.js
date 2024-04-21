@@ -553,6 +553,57 @@ class DataBase {
     }
 
     /**
+     * Return all software question.
+     * @returns {Promise<unknown>} All software question.
+     */
+    softwareQuestion() {
+        return new Promise((resolve, reject) => {
+           const sql = `SELECT descrizione, titolo FROM domande_frequenti WHERE topic = 'Software'`;
+
+           this.open();
+           db.all(sql, [], (err, row) => {
+              if (err) throw reject(err);
+              resolve(row);
+           });
+           this.close();
+        });
+    }
+
+    /**
+     * Return all hardware question.
+     * @returns {Promise<unknown>} All software question.
+     */
+    hardwareQuestion() {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT descrizione, titolo FROM domande_frequenti WHERE topic = 'Hardware'`;
+
+            this.open();
+            db.all(sql, [], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    /**
+     * Return all other question.
+     * @returns {Promise<unknown>} All software question.
+     */
+    otherQuestion() {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT descrizione, titolo FROM domande_frequenti WHERE topic = 'Other'`;
+
+            this.open();
+            db.all(sql, [], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    /**
      * Add new frequent question.
      * @param {text} topic Question topic.
      * @param {text} description Question description.
