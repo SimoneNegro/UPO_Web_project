@@ -22,6 +22,7 @@ const otpRouter = require('./routes/otp');
 const closedUserTicketsRouter = require('./routes/closed_tickets_user');
 const userDashboardRouter = require('./routes/user_dashboard');
 const changePasswordRouter = require('./routes/change_password');
+const frequentQuestionRouter = require('./routes/frequent_questions');
 // staff routes
 const adminRouter = require('./routes/admin');
 const closedTicketsRouter = require('./routes/closed_tickets');
@@ -30,6 +31,7 @@ const ticketDashboardRouter = require('./routes/dashboard');
 // admin routes
 const superAdminRouter = require('./routes/super_admin');
 const adminUpdateUserRouter = require('./routes/update_user');
+const adminUpdateFrequentQuestionRouter = require('./routes/update_frequent_question');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -124,6 +126,7 @@ app.use('/otp', otpRouter);
 app.use('/closed-tickets', closedUserTicketsRouter);
 app.use('/user-dashboard', userDashboardRouter);
 app.use('/change-password', changePasswordRouter);
+app.use('/frequent-questions', frequentQuestionRouter);
 
 // staff routes
 app.use('/admin', adminRouter);
@@ -133,6 +136,7 @@ app.use('/dashboard', ticketDashboardRouter);
 // admin routes
 app.use('/super-admin', superAdminRouter);
 app.use('/update-user', adminUpdateUserRouter);
+app.use('/update-frequent-question', adminUpdateFrequentQuestionRouter);
 
 // logout handler
 app.post('/logout', function (req, res, next) {

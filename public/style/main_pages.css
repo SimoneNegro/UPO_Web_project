@@ -265,3 +265,7 @@ select.decorated option:hover {
 .logo-size {
     width: 5rem;
 }
+
+.nl {
+    white-space: pre-wrap;
+}

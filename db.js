@@ -1,4 +1,5 @@
 // I use DBeaver with a sqlite database
+const {text} = require("express");
 const sqlite3 = require('sqlite3').verbose();
 let db;
 
@@ -508,6 +509,115 @@ class DataBase {
 
             this.open();
             db.get(sql, [staff_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    /**
+     * Return all frequent questions and all parameter.
+     * @returns {Promise<unknown>} Return all frequent questions.
+     */
+    allFrequentQuestions() {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT *
+                         FROM domande_frequenti`;
+
+            this.open();
+            db.all(sql, [], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    /**
+     * Delete a specif question.
+     * @param {int} question_id Question id.
+     * @returns {Promise<unknown>} Returns true if successful or false if failed.
+     */
+    deleteQuestion(question_id) {
+        return new Promise((resolve, reject) => {
+           const sql = `DELETE FROM domande_frequenti WHERE id = ?`;
+
+           this.open();
+           db.run(sql, [question_id], (err, row) => {
+               if (err) throw reject(err);
+               resolve(row);
+           });
+           this.close();
+        });
+    }
+
+    /**
+     * Return all software question.
+     * @returns {Promise<unknown>} All software question.
+     */
+    softwareQuestion() {
+        return new Promise((resolve, reject) => {
+           const sql = `SELECT descrizione, titolo FROM domande_frequenti WHERE topic = 'Software'`;
+
+           this.open();
+           db.all(sql, [], (err, row) => {
+              if (err) throw reject(err);
+              resolve(row);
+           });
+           this.close();
+        });
+    }
+
+    /**
+     * Return all hardware question.
+     * @returns {Promise<unknown>} All software question.
+     */
+    hardwareQuestion() {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT descrizione, titolo FROM domande_frequenti WHERE topic = 'Hardware'`;
+
+            this.open();
+            db.all(sql, [], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    /**
+     * Return all other question.
+     * @returns {Promise<unknown>} All software question.
+     */
+    otherQuestion() {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT descrizione, titolo FROM domande_frequenti WHERE topic = 'Other'`;
+
+            this.open();
+            db.all(sql, [], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    /**
+     * Add new frequent question.
+     * @param {text} topic Question topic.
+     * @param {text} description Question description.
+     * @param {text} title Question title.
+     * @param {int} admin_id Admin id.
+     * @returns {Promise<unknown>} Returns true if successful or false if failed.
+     */
+    addNewQuestion(topic, description, title, admin_id) {
+        return new Promise((resolve, reject) => {
+            const sql = `INSERT INTO domande_frequenti(topic, descrizione, titolo, admin_id)
+                         VALUES (?, ?, ?, ?)`;
+
+            this.open();
+            db.run(sql, [topic, description, title, admin_id], (err, row) => {
                 if (err) throw reject(err);
                 resolve(row);
             });
