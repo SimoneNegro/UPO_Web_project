@@ -40,17 +40,28 @@ Once you have done you have to configure the `.env` file (you can create this fi
 
 After that, run `server.js` and that's it. You can run this file with terminal to by digit `node server`.
 
-## How to use the project
+## How to move inside the project
 
-Nelle cartelle sono presenti:
+The main folder contains other folders and files:
 
-- `databases`: database utili al back-end del programma.
-- `models`: definisce il DAO, ossia fornisce un'interfaccia unificata per l'accesso ai dati;
-- public:
-  - `js`: definisce funzioni utili al front-end;
-  - `style`: definisce lo stile del front-end;
-- `routes`: definisce i percorsi e i metodi HTTP, andando a gestire il back-end;
-- `views`: definisce le pagine vere e proprie del sito web.
+- `databases`: contain a database test;
+- `public`: this folder contains:
+  - `js`: define front-end function;
+  - `style`: define front-end style;
+- `routes`: define file routes and HTTP method to handle the backend;
+- `views`: define website pages.
+
+The main folder contains `.env` file and `server.js` file, that is one of most important file.
+
+.
+├── `databases`                   # Contain a database test.
+├── `public`
+│   ├── `js`                      # Define front-end function.
+│   └── `style`                   # Define front-end style.
+├── `routes`                      # Define file routes and HTTP method to handle the backend.
+├── `views`                       # Define website pages.
+├── `.env`                        # Contain secret environment variable
+└── `server.js`                   # Call all `routes` pages and setup project structure.
 
 ## Dettagli
 
