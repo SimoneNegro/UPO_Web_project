@@ -53,6 +53,7 @@ The main folder contains other folders and files:
 
 The main folder contains `.env` file and `server.js` file, that is one of most important file.
 
+``` bash
 .
 ├── `databases`                   # Contain a database test.
 ├── `public`
@@ -62,6 +63,7 @@ The main folder contains `.env` file and `server.js` file, that is one of most i
 ├── `views`                       # Define website pages.
 ├── `.env`                        # Contain secret environment variable
 └── `server.js`                   # Call all `routes` pages and setup project structure.
+```
 
 ## Dettagli
 
