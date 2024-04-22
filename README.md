@@ -42,16 +42,7 @@ After that, run `server.js` and that's it. You can run this file with terminal t
 
 ## How to move inside the project
 
-The main folder contains other folders and files:
-
-- `databases`: contain a database test;
-- `public`: this folder contains:
-  - `js`: define front-end function;
-  - `style`: define front-end style;
-- `routes`: define file routes and HTTP method to handle the backend;
-- `views`: define website pages.
-
-The main folder contains `.env` file and `server.js` file, that is one of most important file.
+The main folder contains:
 
 ``` bash
 .
