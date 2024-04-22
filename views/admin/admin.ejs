@@ -9,15 +9,19 @@
         <h1>Welcome <%= user.email %>!</h1>
         <p>Click <a class="link blue-text" href="/view_tickets">here</a> to start.</p>
         <h3>Dashboard</h3>
-        <div class="container pb-3">
-            <div class="row">
-                <div class="col-sm">
-                    <canvas id="myChart" class="pie-dimension"></canvas>
+        <div class="container pb-3 ps-0">
+            <% if(user.tipo == 'staff') { %>
+                <div class="row">
+                    <div class="col-sm">
+                        <canvas id="myChart" class="pie-dimension"></canvas>
+                    </div>
+                    <div class="col-sm">
+                        <canvas id="lineChartPerMonth" class=""></canvas>
+                    </div>
                 </div>
-                <div class="col-sm">
-                    <canvas id="lineChartPerMonth" class=""></canvas>
-                </div>
-            </div>
+            <% } else { %>
+                <p>Users staff see a pie chart and a line chart.</p>
+            <% } %>
         </div>
     </div>
 </main>
