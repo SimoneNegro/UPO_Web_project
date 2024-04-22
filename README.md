@@ -1,6 +1,22 @@
-# Web
+# Web project
 
-## Premesse
+This is an educational project.
+
+## Description
+
+This web application is a helpdesk. The essential part of this application is to create and manage tickets opened by users.
+
+There are three different users:
+
+- utente: normal users that can navigate through main pages. They can open tickets inside of 'Open ticket' page. They can visualize tickets status (if the tickets are pending or waiting to transfer) and they can also see all their closed tickets.
+- staff: are users that handle all tickets user. They can visualize opened tickets and handle them. They can change tickets status:
+  - waiting to transfer: transfer a ticket to another staff member;
+  - solved: problem solved successfully;
+  - closed: can't solve ticket problem yet;
+  - cancelled: not a real issue.
+  
+  They can also see all closed tickets by themselves and see two different charts to see them progress.
+- admin: are users that
 
 Il sito web è stato realizzato con Node js e i suoi pacchetti.
 
