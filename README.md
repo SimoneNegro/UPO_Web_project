@@ -1,6 +1,6 @@
 # Web project
 
-This is an educational project.
+This is an educational project made from zero to this.
 
 ## Description
 
@@ -16,13 +16,31 @@ There are three different users:
   - cancelled: not a real issue.
   
   They can also see all closed tickets by themselves and see two different charts to see them progress.
-- admin: are users that
+- admin: are users that can navigate through all pages (user and staff pages). They can change users status between user, staff and admin. In addition they can add and remove frequent questions that are shown on frequent questions page.
 
-Il sito web è stato realizzato con Node js e i suoi pacchetti.
+Website backend is built using [Node js](https://nodejs.org/en) and written in [JavaScript](https://www.javascript.com). To create database i used [DBeaver](https://dbeaver.io) with [SQLite](https://www.sqlite.org) DBMS.
 
-Ho deciso di usare file `.ejs` e non `.html` perché permette la gestione dinamica delle pagine web.
+Website frontend is written using [EJS](https://ejs.co).
+
+I used this combination because it was required by the teachers.
 
 Per la realizzazione del DB mi sono appoggiato a DBeaver e ho usato SQLite.
+
+## How to install and run the project
+
+To install and run the project is very simple.
+
+Go to code to install or clone the project.
+
+Once you have done you have to configure the `.env` file (you can create this file directly inside main project folder). You have to configure:
+
+- TOKEN_KEY: you have to generate the token with a random string. After you have generated the string, you must have to crypt it (i used SHA256 encryption algorithm). This token is an environment variable used as a secret key for signing [JWT](https://jwt.io) tokens;
+- MAIL_USERNAME: put an email address that is used for sending OTP code to reset user password;
+- MAIL_PASSWORD: to create this token, you must follow [this guide](https://support.google.com/mail/answer/185833?hl=en) using MAIL_USERNAME mail.
+
+After that, run `server.js` and that's it. You can run this file with terminal to by digit `node server`.
+
+## How to use the project
 
 Nelle cartelle sono presenti:
 
