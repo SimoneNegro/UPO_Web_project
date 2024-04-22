@@ -56,8 +56,6 @@ The main folder contains:
 └── `server.js`                   # Call all `routes` pages and setup project structure.
 ```
 
-## Dettagli
+## Contribute to the project
 
-Per andare a vedere quello che riguarda il front-end, basta andare a vedere le pagine presenti nelle `views`, dove lo stile viene definito nella cartella `style` e tutto ciò che riguarda alcune validazioni o migliori grafiche avanzate, basta guardare la cartella `js`.
-
-La parte più complessa da capire è il back-end. Il file main e più importante è `server.js`.
+If you want to contribute to the project, you are free to contribute by pushing requests. You can already see some open issues that you can work on.
