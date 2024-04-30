@@ -24,8 +24,6 @@ Website frontend is written using [EJS](https://ejs.co).
 
 I used this combination because it was required by the teachers.
 
-Per la realizzazione del DB mi sono appoggiato a DBeaver e ho usato SQLite.
-
 ## How to install and run the project
 
 To install and run the project is very simple.
