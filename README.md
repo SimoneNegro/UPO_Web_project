@@ -38,6 +38,8 @@ Once you have done you have to configure the `.env` file (you can create this fi
 
 After that, run `server.js` and that's it. You can run this file with terminal to by digit `node server`.
 
+Note: "I have created a test database. User emails are visible to everyone, while the passwords are the same for all users and it is: 11111.
+
 ## How to move inside the project
 
 The main folder contains:
