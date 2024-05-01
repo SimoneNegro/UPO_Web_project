@@ -79,7 +79,7 @@ class DataBase {
             const sql = `SELECT COUNT(*) AS num_user_ticket
                          FROM ticket t
                                   INNER JOIN utente u ON t.id_utente = u.id
-                         WHERE u.id = ?`;
+                         WHERE u.id = ? AND (stato = 'Pending' OR stato = 'Waiting Transfer')`;
 
             this.open();
             db.get(sql, [id], (err, row) => {
