@@ -604,6 +604,24 @@ class DataBase {
     }
 
     /**
+     * Return all frequent question.
+     * @param {text} description Frequent question title.
+     * @returns {Promise<unknown>} All frequent questions.
+     */
+    allFrequentQuestionByDescription(description) {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT descrizione, titolo FROM domande_frequenti WHERE titolo LIKE '%' || ? || '%'`;
+
+            this.open();
+            db.all(sql, [description], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    /**
      * Add new frequent question.
      * @param {text} topic Question topic.
      * @param {text} description Question description.

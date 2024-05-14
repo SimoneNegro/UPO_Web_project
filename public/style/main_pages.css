@@ -269,3 +269,7 @@ select.decorated option:hover {
 .nl {
     white-space: pre-wrap;
 }
+
+.margin-auto {
+    margin: auto; 
+}

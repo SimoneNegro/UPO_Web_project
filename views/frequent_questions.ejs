@@ -8,6 +8,43 @@
     <div class="container">
         <section class="mb-4">
             <h2 class="mb-4 text-center">Frequently Asked Question</h2>
+            <section class="text-center">
+                <h4 class="mb-2 text-center">Search a question</h4>
+                <form id="search-quetsion" action="/frequent-questions" method="get">
+                    <section class="mb-4 justify-content-center">
+                        <input class="max-width area-style border form-control margin-auto" name="description"
+                        id="description" type="text" placeholder="Insert a question description...">
+                    </section>
+                    <section>
+                        <button class="send-button font mb-3" id="search-quetsion" type="submit">Search question</button>
+                    </section>
+                </form>
+            </section>
+            <% if (searched_question !== undefined) { %>
+                <% if (searched_question.length === 0) { %>
+                    <p class="error text-center">No frequent question found.<%= searched_question %> </p>
+                <% } else { %>
+                    <p class="check text-center">Question found: <%= searched_question.length %></p>
+                    <div class="container ps-0 pe-3">
+                        <div class="row justify-content-center">
+                            <% searched_question.forEach(function(all_searched_question) { %>
+                                <div class="col-sm-6">
+                                    <div class="card mb-4 shadow">
+                                        <div class="card-header blue-bg pt-3 text-center">
+                                            <h5 class="card-title">
+                                                <%= all_searched_question.titolo %>
+                                            </h5>
+                                        </div>
+                                        <div class="card-body d-flex justify-content-center">
+                                            <p class="nl"><%= all_searched_question.descrizione %></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        </div>
+                    </div>
+                <% } %>
+            <% } %>
             <h4 class="mb-4 text-center">Software Issue</h4>
             <% if(sw_question !== undefined) { %>
                 <% if(sw_question.length === 0) { %>
