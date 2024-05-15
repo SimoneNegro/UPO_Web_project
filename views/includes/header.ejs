@@ -38,6 +38,11 @@
                     <% } else { %>
                         <a class="link" href="/frequent-questions">Frequent questions</a>
                     <% } %>
+                    <% if(title == "Community" ) { %>
+                        <a class="static-link">Community</a>
+                    <% } else { %>
+                        <a class="link" href="/community">Community</a>
+                    <% } %>
                     <% if(user) { %>
                         <% if(user.tipo == 'admin') { %>
                             <a class="nav-link link" href="/super-admin">Admin page</a>

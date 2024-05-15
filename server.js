@@ -23,6 +23,7 @@ const closedUserTicketsRouter = require('./routes/closed_tickets_user');
 const userDashboardRouter = require('./routes/user_dashboard');
 const changePasswordRouter = require('./routes/change_password');
 const frequentQuestionRouter = require('./routes/frequent_questions');
+const communityRouter = require('./routes/community');
 // staff routes
 const adminRouter = require('./routes/admin');
 const closedTicketsRouter = require('./routes/closed_tickets');
@@ -127,6 +128,7 @@ app.use('/closed-tickets', closedUserTicketsRouter);
 app.use('/user-dashboard', userDashboardRouter);
 app.use('/change-password', changePasswordRouter);
 app.use('/frequent-questions', frequentQuestionRouter);
+app.use('/community', communityRouter);
 
 // staff routes
 app.use('/admin', adminRouter);

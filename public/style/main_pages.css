@@ -13,7 +13,7 @@ body {
     background: #FAF9F6;
 }
 
-h1, h2, h3, h4, h5, span {
+h1, h2, h3, h4, h5, h6, span {
     color: var(--secondary) !important;
 }
 
@@ -272,4 +272,26 @@ select.decorated option:hover {
 
 .margin-auto {
     margin: auto; 
+}
+
+.like-button {
+    background:transparent; 
+    border:none;
+}
+
+.switch-color {
+    transition: 0.3s;
+}
+
+.switch-color:hover {
+    color: rgb(219, 20, 20);
+}
+
+.like {
+    color: rgb(219, 20, 20);
+    transition: 0.7s;
+}
+
+.like:hover {
+    color: rgb(143, 17, 17);
 }

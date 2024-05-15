@@ -252,6 +252,14 @@ class DataBase {
         });
     }
 
+    /**
+     * Update gestisce updating data specified by parameters.
+     * @param {int} staff_id Staff id.
+     * @param {int} ticket_id Ticket id.
+     * @param {String} comment Handled ticket description.
+     * @param {int} visible 1 show, 0 don't show.
+     * @returns {Promise<unknown>} Returns true if successful or false if failed. 
+     */
     closedTicketInformation(staff_id, ticket_id, comment, visible) {
         return new Promise((resolve, reject) => {
             const sql = `UPDATE gestisce
@@ -260,6 +268,53 @@ class DataBase {
 
             this.open();
             db.run(sql, [comment, visible, staff_id, ticket_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    getAllCommunityTickets(page, offset) {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT g.id, t.descrizione, g.commento, g."like", t.nome_topic, t.chiusura_ticket, t.stato  FROM gestisce g 
+                         INNER JOIN ticket t ON g.id_ticket = t.id 
+                         WHERE g.visibile = 1
+                         ORDER BY g."like" DESC
+                         LIMIT ?
+                         OFFSET ?`;
+
+            this.open();
+            db.all(sql, [page, offset], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    countAllCommunityTickets() {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT COUNT(*) AS num_comment FROM gestisce g 
+                         INNER JOIN ticket t ON g.id_ticket = t.id 
+                         WHERE g.visibile = 1`;
+
+            this.open();
+            db.get(sql, [], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    likedContent(user_id) {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT * FROM likes 
+                         WHERE id_utente = ?`;
+
+            this.open();
+            db.all(sql, [user_id], (err, row) => {
                 if (err) throw reject(err);
                 resolve(row);
             });
