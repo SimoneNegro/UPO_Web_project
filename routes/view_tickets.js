@@ -13,7 +13,7 @@ router.get('/', async function (req, res, next) {
     }
 
     try {
-        const tickets = await db.allOpenTickets();
+        const tickets = await db.allOpenTickets(req.user.id);
         const num_tickets = await db.numberOfManagedTicket(req.user.id);
         return res.render('admin/view_tickets', {
             title: "View Tickets",

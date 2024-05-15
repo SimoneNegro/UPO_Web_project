@@ -36,17 +36,21 @@ router.post('/', async function (req, res, next) {
 
         switch (req.body.operation_type) {
             case "Transfer Ticket":
+                await db.closedTicketInformation(req.user.id, req.body.ticket_id, req.body.description, 0);
                 await db.updateTicketStatusWaitingTransfer(req.body.ticket_id);
                 break;
             case "Solve Ticket":
+                await db.closedTicketInformation(req.user.id, req.body.ticket_id, req.body.description, req.body.visibility);
                 await db.updateTicketStatusSolved(req.body.ticket_id);
                 await db.updateCloseDateTicket(req.body.ticket_id, data);
                 break;
             case "Close Ticket":
+                await db.closedTicketInformation(req.user.id, req.body.ticket_id, req.body.description, req.body.visibility);
                 await db.updateTicketStatusClosed(req.body.ticket_id);
                 await db.updateCloseDateTicket(req.body.ticket_id, data);
                 break;
             case "Cancel Ticket":
+                await db.closedTicketInformation(req.user.id, req.body.ticket_id, null, 0);
                 await db.updateTicketStatusCancelled(req.body.ticket_id);
                 await db.updateCloseDateTicket(req.body.ticket_id, data);
                 break;
@@ -54,6 +58,7 @@ router.post('/', async function (req, res, next) {
                 console.log("Error: invalid operation type");
                 return res.redirect('/dashboard');
         }
+
         return res.redirect('/closed_tickets');
     } catch (err) {
         console.error("Error:", err);

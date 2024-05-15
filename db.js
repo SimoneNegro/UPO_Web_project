@@ -115,16 +115,15 @@ class DataBase {
      * Return all tickets with Open status ordered by open date (first opened, more priorities)
      * @returns All open tickets.
      */
-    allOpenTickets() {
+    allOpenTickets(id) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT *
-                         FROM ticket
-                         WHERE stato LIKE 'Pending'
-                            OR stato LIKE 'Waiting Transfer'
-                         ORDER BY data_apertura ASC`;
+                         FROM ticket t
+                         WHERE t.stato LIKE 'Pending' OR (t.stato LIKE 'Waiting Transfer' AND t.id NOT IN (SELECT id_ticket FROM gestisce WHERE id_admin = ?))
+                         ORDER BY t.data_apertura ASC`;
 
             this.open();
-            db.all(sql, [], (err, rows) => {
+            db.all(sql, [id], (err, rows) => {
                 if (err) throw reject(err);
                 resolve(rows);
             });
@@ -253,11 +252,26 @@ class DataBase {
         });
     }
 
+    closedTicketInformation(staff_id, ticket_id, comment, visible) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE gestisce
+                         SET commento = ?, visibile = ? 
+                         WHERE id_admin = ? AND id_ticket = ?`;
+
+            this.open();
+            db.run(sql, [comment, visible, staff_id, ticket_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
     /**
      * Create a row where is used to see who is currently working on the ticket.
      * @param {int} staff_id Staff id.
      * @param {int} ticket_id Ticket id.
-     * @param {int} date Manage ticket date:
+     * @param {int} date Manage ticket date.
      * @returns Returns true if successful or false if failed.
      */
     addManageTicket(staff_id, ticket_id, date) {
@@ -460,7 +474,7 @@ class DataBase {
             const sql = `SELECT t.stato, COUNT(*) AS closed_tickets
                          FROM gestisce g
                                   INNER JOIN ticket t ON g.id_ticket = t.id
-                         WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ?
+                         WHERE t.chiusura_ticket NOTNULL AND g.id_admin = ? AND t.stato <> 'In Progress' AND t.stato <> 'Waiting Transfer'
                          GROUP BY t.stato`;
             this.open();
             db.all(sql, [staff_id], (err, row) => {

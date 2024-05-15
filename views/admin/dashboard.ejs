@@ -1,98 +1,93 @@
 <%- include('../includes/head.ejs') %>
 
 <body>
-<!-- HEADER -->
-<%- include('../includes/admin/header_admin.ejs') %>
-<!-- CONTENT -->
-<main>
+  <!-- HEADER -->
+  <%- include('../includes/admin/header_admin.ejs') %>
+  <!-- CONTENT -->
+  <main>
     <div class="container">
-        <h1>Ticket dashboard</h1>
+      <h1>Ticket dashboard</h1>
+      <section>
+        <% if (num_tickets.num_managed_ticket===0) { %>
+        <!-- LINK TO PAGE -->
+        <p>To see the ticket, you must first manage one.</p>
+        <p>Click <a class="link blue-text" href="/view_tickets">here</a> to see.</p>
+        <% } else { %>
+        <!-- SEE TICKET AND OPERATION -->
         <section>
-            <% if (num_tickets.num_managed_ticket === 0) { %>
-                <!-- LINK TO PAGE -->
-                <p>To see the ticket, you must first manage one.</p>
-                <p>Click <a class="link blue-text" href="/view_tickets">here</a> to see.</p>
-            <% } else { %>
-                <!-- SEE TICKET AND OPERATION -->
-                <section>
-                    <div class="col-sm">
-                        <div class="container ticket-container">
-                            <h5 class="pt-3 ps-2">TICKET ID</h5>
-                            <p class="ps-2"><%= managed_ticket.id %></p>
-                            <h5 class="ps-2">TOPIC</h5>
-                            <p class="ps-2"><%= managed_ticket.nome_topic %></p>
-                            <h5 class="ps-2">DESCRIPTION</h5>
-                            <p class="nl ps-2"><%= managed_ticket.descrizione %></p>
-                            <h5 class="ps-2">USER E-MAIL</h5>
-                            <p class="ps-2"><%= managed_ticket.email %></p>
-                        </div>
-                    </div>
-                </section>
-                <section class="pt-4">
-                    <h5>COMMANDS</h5>
-                </section>
-                <section>
-                    <div class="container pt-3 pb-5 ps-0 pe-3">
-                        <div class="row justify-content-left ms-0">
-                            <!-- TRANSFER TICKET -->
-                            <div class="col-sm ps-0 pb-2">
-                                <div class="container ps-0">
-                                    <form action="/dashboard" method="post">
-                                        <input id="ticket_id" name="ticket_id" type="hidden"
-                                               value=<%= managed_ticket.id %>>
-                                        <input class="send-button" name="operation_type" type="submit"
-                                               value="Transfer Ticket"
-                                               title="Transfer a ticket to another staff member.">
-                                    </form>
-                                </div>
-                            </div>
-                            <!-- RESOLVED TICKET -->
-                            <div class="col-sm ps-0">
-                                <div class="container ps-0 pb-2">
-                                    <form action="/dashboard" method="post">
-                                        <input id="ticket_id" name="ticket_id" type="hidden"
-                                               value=<%= managed_ticket.id %>>
-                                        <input class="send-button" name="operation_type" type="submit"
-                                               value="Solve Ticket"
-                                               title="Problem solved successfully.">
-                                    </form>
-                                </div>
-                            </div>
-                            <!-- CLOSED TICKET -->
-                            <div class="col-sm ps-0">
-                                <div class="container ps-0 pb-2">
-                                    <form action="/dashboard" method="post">
-                                        <input id="ticket_id" name="ticket_id" type="hidden"
-                                               value=<%= managed_ticket.id %>>
-                                        <input class="send-button" name="operation_type" type="submit"
-                                               value="Close Ticket"
-                                               title="Can't solve ticket problem.">
-                                    </form>
-                                </div>
-                            </div>
-                            <!-- CANCELLED TICKET -->
-                            <div class="col-sm ps-0">
-                                <div class="container ps-0 pb-2">
-                                    <form action="/dashboard" method="post">
-                                        <input id="ticket_id" name="ticket_id" type="hidden"
-                                               value=<%= managed_ticket.id %>>
-                                        <input class="send-button" name="operation_type" type="submit"
-                                               value="Cancel Ticket"
-                                               title="Not a real issue.">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            <% } %>
+          <div class="col-sm">
+            <div class="container ticket-container">
+              <h5 class="pt-3 ps-2">TICKET ID</h5>
+              <p class="ps-2">
+                <%= managed_ticket.id %>
+              </p>
+              <h5 class="ps-2">TOPIC</h5>
+              <p class="ps-2">
+                <%= managed_ticket.nome_topic %>
+              </p>
+              <h5 class="ps-2">DESCRIPTION</h5>
+              <p class="nl ps-2"><%= managed_ticket.descrizione %></p>
+              <h5 class="ps-2">USER E-MAIL</h5>
+              <p class="ps-2">
+                <%= managed_ticket.email %>
+              </p>
+            </div>
+          </div>
         </section>
+        <section class="pt-4">
+          <h5>COMMANDS</h5>
+        </section>
+        <form action="/dashboard" method="post">
+          <!-- TEXTAREA -->
+          <section class="pb-2">
+            <label class="bold" for="description">Describe the solution to the problem:</label>
+            <textarea class="form-control max-width area-style border" name="description" id="description" rows="10" maxlength="1000" placeholder="Describe useful information..." required></textarea>
+            <p class="pt-2">NOTE: if you need to transfer the ticket, provide useful information for the staff who will handle the ticket.</p>
+            <p>Do you want to make your description visible to the community?</p>
+            <input type="radio" id="yes" name="visibility" value="1" required>
+            <label for="yes">Yes</label><br>
+            <input type="radio" id="no" name="visibility" value="0">
+            <label for="no">No</label><br>
+          </section>
+          <section>
+            <input id="ticket_id" name="ticket_id" type="hidden" value=<%=managed_ticket.id%>>
+            <div class="container pb-4 ps-0 pe-3">
+              <div class="row justify-content-left ms-0">
+                <!-- TRANSFER TICKET -->
+                <div class="col-sm container ps-0 pb-2 pt-2">
+                  <input class="send-button" name="operation_type" type="submit" value="Transfer Ticket" title="Transfer a ticket to another staff member.">
+                </div>
+                <!-- RESOLVED TICKET -->
+                <div class="col-sm container ps-0 pb-2 pt-2">
+                  <input class="send-button" name="operation_type" type="submit" value="Solve Ticket" title="Problem solved successfully.">
+                </div>
+                <!-- CLOSED TICKET -->
+                <div class="col-sm container ps-0 pb-2 pt-2">
+                  <input class="send-button" name="operation_type" type="submit" value="Close Ticket" title="Can't solve ticket problem.">
+                </div>
+                <!-- CANCELLED TICKET -->
+                <div class="col-sm container ps-0 pb-2 pt-2">
+                  <input class="send-button" name="operation_type" type="submit" value="Cancel Ticket" title="Not a real issue.">
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="pb-4">
+            <h5>USE OF COMMANDS</h5>
+            <p>If the ticket being handled is not within your expertise, click the '<strong>Transfer ticket</strong>' button to assign the issue to another staff member.</p>
+            <p>If the issue described in the ticket being handled has been successfully resolved, click the '<strong>Solve Ticket</strong>' button.</p>
+            <p>If the issue described in the ticket being handled could not be resolved, click the '<strong>Close Ticket</strong>' button.</p>
+            <p>If the issue described in the ticket being handled is not a real problem, click the '<strong>Cancel Ticket</strong>' button.</p>
+          </section>
+        </form>
+        <% } %>
+      </section>
     </div>
-</main>
-<!-- FOOTER -->
-<%- include('../includes/admin/footer_admin.ejs') %>
-<!-- SCRIPTS-->
-<%- include('../includes/scripts.ejs') %>
+  </main>
+  <!-- FOOTER -->
+  <%- include('../includes/admin/footer_admin.ejs') %>
+  <!-- SCRIPTS-->
+  <%- include('../includes/scripts.ejs') %>
 </body>
 
 </html>

@@ -8,6 +8,9 @@
     <div class="container">
         <h1>View tickets</h1>
         <section>
+            <% if (tickets.length === 0) { %>
+                <p>There are no open tickets.</p>
+            <% }%>
             <% if (num_tickets.num_managed_ticket > 0) { %>
                 <p>Before to work to another ticket, you must manage your ticket.</p>
                 <p>Click <a href="/dashboard" class="link blue-text">here</a> to see.</p>
