@@ -17,14 +17,14 @@
                 <section>
                     <div class="col-sm">
                         <div class="container ticket-container">
-                            <h5 class="pt-3">TICKET ID</h5>
-                            <p><%= managed_ticket.id %></p>
-                            <h5>TOPIC</h5>
-                            <p><%= managed_ticket.nome_topic %></p>
-                            <h5>DESCRIPTION</h5>
-                            <p class="nl"><%= managed_ticket.descrizione %></p>
-                            <h5>USER E-MAIL</h5>
-                            <p><%= managed_ticket.email %></p>
+                            <h5 class="pt-3 ps-2">TICKET ID</h5>
+                            <p class="ps-2"><%= managed_ticket.id %></p>
+                            <h5 class="ps-2">TOPIC</h5>
+                            <p class="ps-2"><%= managed_ticket.nome_topic %></p>
+                            <h5 class="ps-2">DESCRIPTION</h5>
+                            <p class="nl ps-2"><%= managed_ticket.descrizione %></p>
+                            <h5 class="ps-2">USER E-MAIL</h5>
+                            <p class="ps-2"><%= managed_ticket.email %></p>
                         </div>
                     </div>
                 </section>
@@ -35,7 +35,7 @@
                     <div class="container pt-3 pb-5 ps-0 pe-3">
                         <div class="row justify-content-left ms-0">
                             <!-- TRANSFER TICKET -->
-                            <div class="col-sm ps-0">
+                            <div class="col-sm ps-0 pb-2">
                                 <div class="container ps-0">
                                     <form action="/dashboard" method="post">
                                         <input id="ticket_id" name="ticket_id" type="hidden"
@@ -48,7 +48,7 @@
                             </div>
                             <!-- RESOLVED TICKET -->
                             <div class="col-sm ps-0">
-                                <div class="container ps-0">
+                                <div class="container ps-0 pb-2">
                                     <form action="/dashboard" method="post">
                                         <input id="ticket_id" name="ticket_id" type="hidden"
                                                value=<%= managed_ticket.id %>>
@@ -60,7 +60,7 @@
                             </div>
                             <!-- CLOSED TICKET -->
                             <div class="col-sm ps-0">
-                                <div class="container ps-0">
+                                <div class="container ps-0 pb-2">
                                     <form action="/dashboard" method="post">
                                         <input id="ticket_id" name="ticket_id" type="hidden"
                                                value=<%= managed_ticket.id %>>
@@ -72,7 +72,7 @@
                             </div>
                             <!-- CANCELLED TICKET -->
                             <div class="col-sm ps-0">
-                                <div class="container ps-0">
+                                <div class="container ps-0 pb-2">
                                     <form action="/dashboard" method="post">
                                         <input id="ticket_id" name="ticket_id" type="hidden"
                                                value=<%= managed_ticket.id %>>
