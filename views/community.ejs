@@ -9,72 +9,188 @@
       <!-- TITLE -->
       <h2>Community</h2>
       <p>Here you can find all the tickets opened by users along with the resolution of the issue!</p>
+      <!-- SEARCH BAR -->
+      <form id="search-description" action="/community" method="get">
+        <section class="mb-4">
+          <input class="w-75 area-style border me-4 mt-3" name="description" id="description" type="text" placeholder="Insert a question description...">
+          <button class="send-button font mt-3" id="search-quetsion" type="submit">Search question</button>
+        </section>
+      </form>
+      <!-- SEARCHED TICKET AND DESCRIPTION -->
+      <% if(searched_content) { %>
+      <section>
+        <% if(searched_content.length === 0) { %>
+        <p class="error">There are no question...</p>
+        <% } else { %>
+        <% if(searched_content.length === 1) { %>
+        <p class="check">Description found.</p>
+        <% } else { %>
+        <p class="check">Descriptions found.</p>
+        <% } %>
+        <% searched_content.forEach(searched => { %>
+        <input id="gestisci_id" name="gestisci_id" type="hidden" value="<%= searched.id %>">
+        <div class="border-bottom pt-3 row justify-content-left">
+          <div class="col-sm-10">
+            <h5>
+              <%= searched.descrizione %>
+            </h5>
+            <p>
+              <%= searched.nome_topic %>
+            </p>
+          </div>
+          <div class="col-sm-2">
+            <% if(!user) { %>
+            <h5>
+              <%= searched.like %> <i class="fa-regular fa-heart"></i>
+            </h5>
+            <% } else { %>
+            <% let like = false; %>
+            <% likedContents.forEach(liked => { %>
+            <% if(liked.id_utente === user.id && liked.id_gestisce === searched.id) { %>
+            <!-- LIKE TRUE -->
+            <% like = true; %>
+            <form>
+              <h5>
+                <%= searched.like %> <button class="like-button"><i class="fa-solid fa-heart like"></i></button>
+              </h5>
+            </form>
+            <% } %>
+            <% }); %>
+            <!-- LIKE FALSE -->
+            <% if(!like) { %>
+            <form>
+              <h5>
+                <%= searched.like %> <button class="like-button"><i class="fa-regular fa-heart switch-color"></i></button>
+              </h5>
+            </form>
+            <% }%>
+            <% } %>
+            <p>
+              <%= new Date(searched.chiusura_ticket * 1000).toLocaleDateString(); %>
+            </p>
+          </div>
+        </div>
+        <% }); %>
+        <% } %>
+      </section>
+      <!-- PAGE SELECTOR -->
+      <% if (totalPages > 1) { %>
+      <nav aria-label="Page navigation example" class="pt-4">
+        <ul class="pagination justify-content-center justify-content-end">
+          <% if (currentPage > 1) { %>
+          <li class="page-item">
+            <a class="page-link border-color-pagination" href="/community/?page=<%= currentPage - 1 %>&description=<%= description_query %>" tabindex="-1" aria-disabled="true">Previous</a>
+          </li>
+          <% } else { %>
+          <li class="page-item disabled">
+            <a class="page-link border-color-pagination" href="/community/?page=<%= currentPage - 1 %>&description=<%= description_query %>" tabindex="-1" aria-disabled="true">Previous</a>
+          </li>
+          <% } %>
+
+          <% for (let i = 1; i <= totalPages; i++) { %>
+          <% if (i === currentPage) { %>
+          <li class="page-item disabled"><a class="page-link blue bold border-color-pagination"><%= i %></a></li>
+          <% } else { %>
+          <li class="page-item"><a class="page-link border-color-pagination" href="/community/?page=<%= i %>&description=<%= description_query %>"><%= i %></a></li>
+          <% } %>
+          <% } %>
+
+          <% if (currentPage < totalPages) { %>
+          <li class="page-item">
+            <a class="page-link border-color-pagination" href="/community/?page=<%= currentPage + 1 %>&description=<%= description_query %>">Next</a>
+          </li>
+          <% } else { %>
+          <li class="page-item disabled">
+            <a class="page-link border-color-pagination" href="/community/?page=<%= currentPage + 1 %>&description=<%= description_query %>">Next</a>
+          </li>
+          <% } %>
+        </ul>
+      </nav>
+      <% } %>
+      <% } else { %>
       <!-- TICKET AND DESCRIPTION -->
       <section>
         <% descriptions.forEach(description => { %>
-        <form>
-          <input id="gestisci_id" name="gestisci_id" type="hidden" value="<%= description.id %>">
-          <div class="border-bottom pt-3 row justify-content-left">
-            <div class="col-sm-10">
-              <h5>
-                <%= description.descrizione %>
-              </h5>
-              <p>
-                <%= description.nome_topic %>
-              </p>
-            </div>
-            <div class="col-sm-2">
-              <% if(!user) { %>
-              <h5>
-                <%= description.like %> <i class="fa-regular fa-heart"></i>
-              </h5>
-              <% } else { %>
-              <% let like = false; %>
-              <% likedContents.forEach(liked => { %>
-              <% if(liked.id_utente === user.id && liked.id_gestisce === description.id) { %>
-              <% like = true; %>
+        <input id="gestisci_id" name="gestisci_id" type="hidden" value="<%= description.id %>">
+        <div class="border-bottom pt-3 row justify-content-left">
+          <div class="col-sm-10">
+            <h5>
+              <%= description.descrizione %>
+            </h5>
+            <p>
+              <%= description.nome_topic %>
+            </p>
+          </div>
+          <div class="col-sm-2">
+            <% if(!user) { %>
+            <h5>
+              <%= description.like %> <i class="fa-regular fa-heart"></i>
+            </h5>
+            <% } else { %>
+            <% let like = false; %>
+            <% likedContents.forEach(liked => { %>
+            <% if(liked.id_utente === user.id && liked.id_gestisce === description.id) { %>
+            <!-- LIKE TRUE -->
+            <% like = true; %>
+            <form>
+              <input id="gestisci_id" name="gestisci_id" type="hidden" value="<%= description.id %>">
               <h5>
                 <%= description.like %> <button class="like-button"><i class="fa-solid fa-heart like"></i></button>
               </h5>
-              <% } %>
-              <% }); %>
-              <% if(!like) { %>
+            </form>
+            <% } %>
+            <% }); %>
+            <!-- LIKE FALSE -->
+            <% if(!like) { %>
+            <form>
+              <input id="gestisci_id" name="gestisci_id" type="hidden" value="<%= description.id %>">
               <h5>
                 <%= description.like %> <button class="like-button"><i class="fa-regular fa-heart switch-color"></i></button>
               </h5>
-              <% }%>
-              <% } %>
-              <p>
-                <%= new Date(description.chiusura_ticket * 1000).toLocaleDateString(); %>
-              </p>
-            </div>
+            </form>
+            <% }%>
+            <% } %>
+            <p>
+              <%= new Date(description.chiusura_ticket * 1000).toLocaleDateString(); %>
+            </p>
           </div>
-        </form>
+        </div>
         <% }); %>
       </section>
       <!-- PAGE SELECTOR -->
       <% if (totalPages > 1) { %>
-      <div class="d-flex justify-content-center pt-4 pb-4">
-        <% if (currentPage > 1) { %>
-        <a href="/community/?page=<%= currentPage - 1 %>" class="pe-2">Previous</a>
-        <% } else { %>
-        <span class="pe-2">Previous</span>
-        <% } %>
+      <nav aria-label="Page navigation example" class="pt-4">
+        <ul class="pagination justify-content-center justify-content-end">
+          <% if (currentPage > 1) { %>
+          <li class="page-item">
+            <a class="page-link border-color-pagination" href="/community/?page=<%= currentPage - 1 %>" tabindex="-1" aria-disabled="true">Previous</a>
+          </li>
+          <% } else { %>
+          <li class="page-item disabled">
+            <a class="page-link border-color-pagination" href="/community/?page=<%= currentPage - 1 %>" tabindex="-1" aria-disabled="true">Previous</a>
+          </li>
+          <% } %>
 
-        <% for (let i = 1; i <= totalPages; i++) { %>
-        <% if (i === currentPage) { %>
-        <strong class="pe-2"><%= i %></strong>
-        <% } else { %>
-        <a class="pe-2" href="/community/?page=<%= i %>"><%= i %></a>
-        <% } %>
-        <% } %>
+          <% for (let i = 1; i <= totalPages; i++) { %>
+          <% if (i === currentPage) { %>
+          <li class="page-item disabled"><a class="page-link blue bold border-color-pagination"><%= i %></a></li>
+          <% } else { %>
+          <li class="page-item"><a class="page-link border-color-pagination" href="/community/?page=<%= i %>"><%= i %></a></li>
+          <% } %>
+          <% } %>
 
-        <% if (currentPage < totalPages) { %>
-        <a href="/community/?page=<%= currentPage + 1 %>">Next</a>
-        <% } else { %>
-        <span>Next</span>
-        <% } %>
-      </div>
+          <% if (currentPage < totalPages) { %>
+          <li class="page-item">
+            <a class="page-link border-color-pagination" href="/community/?page=<%= currentPage + 1 %>">Next</a>
+          </li>
+          <% } else { %>
+          <li class="page-item disabled">
+            <a class="page-link border-color-pagination" href="/community/?page=<%= currentPage + 1 %>">Next</a>
+          </li>
+          <% } %>
+        </ul>
+      </nav>
+      <% } %>
       <% } %>
     </div>
   </main>

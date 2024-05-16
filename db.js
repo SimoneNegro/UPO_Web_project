@@ -275,6 +275,39 @@ class DataBase {
         });
     }
 
+    getSearchedCommunityTicket(description, limit, offset) {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT g.id, t.descrizione, g.commento, g."like", t.nome_topic, t.chiusura_ticket, t.stato  FROM gestisce g 
+                         INNER JOIN ticket t ON g.id_ticket = t.id 
+                         WHERE g.visibile = 1 AND t.descrizione LIKE '%' || ? || '%'
+                         ORDER BY g."like" DESC
+                         LIMIT ?
+                         OFFSET ?`;
+                        
+            this.open();
+            db.all(sql, [description, limit, offset], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    countAllSearchedCommunityTickets(description) {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT COUNT(*) AS num_comment FROM gestisce g 
+                         INNER JOIN ticket t ON g.id_ticket = t.id 
+                         WHERE g.visibile = 1 AND t.descrizione LIKE '%' || ? || '%'`;
+
+            this.open();
+            db.get(sql, [description], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
     getAllCommunityTickets(page, offset) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT g.id, t.descrizione, g.commento, g."like", t.nome_topic, t.chiusura_ticket, t.stato  FROM gestisce g 

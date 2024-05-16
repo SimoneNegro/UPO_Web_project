@@ -293,5 +293,13 @@ select.decorated option:hover {
 }
 
 .like:hover {
-    color: rgb(143, 17, 17);
+    color: rgb(240, 143, 143);
+}
+
+.bold {
+    font-weight: 600;
+}
+
+.border-color-pagination {
+    border: solid 1px rgb(191, 191, 238) !important;
 }
