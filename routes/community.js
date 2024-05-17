@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const {isStaff} = require('../public/js/auth');
+const { isStaff } = require('../public/js/auth');
 
 const DataBase = require("../db"); // db.js
+const { watchFile } = require('fs');
 const db = new DataBase();
 
 router.get('/', async function (req, res, next) {
     if (isStaff(req)) {
         return res.redirect('/');
     }
-    
+
     try {
         const perPage = 10;
         const page = parseInt(req.query.page) || 1;
@@ -19,7 +20,7 @@ router.get('/', async function (req, res, next) {
 
         let aus, totalDescriptions, totalPages, descriptions;
 
-        if(description_query) {
+        if (description_query) {
             searched_content = await db.getSearchedCommunityTicket(description_query, perPage, offset);
             aus = await db.countAllSearchedCommunityTickets(description_query);
             totalDescriptions = aus.num_comment;
@@ -32,7 +33,7 @@ router.get('/', async function (req, res, next) {
             descriptions = await db.getAllCommunityTickets(perPage, offset);
         }
 
-        if (req.user) 
+        if (req.user)
             likedContents = await db.likedContent(req.user.id);
 
         return res.render('community', {
@@ -51,12 +52,32 @@ router.get('/', async function (req, res, next) {
     }
 });
 
-router.post('/', async function (req, res, next) {
+router.post('/like', async function (req, res, next) {
     if (isStaff(req)) {
         return res.redirect('/');
     }
 
-    
+    try {
+        const gestisci_id = req.body.gestisci_id;
+        const like = await db.getUserLike(req.user.id, gestisci_id);
+        const page = req.body.page;
+        const description_query = req.body.description;
+
+        if (like) {
+            await db.removeLike(req.user.id, gestisci_id);
+            await db.removeLikeGestisce(gestisci_id);
+        } else {
+            await db.addLike(req.user.id, gestisci_id);
+            await db.addLikeGestisce(gestisci_id);
+        }
+
+        const redirectUrl = description_query ? `/community?page=${page}&description=${description_query}` : `/community?page=${page}`;
+
+        return res.redirect(redirectUrl);
+
+    } catch (error) {
+        console.error("Error:", err);
+    }
 });
 
 module.exports = router;

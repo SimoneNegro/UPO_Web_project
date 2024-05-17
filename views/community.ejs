@@ -47,23 +47,21 @@
             <% let like = false; %>
             <% likedContents.forEach(liked => { %>
             <% if(liked.id_utente === user.id && liked.id_gestisce === searched.id) { %>
-            <!-- LIKE TRUE -->
             <% like = true; %>
-            <form>
-              <h5>
-                <%= searched.like %> <button class="like-button"><i class="fa-solid fa-heart like"></i></button>
-              </h5>
-            </form>
             <% } %>
             <% }); %>
-            <!-- LIKE FALSE -->
-            <% if(!like) { %>
-            <form>
-              <h5>
-                <%= searched.like %> <button class="like-button"><i class="fa-regular fa-heart switch-color"></i></button>
-              </h5>
-            </form>
-            <% }%>
+            <h5>
+              <span class="like-count"><%= searched.like %></span>
+              <form action="/community/like" method="post" style="display:inline;">
+                <input type="hidden" name="gestisci_id" value="<%= searched.id %>">
+                <input type="hidden" name="like" value="<%= !like %>">
+                <input type="hidden" name="page" value="<%= currentPage %>">
+                <input type="hidden" name="description" value="<%= description_query %>">
+                <button class="like-button" type="submit">
+                  <i class="fa-<%= like ? 'solid' : 'regular' %> fa-heart <%= like ? 'like' : 'switch-color' %>"></i>
+                </button>
+              </form>
+            </h5>
             <% } %>
             <p>
               <%= new Date(searched.chiusura_ticket * 1000).toLocaleDateString(); %>
@@ -130,25 +128,21 @@
             <% let like = false; %>
             <% likedContents.forEach(liked => { %>
             <% if(liked.id_utente === user.id && liked.id_gestisce === description.id) { %>
-            <!-- LIKE TRUE -->
             <% like = true; %>
-            <form>
-              <input id="gestisci_id" name="gestisci_id" type="hidden" value="<%= description.id %>">
-              <h5>
-                <%= description.like %> <button class="like-button"><i class="fa-solid fa-heart like"></i></button>
-              </h5>
-            </form>
             <% } %>
             <% }); %>
-            <!-- LIKE FALSE -->
-            <% if(!like) { %>
-            <form>
-              <input id="gestisci_id" name="gestisci_id" type="hidden" value="<%= description.id %>">
-              <h5>
-                <%= description.like %> <button class="like-button"><i class="fa-regular fa-heart switch-color"></i></button>
-              </h5>
-            </form>
-            <% }%>
+            <h5>
+              <span class="like-count"><%= description.like %></span>
+              <form action="/community/like" method="post" style="display:inline;">
+                <input type="hidden" name="gestisci_id" value="<%= description.id %>">
+                <input type="hidden" name="like" value="<%= !like %>">
+                <input type="hidden" name="page" value="<%= currentPage %>">
+                <input type="hidden" name="description" value="<%= description_query %>">
+                <button class="like-button" type="submit">
+                  <i class="fa-<%= like ? 'solid' : 'regular' %> fa-heart <%= like ? 'like' : 'switch-color' %>"></i>
+                </button>
+              </form>
+            </h5>
             <% } %>
             <p>
               <%= new Date(description.chiusura_ticket * 1000).toLocaleDateString(); %>

@@ -275,6 +275,78 @@ class DataBase {
         });
     }
 
+    addLike(id_utente, id_gestisce) {
+        return new Promise((resolve, reject) => {
+            const sql = `INSERT INTO likes(id_utente, id_gestisce)
+                         VALUES(?, ?)`;
+                        
+            this.open();
+            db.run(sql, [id_utente, id_gestisce], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    removeLike(id_utente, id_gestisce) {
+        return new Promise((resolve, reject) => {
+            const sql = `DELETE FROM likes 
+                         WHERE id_utente = ? AND id_gestisce = ?`;
+                        
+            this.open();
+            db.run(sql, [id_utente, id_gestisce], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    addLikeGestisce(id_gestisce) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE gestisce 
+                         SET like = (like + 1) 
+                         WHERE id = ?`;
+                        
+            this.open();
+            db.run(sql, [id_gestisce], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    removeLikeGestisce(id_gestisce) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE gestisce 
+                         SET like = (like - 1) 
+                         WHERE id = ?`;
+                        
+            this.open();
+            db.run(sql, [id_gestisce], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    getUserLike(id_utente, id_gestisce) {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT * FROM likes
+                         WHERE id_utente = ? AND id_gestisce = ?`;
+                        
+            this.open();
+            db.get(sql, [id_utente, id_gestisce], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
     getSearchedCommunityTicket(description, limit, offset) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT g.id, t.descrizione, g.commento, g."like", t.nome_topic, t.chiusura_ticket, t.stato  FROM gestisce g 
