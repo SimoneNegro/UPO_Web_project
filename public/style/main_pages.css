@@ -289,7 +289,7 @@ select.decorated option:hover {
 
 .like {
     color: rgb(219, 20, 20);
-    transition: 0.7s;
+    transition: 0.5s;
 }
 
 .like:hover {
@@ -302,4 +302,9 @@ select.decorated option:hover {
 
 .border-color-pagination {
     border: solid 1px rgb(191, 191, 238) !important;
+}
+
+.invisible-button {
+    background:transparent; 
+    border:none;
 }

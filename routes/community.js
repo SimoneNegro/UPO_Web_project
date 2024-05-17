@@ -7,16 +7,15 @@ const { watchFile } = require('fs');
 const db = new DataBase();
 
 router.get('/', async function (req, res, next) {
-    if (isStaff(req)) {
+    if (isStaff(req))
         return res.redirect('/');
-    }
 
     try {
         const perPage = 10;
         const page = parseInt(req.query.page) || 1;
         const offset = (page - 1) * perPage;
         const description_query = req.query['description'];
-        let likedContents, searched_content;
+        let likedContents, searched_content, description_content;
 
         let aus, totalDescriptions, totalPages, descriptions;
 
@@ -45,7 +44,31 @@ router.get('/', async function (req, res, next) {
             currentPage: page,
             likedContents: likedContents,
             searched_content: searched_content,
-            description_query: description_query
+            description_query: description_query,
+            description_content: description_content
+        });
+    } catch (error) {
+        console.error("Error:", err);
+    }
+});
+
+router.get('/:id', async function (req, res, next) {
+    if (isStaff(req))
+        return res.redirect('/');
+
+    let likedContents;
+
+    try {
+        if (req.user)
+            likedContents = await db.likedContentDirect(req.user.id, req.params.id);
+        const gestisce_id = req.params.id;
+        const description_content = await db.getCommunityTicketInformation(gestisce_id);
+
+        return res.render('community', {
+            title: 'Community',
+            user: req.user,
+            description_content: description_content,
+            likedContents: likedContents
         });
     } catch (error) {
         console.error("Error:", err);
@@ -53,15 +76,15 @@ router.get('/', async function (req, res, next) {
 });
 
 router.post('/like', async function (req, res, next) {
-    if (isStaff(req)) {
+    if (isStaff(req))
         return res.redirect('/');
-    }
 
     try {
         const gestisci_id = req.body.gestisci_id;
         const like = await db.getUserLike(req.user.id, gestisci_id);
         const page = req.body.page;
         const description_query = req.body.description;
+        const single_ticket = req.body.single_ticket;
 
         if (like) {
             await db.removeLike(req.user.id, gestisci_id);
@@ -71,7 +94,9 @@ router.post('/like', async function (req, res, next) {
             await db.addLikeGestisce(gestisci_id);
         }
 
-        const redirectUrl = description_query ? `/community?page=${page}&description=${description_query}` : `/community?page=${page}`;
+        let redirectUrl = description_query ? `/community?page=${page}&description=${description_query}` : `/community?page=${page}`;
+
+        redirectUrl = single_ticket ? `/community/${gestisci_id}` : redirectUrl;
 
         return res.redirect(redirectUrl);
 

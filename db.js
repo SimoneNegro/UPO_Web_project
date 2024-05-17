@@ -380,6 +380,21 @@ class DataBase {
         });
     }
 
+    getCommunityTicketInformation(gestisce_id) {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT g.id, t.descrizione, g.commento, g."like", t.nome_topic, t.chiusura_ticket, t.stato  FROM gestisce g 
+                         INNER JOIN ticket t ON g.id_ticket = t.id 
+                         WHERE g.visibile = 1 AND g.id = ?`;
+
+            this.open();
+            db.get(sql, [gestisce_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
     getAllCommunityTickets(page, offset) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT g.id, t.descrizione, g.commento, g."like", t.nome_topic, t.chiusura_ticket, t.stato  FROM gestisce g 
@@ -420,6 +435,20 @@ class DataBase {
 
             this.open();
             db.all(sql, [user_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    likedContentDirect(user_id, gestisce_id) {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT * FROM likes 
+                         WHERE id_utente = ? AND id_gestisce = ?`;
+
+            this.open();
+            db.get(sql, [user_id, gestisce_id], (err, row) => {
                 if (err) throw reject(err);
                 resolve(row);
             });
