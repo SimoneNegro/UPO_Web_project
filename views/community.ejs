@@ -198,34 +198,36 @@
       <% } %>
       <!-- SINGLE DESCRIPTION -->
       <% } else { %>
-      <h3 class="nl"><%= description_content.descrizione %></h3>
+      <div class="word-break">
+        <h3 class="nl text-break"><%= description_content.descrizione %></h3>
+      </div>
       <section class="border-bottom mb-3">
-        <p class="mb-1 nl small">Topic: <%= description_content.nome_topic %>   <span class="align-middle">•</span>   Publish: <%= new Date(description_content.chiusura_ticket * 1000).toLocaleDateString(undefined, { day: '2-digit', month: '2-digit', year: 'numeric' }); %></p>
+        <p class="mb-1 nl small"><a class="link" href="/community">← Go back</a>  <span class="align-middle">•</span>  Topic: <%= description_content.nome_topic %>  <span class="align-middle">•</span>  Publish: <%= new Date(description_content.chiusura_ticket * 1000).toLocaleDateString(undefined, { day: '2-digit', month: '2-digit', year: 'numeric' }); %></p>
       </section>
       <h4>Problem solution</h4>
       <p class="nl large"><%= description_content.commento %></p>
       <!-- LIKE LOGIC -->
       <% if(!user) { %>
-        <h5>
-          <%= description_content.like %> <i class="fa-regular fa-heart"></i>
-        </h5>
-        <% } else { %>
-        <% let like = false; %>
-        <% if(likedContents) { %>
-        <% like = true; %>
-        <% } %>
-        <h5>
-          <span class="like-count"><%= description_content.like %></span>
-          <form action="/community/like" method="post" style="display:inline;">
-            <input type="hidden" name="gestisci_id" value="<%= description_content.id %>">
-            <input type="hidden" name="like" value="<%= !like %>">
-            <input type="hidden" name="single_ticket" value="1">
-            <button class="like-button" type="submit">
-              <i class="fa-<%= like ? 'solid' : 'regular' %> fa-heart <%= like ? 'like' : 'switch-color' %>"></i>
-            </button>
-          </form>
-        </h5>
-        <% } %>
+      <h5>
+        <%= description_content.like %> <i class="fa-regular fa-heart"></i>
+      </h5>
+      <% } else { %>
+      <% let like = false; %>
+      <% if(likedContents) { %>
+      <% like = true; %>
+      <% } %>
+      <h5>
+        <span class="like-count"><%= description_content.like %></span>
+        <form action="/community/like" method="post" style="display:inline;">
+          <input type="hidden" name="gestisci_id" value="<%= description_content.id %>">
+          <input type="hidden" name="like" value="<%= !like %>">
+          <input type="hidden" name="single_ticket" value="1">
+          <button class="like-button" type="submit">
+            <i class="fa-<%= like ? 'solid' : 'regular' %> fa-heart <%= like ? 'like' : 'switch-color' %>"></i>
+          </button>
+        </form>
+      </h5>
+      <% } %>
       <% } %>
     </div>
   </main>
