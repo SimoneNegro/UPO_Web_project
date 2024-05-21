@@ -1,71 +1,73 @@
 <header class="header">
-    <nav
-            class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom border-dark-subtle shadow mb-5 sticky-top light-bg">
-        <div class="container">
-            <% if(title == "NGR" ) { %>
-                <a class="navbar-brand static-link"><!-- inserisci img logo -->NGR</a>
-            <% } else { %>
-                <a class="navbar-brand link" href="/"><!-- inserisci img logo -->NGR</a>
-            <% } %>
-            <!-- BUTTON SHOW SMALL SCREEN -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- ALL PAGES LINK -->
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between"
-                 id="navbarNavAltMarkup">
-                <!-- MAIN PAGES -->
-                <div class="d-sm-inline-flex gap-4">
-                    <% if(title == "Open a ticket" ) { %>
-                        <a class="nav-link static-link">Open ticket</a>
-                    <% } else { %>
-                        <a class="nav-link link" href="/open-ticket">Open ticket</a>
-                    <% } %>
-                    <% if(title == "My Tickets" ) { %>
-                        <a class="nav-link static-link">My tickets</a>
-                    <% } else { %>
-                        <a class="nav-link link" href="/my-tickets">My tickets</a>
-                    <% } %>
-                    <% if(title == "Closed Tickets" ) { %>
-                        <a class="nav-link static-link">Closed tickets</a>
-                    <% } else { %>
-                        <a class="nav-link link" href="/closed-tickets">Closed tickets</a>
-                    <% } %>
-                    <% if(title == "Frequent Questions" ) { %>
-                        <a class="static-link">Frequent questions</a>
-                    <% } else { %>
-                        <a class="link" href="/frequent-questions">Frequent questions</a>
-                    <% } %>
-                    <% if(title == "Community" ) { %>
-                        <a class="static-link">Community</a>
-                    <% } else { %>
-                        <a class="link" href="/community">Community</a>
-                    <% } %>
-                    <% if(user) { %>
-                        <% if(user.tipo == 'admin') { %>
-                            <a class="nav-link link" href="/super-admin">Admin page</a>
-                        <% } %>
-                    <% } %>
-                </div>
-                <!-- LOG PAGES -->
-                <div class="d-sm-inline-flex gap-4">
-                    <% if (!user) { %>
-                        <a class="nav-link link" href="/signup">Register</a>
-                        <a class="nav-link link" href="/login">Login</a>
-                    <% } else { %>
-                        <% if(title == "Dashboard" ) { %>
-                            <a class="nav-link static-link">Welcome <%= user.email %></a>
-                        <% } else { %>
-                            <a class="nav-link link" href="/user-dashboard">Welcome <%= user.email %></a>
-                        <% } %>
-                        <form action="/logout" method="post">
-                            <button class="nav-link link">Log out</button>
-                        </form>
-                    <% } %>
-                </div>
-            </div>
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom border-dark-subtle shadow mb-5 sticky-top light-bg">
+    <div class="container">
+      <% if(title == "NGR" ) { %>
+      <a class="navbar-brand static-link">
+        <!-- inserisci img logo -->NGR
+      </a>
+      <% } else { %>
+      <a class="navbar-brand link" href="/">
+        <!-- inserisci img logo -->NGR
+      </a>
+      <% } %>
+      <!-- BUTTON SHOW SMALL SCREEN -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- ALL PAGES LINK -->
+      <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="navbarNavAltMarkup">
+        <!-- MAIN PAGES -->
+        <div class="d-sm-inline-flex gap-4">
+          <% if(user) { %>
+          <% if(title == "Open a ticket" ) { %>
+          <a class="nav-link static-link">Open ticket</a>
+          <% } else { %>
+          <a class="nav-link link" href="/open-ticket">Open ticket</a>
+          <% } %>
+          <% if(title == "My Tickets" ) { %>
+          <a class="nav-link static-link">My tickets</a>
+          <% } else { %>
+          <a class="nav-link link" href="/my-tickets">My tickets</a>
+          <% } %>
+          <% if(title == "Closed Tickets" ) { %>
+          <a class="nav-link static-link">Closed tickets</a>
+          <% } else { %>
+          <a class="nav-link link" href="/closed-tickets">Closed tickets</a>
+          <% } %>
+          <% } %>
+          <% if(title == "Frequent Questions" ) { %>
+          <a class="static-link">Frequent questions</a>
+          <% } else { %>
+          <a class="link" href="/frequent-questions">Frequent questions</a>
+          <% } %>
+          <% if(title == "Community" ) { %>
+          <a class="static-link">Community</a>
+          <% } else { %>
+          <a class="link" href="/community">Community</a>
+          <% } %>
+          <% if(user) { %>
+          <% if(user.tipo == 'admin') { %>
+          <a class="nav-link link" href="/super-admin">Admin page</a>
+          <% } %>
+          <% } %>
         </div>
-    </nav>
+        <!-- LOG PAGES -->
+        <div class="d-sm-inline-flex gap-4">
+          <% if (!user) { %>
+          <a class="nav-link link" href="/signup">Register</a>
+          <a class="nav-link link" href="/login">Login</a>
+          <% } else { %>
+          <% if(title == "Dashboard" ) { %>
+          <a class="nav-link static-link">Welcome <%= user.email %></a>
+          <% } else { %>
+          <a class="nav-link link" href="/user-dashboard">Welcome <%= user.email %></a>
+          <% } %>
+          <form action="/logout" method="post">
+            <button class="nav-link link">Log out</button>
+          </form>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </nav>
 </header>

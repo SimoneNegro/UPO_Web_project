@@ -1,91 +1,93 @@
 <footer class="footer border-top border-dark-subtle light-bg">
-    <div class="container text-center pt-4 pb-5">
-        <div class="row justify-content-center">
-            <!-- FIRST COLUMN -->
-            <div class="col text-start me-4">
-                <span class="fw-bold">COMPANY NAME</span>
-                <p class="pt-2">Our company specializes in solving problems as quickly as possible.</p>
-            </div>
-            <!-- SECOND COLUMN -->
-            <div class="col text-start me-4">
-                <span class="fw-bold">USEFUL LINKS</span>
-                <div class="row pt-2">
-                    <% if(title == "Terms Of Service" ) { %>
-                        <a class="static-link">Terms of Service</a>
-                    <% } else { %>
-                        <a class="link" href="/terms-of-service">Terms of Service</a>
-                    <% } %>
-                    <% if(title == "Privacy Policy" ) { %>
-                        <a class="static-link">Privacy Policy</a>
-                    <% } else { %>
-                        <a class="link" href="/privacy-policy">Privacy Policy</a>
-                    <% } %>
-                    <% if(title == "Cookie Policy" ) { %>
-                        <a class="static-link">Cookie Policy</a>
-                    <% } else { %>
-                        <a class="link" href="/cookie-policy">Cookie Policy</a>
-                    <% } %>
+  <div class="container text-center pt-4 pb-5">
+    <div class="row justify-content-center">
+      <!-- FIRST COLUMN -->
+      <div class="col text-start me-4">
+        <span class="fw-bold">COMPANY NAME</span>
+        <p class="pt-2">Our company specializes in solving problems as quickly as possible.</p>
+      </div>
+      <!-- SECOND COLUMN -->
+      <div class="col text-start me-4">
+        <span class="fw-bold">USEFUL LINKS</span>
+        <div class="row pt-2">
+          <% if(title == "Terms Of Service" ) { %>
+          <a class="static-link">Terms of Service</a>
+          <% } else { %>
+          <a class="link" href="/terms-of-service">Terms of Service</a>
+          <% } %>
+          <% if(title == "Privacy Policy" ) { %>
+          <a class="static-link">Privacy Policy</a>
+          <% } else { %>
+          <a class="link" href="/privacy-policy">Privacy Policy</a>
+          <% } %>
+          <% if(title == "Cookie Policy" ) { %>
+          <a class="static-link">Cookie Policy</a>
+          <% } else { %>
+          <a class="link" href="/cookie-policy">Cookie Policy</a>
+          <% } %>
 
-                </div>
-            </div>
-            <!-- THIRD COLUMN -->
-            <div class="col text-start me-4">
-                <span class="fw-bold">PAGES</span>
-                <div class="row pt-2">
-                    <% if(title == "Open a ticket" ) { %>
-                        <a class="static-link">Open ticket</a>
-                    <% } else { %>
-                        <a class="link" href="/open-ticket">Open ticket</a>
-                    <% } %>
-                    <% if(title == "My Tickets" ) { %>
-                        <a class="static-link">My tickets</a>
-                    <% } else { %>
-                        <a class="link" href="/my-tickets">My tickets</a>
-                    <% } %>
-                    <% if(title == "Closed Tickets" ) { %>
-                        <a class="static-link">Closed tickets</a>
-                    <% } else { %>
-                        <a class="link" href="/closed-tickets">Closed tickets</a>
-                    <% } %>
-                    <% if(title == "Frequent Questions" ) { %>
-                        <a class="static-link">Frequent questions</a>
-                    <% } else { %>
-                        <a class="link" href="/frequent-questions">Frequent questions</a>
-                    <% } %>
-                    <% if(title == "Community" ) { %>
-                        <a class="static-link">Community</a>
-                    <% } else { %>
-                        <a class="link" href="/community">Community</a>
-                    <% } %>
-                    <% if(user) { %>
-                        <% if(user.tipo == 'admin') { %>
-                            <a class="link" href="/super-admin">Admin page</a>
-                        <% } %>
-                    <% } %>
-                </div>
-            </div>
-            <!-- FOURTH COLUMN -->
-            <div class="col text-start me-4">
-                <span class="fw-bold">CONTACT AND SOCIAL</span>
-                <div class="pt-2 justify-content-center">
-                    <a target="_blank" class="link" href="https://github.com/SimoneNegro">
-                        <img class="icon-dimension me-3" src="/style/images/github.png" alt="GitHub logo">
-                    </a>
-                    <a class="link" href="#">
-                        <img class="icon-dimension me-3" src="/style/images/gmail.png" alt="Gmail logo">
-                    </a>
-                    <a target="_blank" class="link" href="https://www.linkedin.com/in/negro-simone-babb88238/">
-                        <img class="icon-dimension me-3" src="/style/images/linkedin.png" alt="LinkedIn logo">
-                    </a>
-                    <a class="link" href="#">
-                        <img class="icon-dimension me-3" src="/style/images/whatsapp.png" alt="Whatsapp logo">
-                    </a>
-                </div>
-            </div>
-            <div class="col text-start">
-                <!-- <span class="fw-bold pb-3">WHERE TO FIND US</span> -->
-                <div id="map"></div>
-            </div>
         </div>
+      </div>
+      <!-- THIRD COLUMN -->
+      <div class="col text-start me-4">
+        <span class="fw-bold">PAGES</span>
+        <div class="row pt-2">
+          <% if(user) { %>
+          <% if(title == "Open a ticket" ) { %>
+          <a class="static-link">Open ticket</a>
+          <% } else { %>
+          <a class="link" href="/open-ticket">Open ticket</a>
+          <% } %>
+          <% if(title == "My Tickets" ) { %>
+          <a class="static-link">My tickets</a>
+          <% } else { %>
+          <a class="link" href="/my-tickets">My tickets</a>
+          <% } %>
+          <% if(title == "Closed Tickets" ) { %>
+          <a class="static-link">Closed tickets</a>
+          <% } else { %>
+          <a class="link" href="/closed-tickets">Closed tickets</a>
+          <% } %>
+          <% } %>
+          <% if(title == "Frequent Questions" ) { %>
+          <a class="static-link">Frequent questions</a>
+          <% } else { %>
+          <a class="link" href="/frequent-questions">Frequent questions</a>
+          <% } %>
+          <% if(title == "Community" ) { %>
+          <a class="static-link">Community</a>
+          <% } else { %>
+          <a class="link" href="/community">Community</a>
+          <% } %>
+          <% if(user) { %>
+          <% if(user.tipo == 'admin') { %>
+          <a class="link" href="/super-admin">Admin page</a>
+          <% } %>
+          <% } %>
+        </div>
+      </div>
+      <!-- FOURTH COLUMN -->
+      <div class="col text-start me-4">
+        <span class="fw-bold">CONTACT AND SOCIAL</span>
+        <div class="pt-2 justify-content-center">
+          <a target="_blank" class="link" href="https://github.com/SimoneNegro">
+            <img class="icon-dimension me-3" src="/style/images/github.png" alt="GitHub logo">
+          </a>
+          <a class="link" href="#">
+            <img class="icon-dimension me-3" src="/style/images/gmail.png" alt="Gmail logo">
+          </a>
+          <a target="_blank" class="link" href="https://www.linkedin.com/in/negro-simone-babb88238/">
+            <img class="icon-dimension me-3" src="/style/images/linkedin.png" alt="LinkedIn logo">
+          </a>
+          <a class="link" href="#">
+            <img class="icon-dimension me-3" src="/style/images/whatsapp.png" alt="Whatsapp logo">
+          </a>
+        </div>
+      </div>
+      <div class="col text-start">
+        <!-- <span class="fw-bold pb-3">WHERE TO FIND US</span> -->
+        <div id="map"></div>
+      </div>
     </div>
+  </div>
 </footer>
