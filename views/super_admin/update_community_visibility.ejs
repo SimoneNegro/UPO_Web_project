@@ -1,0 +1,126 @@
+<%- include('../includes/head.ejs') %>
+
+<body>
+  <!-- HEADER -->
+  <%- include('../includes/super_admin/super_admin_header.ejs') %>
+  <!-- CONTENT -->
+  <main>
+    <div class="container">
+      <h1>Update community comment visibility</h1>
+      <% if (allComments.length === 0) { %>
+      <p>There are no visible community comment.</p>
+      <% } else { %>
+      <section>
+        <h4>Search community comment</h4>
+        <form action="/update-community-comment-visibility" method="get">
+          <label class="bold me-2" for="description">Search community comment by description: </label>
+          <input class="shadow-box border in-w me-2" id="description" name="description" type="text" autocomplete="text" required>
+          <input class="send-button ms-2" name="operation_type" type="submit" value="Search comment" title="Search comment by description.">
+        </form>
+        <% if (searchedComment !== undefined) { %>
+        <% if (searchedComment.length === 0) { %>
+        <p class="error">No description found.<%= searchedComment %> </p>
+        <% } else { %>
+        <p class="check">Descriptions found: <%= searchedComment.length %></p>
+        <div class="container text-left pb-2 ps-0 pe-3">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th scope="col">
+                  <h5>Description</h5>
+                </th>
+                <th scope="col">
+                  <h5>Comment</h5>
+                </th>
+                <th scope="col">
+                  <h5>Closed tickets</h5>
+                </th>
+                <th scope="col">
+                  <h5>Like</h5>
+                </th>
+                <th scope="col">
+                  <h5>Visibility</h5>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <% searchedComment.forEach(function(comment) { %>
+              <form action="/update-community-comment-visibility?_method=PUT" method="post">
+                <tr>
+                  <th scope="row">
+                    <%= comment.descrizione %>
+                    <input type="hidden" value="<%= comment.id %>" id="id" name="id">
+                  </th>
+                  <th scope="row"><%= comment.commento %></th>
+                  <th scope="row"><%= new Date(comment.chiusura_ticket * 1000).toLocaleDateString(undefined, { day: '2-digit', month: '2-digit', year: 'numeric' }); %></th>
+                  <th scope="row"><%= comment.like %></th>
+                  <th scope="row">
+                    <label class="bold me-3" for="visibility">Actual visibility: </label>
+                    <select class="shadow-box border select-style" name="visibility" id="visibility" required>
+                      <option class="option-style" value="1" <%= 1 === comment.visibile ? "selected" : null %>>
+                        Visible
+                      </option>
+                      <option class="option-style" value="0" <%= 0 === comment.visibile ? "selected" : null %>>
+                        Not visibile
+                      </option>
+                    </select>
+                  </th>
+                  <th scope="row">
+                    <input class="send-button mb-3" name="operation_type" type="submit" value="Update visibility" title="Save changes.">
+                  </th>
+                </tr>
+              </form>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+        <% } %>
+        <% } %>
+      </section>
+      <section>
+        <h4>All community comment</h4>
+        <div class="container text-left pb-5 ps-0 pe-3">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th scope="col">
+                  <h5>Description</h5>
+                </th>
+                <th scope="col">
+                  <h5>Comment</h5>
+                </th>
+                <th scope="col">
+                  <h5>Closed tickets</h5>
+                </th>
+                <th scope="col">
+                  <h5>Like</h5>
+                </th>
+                <th scope="col">
+                  <h5>Visibility</h5>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <% allComments.forEach(function(comment) { %>
+              <tr>
+                <th scope="row"><%= comment.descrizione %></th>
+                <th scope="row"><%= comment.commento %></th>
+                <th scope="row"><%= new Date(comment.chiusura_ticket * 1000).toLocaleDateString(undefined, { day: '2-digit', month: '2-digit', year: 'numeric' }); %></th>
+                <th scope="row"><%= comment.like %></th>
+                <th scope="row"><%= comment.visibile == 1 ? "Visible" : "Not visible" %></th>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <% } %>
+    </div>
+  </main>
+  <!-- FOOTER -->
+  <%- include('../includes/super_admin/super_admin_footer.ejs') %>
+  <!-- SCRIPTS-->
+  <%- include('../includes/scripts.ejs') %>
+</body>
+
+</html>

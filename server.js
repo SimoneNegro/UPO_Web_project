@@ -33,6 +33,7 @@ const ticketDashboardRouter = require('./routes/dashboard');
 const superAdminRouter = require('./routes/super_admin');
 const adminUpdateUserRouter = require('./routes/update_user');
 const adminUpdateFrequentQuestionRouter = require('./routes/update_frequent_question');
+const adminUpdateCommunityVisbilityRouter = require('./routes/update_community_visibility');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -139,6 +140,7 @@ app.use('/dashboard', ticketDashboardRouter);
 app.use('/super-admin', superAdminRouter);
 app.use('/update-user', adminUpdateUserRouter);
 app.use('/update-frequent-question', adminUpdateFrequentQuestionRouter);
+app.use('/update-community-comment-visibility', adminUpdateCommunityVisbilityRouter);
 
 // logout handler
 app.post('/logout', function (req, res, next) {

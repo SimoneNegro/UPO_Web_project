@@ -400,7 +400,7 @@ class DataBase {
             const sql = `SELECT g.id, t.descrizione, g.commento, g."like", t.nome_topic, t.chiusura_ticket, t.stato  FROM gestisce g 
                          INNER JOIN ticket t ON g.id_ticket = t.id 
                          WHERE g.visibile = 1
-                         ORDER BY g."like" DESC
+                         ORDER BY g."like" DESC, t.chiusura_ticket DESC
                          LIMIT ?
                          OFFSET ?`;
 
@@ -449,6 +449,67 @@ class DataBase {
 
             this.open();
             db.get(sql, [user_id, gestisce_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    allCommunityComment() {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT t.descrizione, g.commento, g.visibile, t.chiusura_ticket, g."like" FROM gestisce g
+                         INNER JOIN ticket t ON t.id = g.id_ticket
+                         ORDER BY g."like" DESC, t.chiusura_ticket DESC`;
+
+            this.open();
+            db.all(sql, [], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    getCommentByTicketDescription(description) {
+        return new Promise((resolve, reject) => {
+            const sql = `SELECT t.descrizione, g.commento, g.visibile, t.chiusura_ticket, g."like", g.id FROM gestisce g
+                         INNER JOIN ticket t ON t.id = g.id_ticket
+                         WHERE t.descrizione LIKE '%' || ? || '%'
+                         ORDER BY g."like" DESC, t.chiusura_ticket DESC`;
+
+            this.open();
+            db.all(sql, [description], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    updateCommentVisibilityTrue(gestisce_id) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE gestisce
+                         SET visibile = 1
+                         WHERE id = ?`;
+
+            this.open();
+            db.run(sql, [gestisce_id], (err, row) => {
+                if (err) throw reject(err);
+                resolve(row);
+            });
+            this.close();
+        });
+    }
+
+    updateCommentVisibilityFalse(gestisce_id) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE gestisce
+                         SET visibile = 0
+                         WHERE id = ?`;
+
+            this.open();
+            db.run(sql, [gestisce_id], (err, row) => {
                 if (err) throw reject(err);
                 resolve(row);
             });
