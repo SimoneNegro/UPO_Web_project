@@ -3,14 +3,20 @@ const router = express.Router();
 const DataBase = require("../db"); // db.js
 const db = new DataBase();
 
-// ticket root
+const { isStaff } = require('../public/js/auth');
+
 router.get('/', async function (req, res, next) {
-    // ADD IS NOT IN STAFF ROUTING
+    if(isStaff(req)) {
+        console.log("Access denied to Open a ticket: you are not an admin or a user\n");
+        return res.redirect('/');
+    }
+
     const err_ticket_text = 0;
 
     try {
         const topics = await db.allTicketTopics();
 
+        console.log("Correct routing page: Open a ticket\n");
         return res.render('ticket', {
             title: "Open a ticket",
             user: req.user,
@@ -19,7 +25,6 @@ router.get('/', async function (req, res, next) {
         });
     } catch (err) {
         console.error("Error:", err);
-        // TODO: handle error
     }
 });
 
@@ -32,6 +37,7 @@ router.post('/', async function (req, res, next) {
         if (err_ticket_text.invalid_text > 0) {
             const topics = await db.allTicketTopics();
 
+            console.log("Error: invalid ticket description\n");
             return res.render('ticket', {
                 title: "Open a ticket",
                 user: req.user,
@@ -41,10 +47,11 @@ router.post('/', async function (req, res, next) {
         }
 
         await db.addNewTicket(req.body.description, data, req.user.id, req.body.topic);
+
+        console.log("New ticket successfully opened\n");
         return res.redirect('/my-tickets');
     } catch (err) {
         console.error("Error:", err);
-        // TODO: handle error
     }
 });
 

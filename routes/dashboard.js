@@ -4,16 +4,19 @@ const router = express.Router();
 const DataBase = require("../db"); // db.js
 const db = new DataBase();
 
-const {isStaff, isAdmin} = require('../public/js/auth');
+const { isStaff, isAdmin } = require('../public/js/auth');
 
 router.get('/', async function (req, res, next) {
     if (!isStaff(req) && !isAdmin(req)) {
+        console.log("Access denied to Ticket Dashboard: you are not a staff or admin member or you are not logged in\n");
         return res.redirect('/');
     }
 
     try {
         const num_tickets = await db.numberOfManagedTicket(req.user.id);
         const managed_ticket = await db.managedTicket(req.user.id);
+
+        console.log("Correct routing page: Ticket Dashboard\n");
         return res.render('admin/dashboard', {
             title: 'Ticket Dashboard',
             user: req.user,
@@ -22,12 +25,12 @@ router.get('/', async function (req, res, next) {
         });
     } catch (err) {
         console.error("Error:", err);
-        // TODO: handle error
     }
 });
 
 router.post('/', async function (req, res, next) {
     if (!isStaff(req) && !isAdmin(req)) {
+        console.log("Access denied\n");
         return res.redirect('/');
     }
 
@@ -54,15 +57,15 @@ router.post('/', async function (req, res, next) {
                 await db.updateTicketStatusCancelled(req.body.ticket_id);
                 await db.updateCloseDateTicket(req.body.ticket_id, data);
                 break;
-            default :
+            default:
                 console.log("Error: invalid operation type");
                 return res.redirect('/dashboard');
         }
 
+        console.log("Ticket handled correctly");
         return res.redirect('/closed_tickets');
     } catch (err) {
         console.error("Error:", err);
-        // TODO: handle error
     }
 });
 

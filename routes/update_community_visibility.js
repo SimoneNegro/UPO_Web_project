@@ -11,8 +11,10 @@ router.use(methodOverride('_method'));
 
 router.get('/', async function (req, res, next) {
     try {
-        if (!isAdmin(req))
+        if (!isAdmin(req)) {
+            console.log("Access denied to Update Community Comment Visibility: you are not an admin\n");
             return res.redirect('/');
+        }
 
         const description = req.query['description'];
         let searchedComment;
@@ -21,6 +23,8 @@ router.get('/', async function (req, res, next) {
             searchedComment = await db.getCommentByTicketDescription(description);
 
         const allComments = await db.allCommunityComment();
+
+        console.log("Correct routing page: Update Community Comment Visibility\n");
         return res.render('super_admin/update_community_visibility', {
             title: 'Update Community Comment Visibility',
             user: req.user,
@@ -34,15 +38,18 @@ router.get('/', async function (req, res, next) {
 
 router.put('/', async function (req, res, next) {
     try {
-        if (!isAdmin(req)) 
+        if (!isAdmin(req)) {
+            console.log("Access denied to Update Community Comment Visibility: you are not an admin\n");
             return res.status(403).json();
+        }
 
-        if(req.body.visibility == 1)
+        if (req.body.visibility == 1)
             await db.updateCommentVisibilityTrue(req.body.id);
-        else if(req.body.visibility == 0)
+        else if (req.body.visibility == 0)
             await db.updateCommentVisibilityFalse(req.body.id);
 
-        res.redirect('back');
+        console.log("Updated comment community visibility\n");
+        return res.redirect('back');
     } catch (err) {
         console.error("Error:", err);
     }

@@ -7,8 +7,10 @@ const { watchFile } = require('fs');
 const db = new DataBase();
 
 router.get('/', async function (req, res, next) {
-    if (isStaff(req))
+    if (isStaff(req)) {
+        console.log("Access denied to Community: you are a staff member\n");
         return res.redirect('/');
+    }
 
     try {
         const perPage = 10;
@@ -35,6 +37,7 @@ router.get('/', async function (req, res, next) {
         if (req.user)
             likedContents = await db.likedContent(req.user.id);
 
+        console.log("Correct routing page: Community\n");
         return res.render('community', {
             title: 'Community',
             user: req.user,
@@ -53,8 +56,10 @@ router.get('/', async function (req, res, next) {
 });
 
 router.get('/:id', async function (req, res, next) {
-    if (isStaff(req))
+    if (isStaff(req)) {
+        console.log("Access denied\n");
         return res.redirect('/');
+    }
 
     let likedContents;
 
@@ -64,6 +69,7 @@ router.get('/:id', async function (req, res, next) {
         const gestisce_id = req.params.id;
         const description_content = await db.getCommunityTicketInformation(gestisce_id);
 
+        console.log("Correct routing page: Community\n");
         return res.render('community', {
             title: 'Community',
             user: req.user,
@@ -76,8 +82,10 @@ router.get('/:id', async function (req, res, next) {
 });
 
 router.post('/like', async function (req, res, next) {
-    if (isStaff(req))
+    if (isStaff(req)) {
+        console.log("Access denied to Community: you are a staff member\n");
         return res.redirect('/');
+    }
 
     try {
         const gestisci_id = req.body.gestisci_id;
@@ -98,8 +106,8 @@ router.post('/like', async function (req, res, next) {
 
         redirectUrl = single_ticket ? `/community/${gestisci_id}` : redirectUrl;
 
+        console.log("Like added\n");
         return res.redirect(redirectUrl);
-
     } catch (error) {
         console.error("Error:", err);
     }

@@ -43,6 +43,7 @@ class DataBase {
             this.open();
             db.get(sql, [email], (err, row) => {
                 if (err) throw reject(err);
+                console.log("User found by email");
                 resolve(row);
             });
             this.close();
@@ -63,6 +64,7 @@ class DataBase {
             this.open();
             db.get(sql, [id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("User found by id");
                 resolve(row);
             });
             this.close();
@@ -84,6 +86,7 @@ class DataBase {
             this.open();
             db.get(sql, [id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned number of tickets opened by User");
                 resolve(row);
             });
             this.close();
@@ -105,6 +108,7 @@ class DataBase {
             this.open();
             db.all(sql, [id], (err, rows) => {
                 if (err) throw reject(err);
+                console.log("Returned all tickets opened by User");
                 resolve(rows);
             });
             this.close();
@@ -125,6 +129,7 @@ class DataBase {
             this.open();
             db.all(sql, [id], (err, rows) => {
                 if (err) throw reject(err);
+                console.log("Returned all opened tickets");
                 resolve(rows);
             });
             this.close();
@@ -145,6 +150,7 @@ class DataBase {
             this.open();
             db.run(sql, [ticket_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Updated ticket status to 'In Progress'");
                 resolve(row);
             });
             this.close();
@@ -165,6 +171,7 @@ class DataBase {
             this.open();
             db.run(sql, [ticket_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Updated ticket status to 'Waiting Transfer'");
                 resolve(row);
             });
             this.close();
@@ -185,6 +192,7 @@ class DataBase {
             this.open();
             db.run(sql, [ticket_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Updated ticket status to 'Resolved'");
                 resolve(row);
             });
             this.close();
@@ -205,6 +213,7 @@ class DataBase {
             this.open();
             db.run(sql, [ticket_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Updated ticket status to 'Closed'");
                 resolve(row);
             });
             this.close();
@@ -225,6 +234,7 @@ class DataBase {
             this.open();
             db.run(sql, [ticket_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Updated ticket status to 'Cancelled'");
                 resolve(row);
             });
             this.close();
@@ -246,6 +256,7 @@ class DataBase {
             this.open();
             db.run(sql, [data, ticket_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Updated ticket close date");
                 resolve(row);
             });
             this.close();
@@ -269,12 +280,19 @@ class DataBase {
             this.open();
             db.run(sql, [comment, visible, staff_id, ticket_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Updated closed ticket information");
                 resolve(row);
             });
             this.close();
         });
     }
 
+    /**
+     * Add like to a specific comment.
+     * @param {int} id_utente User id.
+     * @param {int} id_gestisce Gestisce id.
+     * @returns {Promise<unknown>} Returns true if successful or false if failed. 
+     */
     addLike(id_utente, id_gestisce) {
         return new Promise((resolve, reject) => {
             const sql = `INSERT INTO likes(id_utente, id_gestisce)
@@ -283,12 +301,19 @@ class DataBase {
             this.open();
             db.run(sql, [id_utente, id_gestisce], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Updated liked comment by user (added)");
                 resolve(row);
             });
             this.close();
         });
     }
 
+    /**
+     * Remove like from a specific comment.
+     * @param {int} id_utente User id.
+     * @param {int} id_gestisce Gestisce id.
+     * @returns {Promise<unknown>} Returns true if successful or false if failed. 
+     */ 
     removeLike(id_utente, id_gestisce) {
         return new Promise((resolve, reject) => {
             const sql = `DELETE FROM likes 
@@ -297,12 +322,18 @@ class DataBase {
             this.open();
             db.run(sql, [id_utente, id_gestisce], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Updated liked comment by user (removed)");
                 resolve(row);
             });
             this.close();
         });
     }
 
+    /**
+     * Increase the number of like by one.
+     * @param {int} id_gestisce Gestisce id.
+     * @returns {Promise<unknown>} Returns true if successful or false if failed. 
+     */
     addLikeGestisce(id_gestisce) {
         return new Promise((resolve, reject) => {
             const sql = `UPDATE gestisce 
@@ -312,12 +343,18 @@ class DataBase {
             this.open();
             db.run(sql, [id_gestisce], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Updated number of liked comment by user (added)");
                 resolve(row);
             });
             this.close();
         });
     }
 
+    /**
+     * Decrease the number of like by one.
+     * @param {int} id_gestisce Gestisce id.
+     * @returns {Promise<unknown>} Returns true if successful or false if failed. 
+     */
     removeLikeGestisce(id_gestisce) {
         return new Promise((resolve, reject) => {
             const sql = `UPDATE gestisce 
@@ -327,12 +364,19 @@ class DataBase {
             this.open();
             db.run(sql, [id_gestisce], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Updated number of liked comment by user (removed)");
                 resolve(row);
             });
             this.close();
         });
     }
 
+    /**
+     * Return a row if user liked specified comment.
+     * @param {int} id_utente User id.
+     * @param {int} id_gestisce Gestisce id.
+     * @returns Return a row.
+     */
     getUserLike(id_utente, id_gestisce) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT * FROM likes
@@ -341,12 +385,20 @@ class DataBase {
             this.open();
             db.get(sql, [id_utente, id_gestisce], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned liked/not liked comment");
                 resolve(row);
             });
             this.close();
         });
     }
 
+    /**
+     * Return limited tickets searched by user. 
+     * @param {String} description Ticket description.
+     * @param {int} limit Number of comment per page.
+     * @param {int} offset Offset comment page.
+     * @returns Limited tickets.
+     */
     getSearchedCommunityTicket(description, limit, offset) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT g.id, t.descrizione, g.commento, g."like", t.nome_topic, t.chiusura_ticket, t.stato  FROM gestisce g 
@@ -359,12 +411,18 @@ class DataBase {
             this.open();
             db.all(sql, [description, limit, offset], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned limited tickets searched by user");
                 resolve(row);
             });
             this.close();
         });
     }
 
+    /**
+     * Return the number of tickets with specified description.
+     * @param {String} description Ticket description.
+     * @returns Number of tickets with specified description.
+     */
     countAllSearchedCommunityTickets(description) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT COUNT(*) AS num_comment FROM gestisce g 
@@ -374,12 +432,18 @@ class DataBase {
             this.open();
             db.get(sql, [description], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Number of tickets searched by description");
                 resolve(row);
             });
             this.close();
         });
     }
 
+    /**
+     * Return a single ticket with specific information.
+     * @param {int} gestisce_id Gestisce id.
+     * @returns Ticket description information.
+     */
     getCommunityTicketInformation(gestisce_id) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT g.id, t.descrizione, g.commento, g."like", t.nome_topic, t.chiusura_ticket, t.stato  FROM gestisce g 
@@ -389,12 +453,19 @@ class DataBase {
             this.open();
             db.get(sql, [gestisce_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned community ticket information");
                 resolve(row);
             });
             this.close();
         });
     }
 
+    /**
+     * Return a limited community tickets list.
+     * @param {int} page Number of comment per page.
+     * @param {int} offset Offset comment page.
+     * @returns Portion of all community tickets.
+     */
     getAllCommunityTickets(page, offset) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT g.id, t.descrizione, g.commento, g."like", t.nome_topic, t.chiusura_ticket, t.stato  FROM gestisce g 
@@ -407,12 +478,17 @@ class DataBase {
             this.open();
             db.all(sql, [page, offset], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned limited community tickets");
                 resolve(row);
             });
             this.close();
         });
     }
 
+    /**
+     * Count all visible tickets.
+     * @returns Number of visible tickets.
+     */
     countAllCommunityTickets() {
         return new Promise((resolve, reject) => {
             const sql = `SELECT COUNT(*) AS num_comment FROM gestisce g 
@@ -422,12 +498,18 @@ class DataBase {
             this.open();
             db.get(sql, [], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned the number of visible community tickets");
                 resolve(row);
             });
             this.close();
         });
     }
 
+    /**
+     * Select all liked community tickets by specified user.
+     * @param {int} user_id User id.
+     * @returns All liked community tickets by specified user.
+     */
     likedContent(user_id) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT * FROM likes 
@@ -436,12 +518,19 @@ class DataBase {
             this.open();
             db.all(sql, [user_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned all liked community ticket by this user");
                 resolve(row);
             });
             this.close();
         });
     }
 
+    /**
+     * Return a liked community ticket by specified user and ticket.
+     * @param {int} user_id User id.
+     * @param {int} gestisce_id Gestisce id.
+     * @returns Liked community ticket by specified user and ticket.
+     */
     likedContentDirect(user_id, gestisce_id) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT * FROM likes 
@@ -450,12 +539,17 @@ class DataBase {
             this.open();
             db.get(sql, [user_id, gestisce_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned liked community ticket by this user and this ticket");
                 resolve(row);
             });
             this.close();
         });
     }
 
+    /**
+     * Return all community comment (visible and invisible).
+     * @returns All community comment.
+     */
     allCommunityComment() {
         return new Promise((resolve, reject) => {
             const sql = `SELECT t.descrizione, g.commento, g.visibile, t.chiusura_ticket, g."like" FROM gestisce g
@@ -465,12 +559,18 @@ class DataBase {
             this.open();
             db.all(sql, [], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned all community comment");
                 resolve(row);
             });
             this.close();
         });
     }
 
+    /**
+     * Return community comment searched by description.
+     * @param {String} description Ticket description.
+     * @returns Community comment.
+     */
     getCommentByTicketDescription(description) {
         return new Promise((resolve, reject) => {
             const sql = `SELECT t.descrizione, g.commento, g.visibile, t.chiusura_ticket, g."like", g.id FROM gestisce g
@@ -481,12 +581,18 @@ class DataBase {
             this.open();
             db.all(sql, [description], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned community comment search by description");
                 resolve(row);
             });
             this.close();
         });
     }
 
+    /**
+     * Set true community comment visibility. 
+     * @param {int} gestisce_id Gestisce id.
+     * @returns {Promise<unknown>} Returns true if successful or false if failed. 
+     */
     updateCommentVisibilityTrue(gestisce_id) {
         return new Promise((resolve, reject) => {
             const sql = `UPDATE gestisce
@@ -496,12 +602,18 @@ class DataBase {
             this.open();
             db.run(sql, [gestisce_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Updated community comment visibility: true");
                 resolve(row);
             });
             this.close();
         });
     }
 
+    /**
+     * Set false community comment visibility. 
+     * @param {int} gestisce_id Gestisce id.
+     * @returns {Promise<unknown>} Returns true if successful or false if failed. 
+     */
     updateCommentVisibilityFalse(gestisce_id) {
         return new Promise((resolve, reject) => {
             const sql = `UPDATE gestisce
@@ -511,6 +623,8 @@ class DataBase {
             this.open();
             db.run(sql, [gestisce_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Updated community comment visibility: false");
+
                 resolve(row);
             });
             this.close();
@@ -532,6 +646,7 @@ class DataBase {
             this.open();
             db.run(sql, [staff_id, ticket_id, date], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Created connection between ticket and staff member");
                 resolve(row);
             });
             this.close();
@@ -555,6 +670,7 @@ class DataBase {
             this.open();
             db.get(sql, [staff_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Selected ticket managed by staff member");
                 resolve(row);
             });
         });
@@ -575,6 +691,7 @@ class DataBase {
             this.open();
             db.all(sql, [user_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned all closed tickets by specific user");
                 resolve(row);
             });
             this.close();
@@ -597,6 +714,7 @@ class DataBase {
             this.open();
             db.all(sql, [staff_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned all 'Resolved' tickets");
                 resolve(row);
             });
             this.close();
@@ -619,6 +737,7 @@ class DataBase {
             this.open();
             db.all(sql, [staff_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned all 'Closed' tickets");
                 resolve(row);
             });
             this.close();
@@ -641,6 +760,7 @@ class DataBase {
             this.open();
             db.all(sql, [staff_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned all 'Cancelled' tickets");
                 resolve(row);
             });
             this.close();
@@ -665,6 +785,7 @@ class DataBase {
             this.open();
             db.all(sql, [staff_id, user_mail], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned all closed tickets by this staff member and a specific user email");
                 resolve(row);
             });
             this.close();
@@ -687,6 +808,7 @@ class DataBase {
             this.open();
             db.get(sql, [text], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned the number of invalid tickets by a specific description");
                 resolve(row);
             });
             this.close();
@@ -708,6 +830,7 @@ class DataBase {
             this.open();
             db.get(sql, [staff_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned the number of closed ticket by this staff member");
                 resolve(row);
             });
             this.close();
@@ -729,6 +852,7 @@ class DataBase {
             this.open();
             db.all(sql, [staff_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned the number of closed ticket by this staff member");
                 resolve(row);
             });
             this.close();
@@ -752,6 +876,7 @@ class DataBase {
             this.open();
             db.all(sql, [staff_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned all managed ticket by this staff member");
                 resolve(row);
             });
             this.close();
@@ -774,6 +899,7 @@ class DataBase {
             this.open();
             db.get(sql, [staff_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned the number of ticket managed by this staff member");
                 resolve(row);
             });
             this.close();
@@ -792,6 +918,7 @@ class DataBase {
             this.open();
             db.all(sql, [], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned all frequent questions");
                 resolve(row);
             });
             this.close();
@@ -810,6 +937,7 @@ class DataBase {
            this.open();
            db.run(sql, [question_id], (err, row) => {
                if (err) throw reject(err);
+               console.log("Question deleted");
                resolve(row);
            });
            this.close();
@@ -827,6 +955,7 @@ class DataBase {
            this.open();
            db.all(sql, [], (err, row) => {
               if (err) throw reject(err);
+              console.log("Returned 'Software' question");
               resolve(row);
            });
            this.close();
@@ -844,6 +973,7 @@ class DataBase {
             this.open();
             db.all(sql, [], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned 'Hardware' question");
                 resolve(row);
             });
             this.close();
@@ -861,6 +991,7 @@ class DataBase {
             this.open();
             db.all(sql, [], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned 'Other' question");
                 resolve(row);
             });
             this.close();
@@ -879,6 +1010,7 @@ class DataBase {
             this.open();
             db.all(sql, [description], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned all frequent question by description");
                 resolve(row);
             });
             this.close();
@@ -901,6 +1033,7 @@ class DataBase {
             this.open();
             db.run(sql, [topic, description, title, admin_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Added new question");
                 resolve(row);
             });
             this.close();
@@ -932,6 +1065,7 @@ class DataBase {
             this.open();
             db.all(sql, [], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned all user");
                 resolve(row);
             });
             this.close();
@@ -953,6 +1087,7 @@ class DataBase {
             this.open();
             db.run(sql, [type, email], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Updated user role");
                 resolve(row);
             });
             this.close();
@@ -974,6 +1109,7 @@ class DataBase {
             this.open();
             db.all(sql, [email], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned users by email");
                 resolve(row);
             });
             this.close();
@@ -992,6 +1128,7 @@ class DataBase {
             this.open();
             db.all(sql, [], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned all user role");
                 resolve(row);
             });
             this.close();
@@ -1012,6 +1149,7 @@ class DataBase {
             this.open();
             db.get(sql, [email], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned user role");
                 resolve(row);
             });
             this.close();
@@ -1033,6 +1171,7 @@ class DataBase {
             // insert user type into function to prevent inject attacks
             db.run(sql, [email, password, "utente"], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Added new user");
                 resolve(row);
             });
             this.close();
@@ -1054,6 +1193,7 @@ class DataBase {
             this.open();
             db.run(sql, [token, user_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Added token to user");
                 resolve(row);
             });
             this.close();
@@ -1068,7 +1208,7 @@ class DataBase {
      * @param {int} uuid Link identification code.
      * @returns {Promise<unknown>} Returns true if successful or false if failed.
      */
-    otpCodeAssigment(id, otp, current_date, uuid) {
+    otpCodeAssignment(id, otp, current_date, uuid) {
         return new Promise((resolve, reject) => {
             const sql = `INSERT INTO otp(user_id, otp, date, uuid)
                          VALUES (?, ?, ?, ?)`;
@@ -1076,6 +1216,7 @@ class DataBase {
             this.open();
             db.run(sql, [id, otp, current_date, uuid], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Assigned OTP code to user");
                 resolve(row);
             });
             this.close();
@@ -1098,6 +1239,7 @@ class DataBase {
             this.open();
             db.get(sql, [uuid], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned user by uuid");
                 resolve(row);
             });
             this.close();
@@ -1119,6 +1261,7 @@ class DataBase {
             this.open();
             db.run(sql, [password, user_id], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Updated user password");
                 resolve(row);
             });
             this.close();
@@ -1139,6 +1282,7 @@ class DataBase {
             this.open();
             db.get(sql, [email], (err, row) => {
                 if (err) throw reject(err);
+                console.log("Returned user by email");
                 resolve(row);
             });
             this.close();
@@ -1157,6 +1301,7 @@ class DataBase {
             this.open();
             db.all(sql, [], (err, rows) => {
                 if (err) throw reject(err);
+                console.log("Returned all ticket topics");
                 resolve(rows);
             });
             this.close();
@@ -1179,6 +1324,7 @@ class DataBase {
             this.open();
             db.run(sql, [description, data, "Pending", user_id, topic], (err, row) => {
                 if (err) throw reject(err);
+                console.log("New ticket created");
                 resolve(row);
             });
             this.close();

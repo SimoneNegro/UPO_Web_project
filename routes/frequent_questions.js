@@ -17,6 +17,7 @@ router.get('/', async function (req, res, next) {
         const hw_question = await db.hardwareQuestion();
         const o_question = await db.otherQuestion();
 
+        console.log("Correct routing page: Frequent Question\n");
         return res.render('frequent_questions', {
             title: 'Frequent Questions',
             user: req.user,

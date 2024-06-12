@@ -4,35 +4,30 @@ const router = express.Router();
 const DataBase = require("../db"); // db.js
 const db = new DataBase();
 
-const {isStaff, isAdmin} = require('../public/js/auth');
+const { isStaff, isAdmin } = require('../public/js/auth');
 
-router.get('/', async function (req, res, next) {
+router.get('/', function (req, res, next) {
     if (!isStaff(req) && !isAdmin(req)) {
+        console.log("Access denied to Staff Panel: you are not a staff or admin member or you are not logged in\n");
         return res.redirect('/');
     }
 
-    try {
-        return res.render('admin/admin', {title: "Staff panel", user: req.user});
-    } catch (err) {
-        console.error("Error:", err);
-        // TODO: handle error
-    }
+    console.log("Correct routing page: Staff Panel\n");
+    return res.render('admin/admin', { title: "Staff panel", user: req.user });
 });
 
 router.get('/chartdata', async function (req, res, next) {
-    if (!req.user) {
+    if (!req.user)
         return res.status(401).json();
-    }
+
     if (!isStaff(req) && !isAdmin(req)) {
+        console.log("Access denied to load data\n");
         return res.redirect('/');
     }
     try {
         const results = await db.numClosedTicketsByStatusByStaffUser(req.user.id);
-        // console.log(results);
         const labels = results.map(row => row.stato);
-        // console.log(labels);
         const data = results.map(row => row.closed_tickets);
-        // console.log(data);
 
         const chartData = {
             type: 'pie', // Or choose another chart type (bar, line, etc.)
@@ -69,19 +64,20 @@ router.get('/chartdata', async function (req, res, next) {
                 },
             },
         };
-        // console.log(chartData);
+        
+        console.log("Loaded pie chart");
         res.status(200).json(chartData);
     } catch (err) {
         console.error("Error:", err);
-        // TODO: handle error
     }
 });
 
 router.get('/linechartpermonth', async function (req, res, next) {
-    if (!req.user) {
+    if (!req.user)
         return res.status(401).json();
-    }
+
     if (!isStaff(req) && !isAdmin(req)) {
+        console.log("Access denied to load data\n");
         return res.redirect('/');
     }
     try {
@@ -132,10 +128,10 @@ router.get('/linechartpermonth', async function (req, res, next) {
             },
         };
 
+        console.log("Loaded line chart\n");
         res.status(200).json(lineChartPerMonth);
     } catch (err) {
         console.error("Error:", err);
-        // TODO: handle error
     }
 });
 

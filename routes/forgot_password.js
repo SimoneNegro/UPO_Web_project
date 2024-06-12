@@ -4,7 +4,7 @@ const DataBase = require("../db"); // db.js
 const db = new DataBase();
 const nodemailer = require("nodemailer");
 const otpGenerator = require('otp-generator');
-const {v4: uuidv4} = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -14,19 +14,20 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// signup root
 router.get('/', function (req, res, next) {
     let errorMessage;
     if (req.query.error !== undefined)
         errorMessage = "Email do not exist."
 
-    return res.render('forgot_password', {message: errorMessage, user: req.user});
+    console.log("Email does not exist");
+    return res.render('forgot_password', { message: errorMessage, user: req.user });
 });
 
 router.post('/', async function (req, res, next) {
     try {
         const user = await db.findUserByEmail(req.body.email);
         if (!user) {
+            console.log("Email does not exist");
             return res.redirect('/forgot-password?error=email_not_exist');
         }
 
@@ -45,7 +46,7 @@ router.post('/', async function (req, res, next) {
 
         const user_id = await db.getUserId(req.body.email);
         let current_date = Math.floor(new Date().getTime() / 1000.0);
-        await db.otpCodeAssigment(user_id.id, otp_code, current_date, uuid);
+        await db.otpCodeAssignment(user_id.id, otp_code, current_date, uuid);
 
         await transporter.sendMail(mailOptions, async function (error, info) {
             if (error) {
@@ -53,6 +54,7 @@ router.post('/', async function (req, res, next) {
             }
         });
 
+        console.log("OTP sent by email");
         return res.redirect('otp?code=' + uuid);
     } catch (err) {
         console.log(err);
