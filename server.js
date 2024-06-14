@@ -30,7 +30,7 @@ const closedTicketsRouter = require('./routes/closed_tickets');
 const viewTicketsRouter = require('./routes/view_tickets');
 const ticketDashboardRouter = require('./routes/dashboard');
 // admin routes
-const adminRouter = require('./routes/super_admin');
+const adminRouter = require('./routes/admin');
 const adminUpdateUserRouter = require('./routes/update_user');
 const adminUpdateFrequentQuestionRouter = require('./routes/update_frequent_question');
 const adminUpdateCommunityVisbilityRouter = require('./routes/update_community_visibility');
@@ -137,7 +137,7 @@ app.use('/closed_tickets', closedTicketsRouter);
 app.use('/view_tickets', viewTicketsRouter);
 app.use('/dashboard', ticketDashboardRouter);
 // admin routes
-app.use('/super-admin', adminRouter);
+app.use('/admin', adminRouter);
 app.use('/update-user', adminUpdateUserRouter);
 app.use('/update-frequent-question', adminUpdateFrequentQuestionRouter);
 app.use('/update-community-comment-visibility', adminUpdateCommunityVisbilityRouter);

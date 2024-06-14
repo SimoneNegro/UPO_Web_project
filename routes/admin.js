@@ -14,7 +14,7 @@ router.get('/', async function (req, res, next) {
 
     try {
         console.log("Correct routing page: Admin panel\n");
-        return res.render('admin/super_admin', { title: "Admin panel", user: req.user });
+        return res.render('admin/admin', { title: "Admin panel", user: req.user });
     } catch (err) {
         console.error("Error:", err);
     }

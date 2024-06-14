@@ -43,7 +43,7 @@ router.post('/', function (req, res, next) {
 
                 if (isAdmin(req)) {
                     console.log("Logged as admin member\n");
-                    return res.redirect('/super-admin');
+                    return res.redirect('/admin');
                 }
 
                 console.log("Logged as user\n");
