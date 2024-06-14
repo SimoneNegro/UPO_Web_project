@@ -30,6 +30,8 @@ To install and run the project is very simple.
 
 Go to code to install or clone the project.
 
+After downloading the project, open the terminal and run the command `npm install`.
+
 Once you have done you have to configure the `.env` file (you can create this file directly inside main project folder). You have to configure:
 
 - TOKEN_KEY: you have to generate the token with a random string. After you have generated the string, you must have to crypt it (i used SHA256 encryption algorithm). This token is an environment variable used as a secret key for signing [JWT](https://jwt.io) tokens;
