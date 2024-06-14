@@ -38,7 +38,7 @@ router.post('/', function (req, res, next) {
 
                 if (isStaff(req)) {
                     console.log("Logged as staff member\n");
-                    return res.redirect('/admin');
+                    return res.redirect('/staff');
                 }
 
                 if (isAdmin(req)) {

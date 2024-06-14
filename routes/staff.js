@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
     }
 
     console.log("Correct routing page: Staff Panel\n");
-    return res.render('staff/admin', { title: "Staff panel", user: req.user });
+    return res.render('staff/staff', { title: "Staff panel", user: req.user });
 });
 
 router.get('/chartdata', async function (req, res, next) {

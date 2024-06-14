@@ -1,5 +1,5 @@
 $(async function () {
-    const response = await fetch("/admin/chartdata", {
+    const response = await fetch("/staff/chartdata", {
         method: "GET",
         cache: "default",
         credentials: "same-origin",
@@ -12,7 +12,7 @@ $(async function () {
     const myChart = new Chart("myChart", chartData);
     myChart.update();
 
-    const lineResponse = await fetch("/admin/linechartpermonth", {
+    const lineResponse = await fetch("/staff/linechartpermonth", {
         method: "GET",
         cache: "default",
         credentials: "same-origin",

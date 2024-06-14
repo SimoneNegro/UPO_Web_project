@@ -6,7 +6,7 @@ const { isStaff } = require('../public/js/auth');
 router.get('/', function (req, res, next) {
     if (isStaff(req)) {
         console.log("Access denied to Community: you are a staff member\n");
-        return res.redirect('/admin');
+        return res.redirect('/staff');
     }
 
     console.log("Correct routing page: Homepage\n");

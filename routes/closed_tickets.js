@@ -24,7 +24,7 @@ router.get('/', async function (req, res, next) {
         const closed_tickets = await db.closedTickets(req.user.id);
         const cancelled_tickets = await db.cancelledTickets(req.user.id);
 
-        console.log("Correct routing page: Closed Ticket (admin)\n");
+        console.log("Correct routing page: Closed Ticket (staff)\n");
         return res.render('staff/closed_tickets', {
             title: "Closed Tickets",
             user: req.user,
