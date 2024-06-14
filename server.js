@@ -25,12 +25,12 @@ const changePasswordRouter = require('./routes/change_password');
 const frequentQuestionRouter = require('./routes/frequent_questions');
 const communityRouter = require('./routes/community');
 // staff routes
-const adminRouter = require('./routes/admin');
+const staffRouter = require('./routes/admin');
 const closedTicketsRouter = require('./routes/closed_tickets');
 const viewTicketsRouter = require('./routes/view_tickets');
 const ticketDashboardRouter = require('./routes/dashboard');
 // admin routes
-const superAdminRouter = require('./routes/super_admin');
+const adminRouter = require('./routes/super_admin');
 const adminUpdateUserRouter = require('./routes/update_user');
 const adminUpdateFrequentQuestionRouter = require('./routes/update_frequent_question');
 const adminUpdateCommunityVisbilityRouter = require('./routes/update_community_visibility');
@@ -58,7 +58,7 @@ app.set('view engine', 'ejs');
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 // session configuration
 app.use(session({
@@ -132,12 +132,12 @@ app.use('/frequent-questions', frequentQuestionRouter);
 app.use('/community', communityRouter);
 
 // staff routes
-app.use('/admin', adminRouter);
+app.use('/admin', staffRouter);
 app.use('/closed_tickets', closedTicketsRouter);
 app.use('/view_tickets', viewTicketsRouter);
 app.use('/dashboard', ticketDashboardRouter);
 // admin routes
-app.use('/super-admin', superAdminRouter);
+app.use('/super-admin', adminRouter);
 app.use('/update-user', adminUpdateUserRouter);
 app.use('/update-frequent-question', adminUpdateFrequentQuestionRouter);
 app.use('/update-community-comment-visibility', adminUpdateCommunityVisbilityRouter);
@@ -154,7 +154,7 @@ app.post('/logout', function (req, res, next) {
 
 // error 404 response
 app.use(function (req, res, next) {
-    res.status(404).render('page_not_found', {title: 'Resource Not Found', user: req.user});
+    res.status(404).render('page_not_found', { title: 'Resource Not Found', user: req.user });
 });
 
 // sever start
