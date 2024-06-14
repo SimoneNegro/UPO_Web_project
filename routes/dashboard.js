@@ -17,7 +17,7 @@ router.get('/', async function (req, res, next) {
         const managed_ticket = await db.managedTicket(req.user.id);
 
         console.log("Correct routing page: Ticket Dashboard\n");
-        return res.render('admin/dashboard', {
+        return res.render('staff/dashboard', {
             title: 'Ticket Dashboard',
             user: req.user,
             num_tickets: num_tickets,

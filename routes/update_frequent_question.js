@@ -18,7 +18,7 @@ router.get('/', async function (req, res, next) {
         const all_topics = await db.allTicketTopics();
 
         console.log("Correct routing page: Update Frequent Questions\n");
-        return res.render('super_admin/update_frequent_question', {
+        return res.render('admin/update_frequent_question', {
             title: 'Update Frequent Questions',
             user: req.user,
             all_questions: all_questions,

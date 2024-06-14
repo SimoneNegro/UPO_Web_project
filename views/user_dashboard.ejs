@@ -5,9 +5,9 @@
 <% if(user.tipo === 'utente') { %>
     <%- include('includes/header.ejs') %>
 <% } else if(user.tipo === 'staff') { %>
-    <%- include('includes/admin/header_admin.ejs') %>
+    <%- include('includes/staff/header_staff.ejs') %>
 <% } else if(user.tipo === 'admin') { %>
-    <%- include('includes/super_admin/super_admin_header.ejs') %>
+    <%- include('includes/admin/header_admin.ejs') %>
 <% } %>
 
 <!-- CONTENT -->
@@ -30,9 +30,9 @@
 <% if(user.tipo === 'utente') { %>
     <%- include('includes/footer.ejs') %>
 <% } else if(user.tipo === 'staff') { %>
-    <%- include('includes/admin/footer_admin.ejs') %>
+    <%- include('includes/staff/footer_staff.ejs') %>
 <% } else if(user.tipo === 'admin') { %>
-    <%- include('includes/super_admin/super_admin_footer.ejs') %>
+    <%- include('includes/admin/footer_admin.ejs') %>
 <% } %>
 
 <!-- SCRIPTS-->

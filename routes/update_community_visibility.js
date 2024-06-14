@@ -25,7 +25,7 @@ router.get('/', async function (req, res, next) {
         const allComments = await db.allCommunityComment();
 
         console.log("Correct routing page: Update Community Comment Visibility\n");
-        return res.render('super_admin/update_community_visibility', {
+        return res.render('admin/update_community_visibility', {
             title: 'Update Community Comment Visibility',
             user: req.user,
             searchedComment: searchedComment,

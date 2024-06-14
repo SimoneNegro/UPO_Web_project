@@ -5,25 +5,27 @@
             <div class="col text-start me-4">
                 <span class="fw-bold">PAGES</span>
                 <div class="row pt-2">
-                    <% if(title == "View Tickets" ) { %>
-                        <a class="static-link">View tickets</a>
+                    <a class="link" href="/">Home user</a>
+                    <a class="link" href="/admin">Home staff</a>
+                </div>
+            </div>
+            <div class="col text-start me-4">
+                <span class="fw-bold">ADMIN PAGES</span>
+                <div class="row pt-2">
+                    <% if(title == "Update User" ) { %>
+                        <a class="static-link">Update user</a>
                     <% } else { %>
-                        <a class="link" href="/view_tickets">View tickets</a>
+                        <a class="link" href="/update-user">Update user</a>
                     <% } %>
-                    <% if(title == "Ticket Dashboard" ) { %>
-                        <a class="static-link">Ticket dashboard</a>
+                    <% if(title == "Update Frequent Questions" ) { %>
+                        <a class="static-link">Update frequent questions</a>
                     <% } else { %>
-                        <a class="link" href="/dashboard">Ticket dashboard</a>
+                        <a class="link" href="/update-frequent-question">Update frequent questions</a>
                     <% } %>
-                    <% if(title == "Closed Tickets" ) { %>
-                        <a class="static-link">Closed tickets</a>
+                    <% if(title == "Update Community Comment Visibility" ) { %>
+                        <a class="static-link">Update community visibility</a>
                     <% } else { %>
-                        <a class="link" href="/closed_tickets">Closed tickets</a>
-                    <% } %>
-                    <% if(user) { %>
-                        <% if(user.tipo == 'admin') { %>
-                            <a class="link" href="/super-admin">Admin page</a>
-                        <% } %>
+                        <a class="link" href="/update-community-comment-visibility">Update community visibility</a>
                     <% } %>
                 </div>
             </div>

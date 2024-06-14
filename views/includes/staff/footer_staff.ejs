@@ -1,0 +1,32 @@
+<footer class="footer border-top border-dark-subtle light-bg">
+    <div class="container text-center pt-4 pb-5">
+        <div class="row justify-content-center">
+            <!-- THIRD COLUMN -->
+            <div class="col text-start me-4">
+                <span class="fw-bold">PAGES</span>
+                <div class="row pt-2">
+                    <% if(title == "View Tickets" ) { %>
+                        <a class="static-link">View tickets</a>
+                    <% } else { %>
+                        <a class="link" href="/view_tickets">View tickets</a>
+                    <% } %>
+                    <% if(title == "Ticket Dashboard" ) { %>
+                        <a class="static-link">Ticket dashboard</a>
+                    <% } else { %>
+                        <a class="link" href="/dashboard">Ticket dashboard</a>
+                    <% } %>
+                    <% if(title == "Closed Tickets" ) { %>
+                        <a class="static-link">Closed tickets</a>
+                    <% } else { %>
+                        <a class="link" href="/closed_tickets">Closed tickets</a>
+                    <% } %>
+                    <% if(user) { %>
+                        <% if(user.tipo == 'admin') { %>
+                            <a class="link" href="/super-admin">Admin page</a>
+                        <% } %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

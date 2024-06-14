@@ -26,7 +26,7 @@ router.get('/', async function (req, res, next) {
         const all_users = await db.allUser();
 
         console.log("Correct routing page: Update User\n");
-        return res.render('super_admin/update_users', {
+        return res.render('admin/update_users', {
             title: "Update User",
             user: req.user,
             all_users: all_users,

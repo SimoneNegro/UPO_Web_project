@@ -2,10 +2,10 @@
     <nav
             class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom border-dark-subtle shadow mb-5 sticky-top light-bg">
         <div class="container">
-            <% if(title == "Admin panel" ) { %>
-                <a class="navbar-brand static-link"><!-- inserisci img logo -->Admin panel</a>
+            <% if(title == "Staff panel" ) { %>
+                <a class="navbar-brand static-link"><!-- inserisci img logo -->Staff panel</a>
             <% } else { %>
-                <a class="navbar-brand link" href="/super-admin"><!-- inserisci img logo -->Admin panel</a>
+                <a class="navbar-brand link" href="/admin"><!-- inserisci img logo -->Staff panel</a>
             <% } %>
             <!-- BUTTON SHOW SMALL SCREEN -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -18,23 +18,27 @@
                  id="navbarNavAltMarkup">
                 <!-- MAIN PAGES -->
                 <div class="d-sm-inline-flex gap-4">
-                    <% if(title == "Update User" ) { %>
-                        <a class="static-link">Update user</a>
+                    <% if(title == "View Tickets" ) { %>
+                        <a class="nav-link static-link">View tickets</a>
                     <% } else { %>
-                        <a class="link" href="/update-user">Update user</a>
+                        <a class="nav-link link" href="/view_tickets">View tickets</a>
                     <% } %>
-                    <% if(title == "Update Frequent Questions" ) { %>
-                        <a class="static-link">Update frequent questions</a>
+                    <% if(title == "Ticket Dashboard" ) { %>
+                        <a class="nav-link static-link">Ticket dashboard</a>
                     <% } else { %>
-                        <a class="link" href="/update-frequent-question">Update frequent questions</a>
+                        <a class="nav-link link" href="/dashboard">Ticket dashboard</a>
                     <% } %>
-                    <% if(title == "Update Community Comment Visibility" ) { %>
-                        <a class="static-link">Update community visibility</a>
+                    <% if(title == "Closed Tickets" ) { %>
+                        <a class="nav-link static-link">Closed tickets</a>
                     <% } else { %>
-                        <a class="link" href="/update-community-comment-visibility">Update community visibility</a>
+                        <a class="nav-link link" href="/closed_tickets">Closed
+                            tickets</a>
                     <% } %>
-                    <a class="nav-link link" href="/">Home user</a>
-                    <a class="nav-link link" href="/admin">Home staff</a>
+                    <% if(user) { %>
+                        <% if(user.tipo == 'admin') { %>
+                            <a class="link" href="/super-admin">Admin page</a>
+                        <% } %>
+                    <% } %>
                 </div>
                 <!-- LOG PAGES -->
                 <div class="d-sm-inline-flex gap-4">
@@ -45,7 +49,7 @@
                         <% if(title == "Dashboard" ) { %>
                             <a class="nav-link static-link">Welcome <%= user.email %></a>
                         <% } else { %>
-                            <a class="nav-link link" href="/user-dashboard">Welcome <%= user.email %></a>
+                                <a class="nav-link link" href="/user-dashboard">Welcome <%= user.email %></a>
                         <% } %>
                         <form action="/logout" method="post">
                             <button class="nav-link link">Log out</button>
