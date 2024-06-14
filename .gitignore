@@ -127,7 +127,6 @@ dist
 .pnp.*
 
 .vscode
-
 .idea
-
 node_modules/
+package-lock.json
